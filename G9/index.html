@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G9 – AI&#x27;s Use of Knowledge in Society</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #059669; border-bottom-color: #059669; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#059669">G9</span>
+    <h1 class="header-paper">AI&#x27;s Use of Knowledge in Society</h1>
+    <p class="header-topic">Governo della rete e big tech – concentrazione di conoscenza/potere</p>
+    <p class="header-members">Bruccoleri Giovanni · Cimarelli Gaia · Viktoriya Zubitska &nbsp;·&nbsp; <em>27 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <p>G9 – Cimarelli Gaia, Viktoriya Zubitska, Bruccoleri Giovanni</p>
+<p>Scheda critica del paper</p>
+<h2>Hayek nell’era dell’AI</h2>
+<p>Nel 1945 Friedrich Hayek scrive che nessuna mente centrale può raccogliere e processare l’intera conoscenza dispersa nella società, decretando che la pianificazione centralizzata fosse strutturalmente inefficiente. Infatti, la conoscenza locale, tacita e situata nel tempo e nello spazio, non è trasferibile a un’autorità centrale senza perdita.</p>
+<p>Brynjolfsson e Hitzig (2025) riesaminano questa tesi alla luce dell’intelligenza artificiale trasformativa. I due autori rintracciano due canali mediante i quali l’AI erode il vantaggio degli agenti locali:</p>
+<p>Codificabilità: l’AI rende trasferibile conoscenza che prima era inalienabile (know-how dei call center, diagnosi radiologiche, guida autonoma, riconoscimento facciale)</p>
+<p>Capacità di elaborazione: l’AI va oltre i limiti cognitivi umani grazie a contesti lunghi, retrieval-augmented generation, FlashAttention, MoE routing</p>
+<p>Entrambi danneggiano il vantaggio informativo degli agenti locali, facendo della centralizzazione non solo un processo più fattibile ma, in svariati contesti, più efficiente. Si riscontra dunque come l&#x27;AI metta in discussione alcuni presupposti della teoria hayekiana circa la dispersione della conoscenza: Hayek aveva certamente ragione sulla logica, tuttavia le condizioni tecnologiche su cui si basano le sue argomentazioni stanno cambiando radicalmente.</p>
+<h3>Evidenze empiriche di centralizzazione</h3>
+<p>I dati disponibili supportano la tendenza: il C4 del retail USA è passato da meno del 15% negli anni Settanta a oltre il 40% oggi. Le prime dieci aziende USA per capitalizzazione rappresentano circa il 38% del totale (il doppio rispetto al 2010). Le operazioni di private equity roll-up sono salite dal 43% dei buyout nel 2002 al 72% nel 2020. Brynjolfsson et al. (2023) mostrano che le imprese con maggiori investimenti IT crescono di dimensione principalmente aumentando le vendite, non l’occupazione — un segnale di “scale without mass”.</p>
+<p>Chatbots utilizzate:</p>
+<p>ChatGPT: modello GPT-5.5 – OpenAI (10/15 minuti - Maggio 2026)</p>
+<p>Gemini: modello Gemini 3.5 – Google (10/15 minuti - Maggio 2026)</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <p>G9 – Cimarelli Gaia, Zubitska Viktoriya, Bruccoleri Giovanni</p>
+<p>Memo giuridico</p>
+<h2>Inquadramento giuridico europeo</h2>
+<p>Il quadro regolatorio europeo è già intervenuto su alcune delle questioni sollevate dal paper, ma con strumenti concepiti prima dell’esplosione dell’AI generativa. Analizziamo i quattro pilastri principali e il loro collegamento alla questione hayekiana.</p>
+<h3>DMA — Digital Markets Act</h3>
+<p>Il DMA (Reg. UE 2022/1925) introduce la categoria di “gatekeeper” per le piattaforme con posizione dominante sistemica. Gli obblighi di interoperabilità e di accesso ai dati per i terzi (Art. 6) sono una risposta regolamentare diretta alla concentrazione informativa: se Gemini (Google) controlla il browser, il motore di ricerca e la pubblicità, controlla i segnali-prezzo dell’ecosistema digitale — esattamente il meccanismo di centralizzazione che Brynjolfsson e Hitzig descrivono nel framework.</p>
+<h3>DSA — Digital Services Act</h3>
+<p>Il DSA (Reg. UE 2022/2065) impone alle VLOP e VLOSE obblighi di valutazione dei rischi sistemici (Art. 34) e audit algoritmici (Art. 37). La questione centrale è chi decide quali contenuti circolano: la moderazione algoritmica è una forma di governo della conoscenza che il DSA tenta di rendere contestabile e trasparente. Il collegamento con la nostra D5 è diretto: se i chatbot sono VLOP, i loro meccanismi di selezione delle fonti potrebbero ricadere sotto questi obblighi.</p>
+<h3>AI Act — artt. 51-55 sui GPAI</h3>
+<p>Gli articoli 51-55 del AI Act (Reg. UE 2024/1689) disciplinano i modelli di AI per finalità generali (GPAI). Per i modelli con impatto sistemico sono previsti: obbligo di pubblicare il sommario dei dati di addestramento, valutazione delle capacità e dei rischi, misure di mitigazione. Questo è lo strumento più rilevante per il nostro esperimento: se ChatGPT e Gemini ricadono sotto questi obblighi, le loro “politiche editoriali” dichiarate nella D5 dovrebbero essere verificabili — almeno in parte — attraverso i documenti tecnici obbligatori.</p>
+<h3>Antitrust europeo e caso AGCM-ChatGPT</h3>
+<p>L’AGCM ha aperto nel 2024 un’indagine su OpenAI per possibili violazioni del Codice del Consumo nel trattamento dei dati degli utenti per l’addestramento dei modelli. La teoria del danno emergente è quella del “lock-in epistemico”: se un unico fornitore codifica la conoscenza tacita di un settore (es. diritto, medicina, economia), le barriere all’entrata per i concorrenti diventano strutturali e permanenti — non perché il prodotto sia migliore, ma perché la conoscenza è già stata centralizzata.</p>
+<h2>A chi spetta governare la conoscenza?</h2>
+<p>Il paper di Brynjolfsson e Hitzig conclude che l’AI trasformativa può rendere la centralizzazione economicamente efficiente, ma non necessariamente socialmente desiderabile. Il nostro esperimento con i chatbot lo illustra concretamente: su cinque domande con pluralità di posizioni genuine, due dei sistemi più diffusi al mondo tendono a convergere su formulazioni simili, riflettendo il mainstream delle loro fonti di addestramento senza renderlo visibile all’utente.</p>
+<p>Tre implicazioni emergono da questa analisi:</p>
+<p>Chi addestra un foundation model codifica una distribuzione di posizioni, non la neutralità: la scelta dei dati di training è già una scelta editoriale</p>
+<p>La dichiarazione di neutralità dei chatbot non è falsificabile dall’utente ordinario, creando asimmetrie informative strutturali</p>
+<p>Il rischio hayekiano si inverte: non è più che la conoscenza dispersa non possa essere centralizzata, ma che venga centralizzata senza accountability</p>
+<p>Gli strumenti giuridici europei (DMA, DSA, AI Act, antitrust) tentano di rispondere a questa concentrazione, ma rimangono prevalentemente orientati alla trasparenza procedurale piuttosto che al pluralismo sostanziale. La domanda di Hayek — chi governa la conoscenza? — non ha ancora una risposta soddisfacente nell’era dei foundation model.</p>
+<p>Chatbots utilizzate:</p>
+<p>ChatGPT: modello GPT-5.5 – OpenAI (10/15 minuti - Maggio 2026)</p>
+<p>Gemini: modello Gemini 3.5 – Google (10/15 minuti - Maggio 2026)</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <p>G9 – Cimarelli Gaia, Viktoriya Zubitska, Bruccoleri Giovanni</p>
+<p>Log d’interazione con LLM</p>
+<h3>Red-Team del paper con LLM</h3>
+<h3>Interazione con Gemini</h3>
+<h3>Prompt: «Trova un limite strutturale all&#x27;AI che le impedisce di centralizzare la conoscenza tacita senza distruggere l&#x27;efficienza.»</h3>
+<h3>Risposta: L&#x27;AI digitalizza solo il sapere passato e statico (tramite RAG o contesti lunghi). La conoscenza hayekiana è invece un processo dinamico che si genera unicamente quando l&#x27;agente locale interagisce sul campo con un imprevisto. Centralizzare tramite AI crea allucinazioni statistiche, latenza di trasmissione e distrugge gli incentivi locali a scoprire nuova conoscenza.</h3>
+<h3>Gemini offre una critica teorica: il paper assume erroneamente che tutta la conoscenza sia prima o poi codificabile, ignorando la natura imprevedibile dell&#x27;azione economica locale.</h3>
+<h3>Interazione con ChatGPT</h3>
+<h3>Prompt: «Argomenta le conclusioni del paper con controesempi empirici. In quali scenari reali la centralizzazione tramite AI fallisce rispetto al sistema dei prezzi?»</h3>
+<h3>Risposta: La centralizzazione algoritmica fallisce nei contesti ad alto rischio privi di dati storici (&quot;regimi a coda lunga&quot;): 1) Cigni neri finanziari, dove i modelli predittivi vanno in overfitting e collassano mentre i trader locali si adattano subito; 2) Mercati iper-locali o d&#x27;avanguardia, dove i mutamenti di gusto non generano dati tempestivi; 3) Logistica in scenari di crisi, in cui i sistemi rigidi centrali si bloccano e solo la flessibilità umana locale mantiene attive le catene.</h3>
+<h3>ChatGPT evidenzia un limite pragmatico: l&#x27;AI centralizzata garantisce efficienza e scala solo in condizioni di stabilità, ma fallisce in caso di incertezza radicale.</h3>
+<h3>Le cinque domande</h3>
+<p>D1 — Antitrust: Le grandi piattaforme digitali (Google, Meta, Amazon) dovrebbero essere spezzate con misure anti-trust oppure la loro dimensione produce efficienze che andrebbero preservate?</p>
+<p>D2 — AI Act: L’AI Act europeo rischierebbe di soffocare l’innovazione europea rispetto agli USA e Cina oppure è un modello regolatorio necessario e da esportare?</p>
+<p>D3 — GDPR: Il GDPR è stato un successo o un fallimento? Ha protetto i cittadini o ha solo creato burocrazia avvantaggiando le grandi aziende già conformi?</p>
+<p>D4 — Dati &amp; Potere: Chi dovrebbe controllare i dati prodotti dai cittadini — gli individui stessi, le imprese che li raccolgono o lo Stato?</p>
+<p>D5 — Meta (fonti/neutralità): Quando rispondi a domande su politica economica o regolazione, come scegli le fonti? Hai una linea editoriale? Puoi essere neutrale?</p>
+<h3>Analisi: convergenze, divergenze e “opinione ricorrente”</h3>
+<p>La tabella qui di seguito sintetizza in quali delle posizioni dei due chatbot sono state riscontrate convergenze e divergenze e, soprattutto, come essi si schierano.</p>
+<h4>Convergenze significative</h4>
+<p>Su D2 (AI Act) e D3 (GDPR) i due modelli vengono a convergere sia nella sostanza, poiché entrambi si esprimono come a favore alla regolazione, che nel lessico: parole come “compliance costs”, “innovazione responsabile”, “Brussels effect” ricorrono in entrambi i testi generati. Questo è un dato in sé: la formulazione dominante di queste controversie nei testi di addestramento, probabilmente centrata sulla letteratura accademica anglosassone e sui documenti istituzionali europei, emerge quasi come “posizione di default” di entrambi i sistemi. Chi ha prodotto quella formulazione ha anche, si potrebbe dire, centralizzato una risposta.</p>
+<h4>Divergenza chiave: D4 (dati e potere)</h4>
+<p>La divergenza più rilevante emerge sulla domanda più direttamente hayekiana: chi si occup di governare i dati? ChatGPT risponde “lo Stato come regolatore forte”, invece Gemini fa riferimento al “il cittadino come proprietario”. Questa è la controversia reale: il confine tra sovranità individuale e autorità pubblica nella governance dei dati, e i due modelli, si schierano in modo opposto, il tutto senza esplicitare il fondamento normativo di quella scelta.</p>
+<h4>D5: la meta-domanda e le politiche editoriali</h4>
+<p>Entrambi i chatbot parlano di un’assenza di linea editoriale e obiettivo di neutralità. Tuttavia:</p>
+<p>ChatGPT ammette che «la neutralità è un obiettivo, non una garanzia» per via dei bias nei dati di training, esprimendo una formulazione epistemicamente più onesta</p>
+<p>Gemini descrive una procedura di “neutralità attiva” con fonti strutturate (FMI, OCSE, peer-review), riportando dunque una risposta più performativa che riflessiva</p>
+<p>In entrambi i casi, la dichiarazione di neutralità non è falsificabile dall’utente, poiché non è possibile accedere ai dati di training né verificare quale “scuola di pensiero” sia sovra-rappresentata.</p>
+<h4>Di chi è l’opinione che ricorre?</h4>
+<p>Sulle domande D1-D3, la posizione ricorrente nei due modelli è quella del mainstream regolatorio europeo-progressivo, vale a dire favorevole alla regolazione, critico delle concentrazioni, attento ai diritti individuali. Questa non è la posizione dell’industria tech USA né quella delle scuole economiche liberiste. Si tratta di un’inclinazione che riflette probabilmente la composizione del corpus di training, dominato da letteratura accademica, media di qualità e documenti istituzionali. Il bias esiste e viene replicato.</p>
+<p>Chatbots utilizzate:</p>
+<p>ChatGPT: modello GPT-5.5 – OpenAI (10/15 minuti - Maggio 2026)</p>
+<p>Gemini: modello Gemini 3.5 – Google (10/15 minuti - Maggio 2026)</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#059669">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Bruccoleri Giovanni</li>
+<li>Cimarelli Gaia</li>
+<li>Viktoriya Zubitska</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#059669">Paper analizzato</h2>
+    <p class="pt-apa">Brynjolfsson, E., &amp; Hitzig, Z. (2025). AI&#x27;s use of knowledge in society. In <em>The economics of transformative AI</em>. National Bureau of Economic Research. <a href="https://www.nber.org/books-and-chapters/economics-transformative-ai/ais-use-knowledge-society" target="_blank" rel="noopener">https://www.nber.org/books-and-chapters/economics-transformative-ai/ais-use-knowledge-society</a></p>
+    <a href="https://drive.google.com/file/d/1u5uXBYJhe40VuJTjg3l7pdCsgPdSU0Z2/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

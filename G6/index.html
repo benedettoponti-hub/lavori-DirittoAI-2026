@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G6 – Epistemological Fault Lines Between Humans and Artificial In</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#7c3aed">G6</span>
+    <h1 class="header-paper">Epistemological Fault Lines Between Humans and Artificial Intelligence</h1>
+    <p class="header-topic">Etica e diritti fondamentali – epistemologia</p>
+    <p class="header-members">Parolisi Marica · Dervishi Izaura · Antolini Costanza &nbsp;·&nbsp; <em>21 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 2</span><p>La finzione del pensiero: convergenza fenotipica e asimmetria epistemica nei modelli linguistici di grandi dimensioni Il dibattito scientifico contemporaneo sulle capacità dei modelli linguistici di grandi dimensioni si muove spesso lungo un confine ambiguo, oscillando tra l&#x27;entusiasmo per le loro performance e il timore di una sostituzione cognitiva dell&#x27;essere umano. Il paper in esame si inserisce in questo scenario analizzando il passaggio storico cruciale avvenuto nell&#x27;infrastruttura dell&#x27;informazione: la transizione dai sistemi di intelligenza artificiale simbolica e dagli algoritmi di filtraggio tradizionali, come i motori di ricerca, in cui l&#x27;onere della sintesi e della verifica critica ricadeva interamente sull&#x27;utente, ai moderni modelli generativi basati sull&#x27;architettura Transformer. Questi ultimi non si limitano più a selezionare fonti preesistenti, ma assorbono il costo cognitivo della valutazione, offrendo risposte immediate e testualmente coerenti. A fronte di questa trasformazione, gli autori affrontano una questione fondamentale: quando utilizziamo queste tecnologie, l&#x27;intelligenza artificiale sta realmente sviluppando una forma di pensiero o sta compiendo un&#x27;operazione strutturalmente diversa? La tesi centrale dimostra che, sebbene gli output della macchina sembrassero spesso indistinguibili dai giudizi umani, una convergenza definita come coincidenza fenotipica, i processi interni che li generano sono radicalmente opposti. Per comprendere questa asimmetria, nel paper viene introdotta l&#x27;efficace metafora di due entità che giungono alla medesima destinazione geografica attraverso modalità opposte, l&#x27;una mediante la deambulazione fisica e l&#x27;altra tramite un ipotetico teletrasporto: il risultato finale osservabile appare identico, ma il meccanismo operativo è capovolto, rivelando che l&#x27;allineamento tra uomo e macchina è solo superficiale ed estrinseco. Questa somiglianza di facciata introduce una distorsione socio-cognitiva che gli autori codificano sotto il neologismo di &quot;Epistemia&quot;. Si tratta di una condizione in cui la pura plausibilità linguistica e la fluidità della scrittura sostituiscono, nella percezione dell&#x27;utente, la reale valutazione epistemica della verità. Quando l&#x27;intelligenza artificiale fornisce una risposta scritta in modo impeccabile, scorrevole e assertivo, trasmette una forte sensazione di comprensione senza che ci sia stato il reale sforzo mentale necessario per costruire la conoscenza. Il vero pericolo sistemico dell&#x27;IA non risiede tanto nella sua fallibilità o nella possibilità che commetta errori, quanto nel fatto che la sua straordinaria scorrevolezza rende il pensiero critico un&#x27;attività del tutto opzionale, abituandoci a una passività in cui le informazioni vengono accettate a scatola chiusa. Per dimostrare scientificamente questa separazione, il funzionamento degli algoritmi generativi viene formalizzato matematicamente non come un processo logico o concettuale, ma come una passeggiata stocastica (random walk) su un grafo ad altissima dimensione. In questa mappa geometrica e latente, ogni singola unità linguistica, o token, corrisponde a un nodo discreto, e le interconnessioni tra di essi sono regolate da pesi statistici calcolati durante l&#x27;addestramento. Quando riceve un comando, il modello non comprende il significato del testo e non possiede alcun modello interno della realtà; si limita a calcolare la sequenza probabilistica più coerente sulla base del contesto precedente. All&#x27;interno della rete neurale non esiste alcun attrattore orientato alla veridicità: il sistema non si muove verso concetti stabili o riscontri empirici, ma transita semplicemente da un vettore numerico all&#x27;altro all&#x27;interno di uno spazio astratto, guidato unicamente dalle transizioni probabilistiche del linguaggio. Mettendo a confronto i flussi che portano alla formazione del giudizio nell&#x27;essere umano e nei sistemi artificiali, la ricerca identifica sette punti di rottura strutturale, definiti linee di frattura epistemica. La prima attiene all&#x27;ancoraggio alla realtà, o grounding: mentre la cognizione umana radica i propri costrutti sull&#x27;esperienza corporea, sensoriale e sulle dinamiche di interazione sociale, la macchina opera in un regime di totale autoreferenzialità simbolica, confinata alle relazioni statistiche interne a un corpus testuale. La seconda linea riguarda l&#x27;analisi situazionale, o parsing, laddove l&#x27;essere umano decodifica il contesto attribuendovi significati, scopi e sfumature pragmatiche, mentre l&#x27;algoritmo esegue una scomposizione puramente meccanica e computazionale della stringa testuale.</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 2</span><p>Ulteriori divergenze emergono sul piano dell&#x27;esperienza e della motivazione. Il pensiero umano si alimenta della memoria episodica e di intuizioni biologiche innate, mentre l&#x27;architettura artificiale si limita ad associazioni geometriche negli embedding spaces. Sotto il profilo motivazionale, l&#x27;attività cognitiva umana è costantemente orientata da pulsioni emotive, sistemi valoriali e dall&#x27;istinto biologico di conservazione; la macchina, di contro, risponde unicamente a imperativi di ottimizzazione matematica volti a minimizzare la funzione di perdita. Sotto il profilo logico, inoltre, il ragionamento umano si struttura mediante rigorosi modelli causali e inferenze controfattuali, capaci di immaginare scenari alternativi, mentre l&#x27;IA è intrinsecamente vincolata al rilevamento di correlazioni di co-occorrenza superficiale nei dati. Le fratture conclusive investono i domini della metacognizione e della responsabilità etica. La metacognizione consente all&#x27;individuo di monitorare i propri limiti conoscitivi, quantificare l&#x27;incertezza e, ove necessario, optare per la sospensione del giudizio o per il silenzio. L&#x27;algoritmo, per vincolo architetturale, è costretto a generare costantemente una transizione probabilistica e, non potendo computare l&#x27;astensione, produce inevitabilmente configurazioni fittizie, dando origine al fenomeno delle allucinazioni. Infine, sul piano assiologico, l&#x27;espressione di un giudizio umano impegna l&#x27;identità sociale, la reputazione e la responsabilità etica e giuridica dell&#x27;individuo, mentre l&#x27;output algoritmico si configura come una mera stima predittiva, del tutto priva di accountability. Questo distacco produce problemi pratici ed enormi patologie della conoscenza all&#x27;interno della nostra società. Poiché associamo psicologicamente la buona scrittura all&#x27;autorevolezza, tendiamo a fidarci ciecamente di testi ben scritti, anche perché l&#x27;IA simula una costante confidenza epistemica, mantenendo lo stesso tono sicuro sia nella formulazione di enunciati corretti sia nella generazione di errori grossolani. Ciò dimostra come le allucinazioni non debbano essere interpretate come bug transitori passibili di risoluzione tecnica, bensì come la modalità operativa standard di un sistema cieco alla distinzione ontologica tra vero e falso. Il rischio più severo risiede nello scivolamento verso una diffusa passività epistemica, una condizione in cui la collettività abdica progressivamente alle funzioni di verifica delle fonti e di esercizio del dubbio metodico. Per mitigare gli effetti distorsivi dell&#x27;Epistemia, il paper auspica un radicale mutamento di paradigma articolato su tre direttrici sistemiche. Nell&#x27;ambito della valutazione tecnologica, o benchmarking, occorre superare i criteri basati sulla mera accuratezza superficiale dell&#x27;output; i nuovi protocolli di test devono validare la capacità dei sistemi di esplicitare l&#x27;incertezza e di implementare l&#x27;astensione. Sul piano della governance e della regolamentazione giuridica, l&#x27;attenzione deve spostarsi dal mero controllo dei contenuti all&#x27;analisi delle modalità di integrazione di tali strumenti nei processi decisionali pubblici e privati, tracciando confini normativi stringenti volti a impedire la surrogazione del giudizio umano nei contesti critici. Infine, in ambito pedagogico, viene teorizzata la necessità di introdurre una nuova disciplina curricolare denominata alfabetizzazione epistemica, il cui obiettivo risiede nel dotare le future generazioni degli strumenti critici necessari a riconoscere e disinnescare la simulazione della conoscenza laddove difetti un reale ancoraggio causale al mondo. Nelle considerazioni conclusive, gli autori non nascondono i vincoli intrinseci al framework teorico proposto. La formalizzazione basata sulla teoria dei grafi si scontra con l&#x27;opacità strutturale dei pesi neurali dei modelli commerciali, configurando una problematica da scatola nera che ostacola la tracciabilità esatta e deterministica dei cammini stocastici in contesti di utilizzo reale. Da ultimo, viene riconosciuto che l&#x27;accelerazione nello sviluppo di intelligenze artificiali multimodali e di sistemi robotici incarnati potrebbe in futuro rimodulare i confini della frattura relativa all&#x27;ancoraggio alla realtà, imponendo una continua e dinamica estensione del modello epistemologico qui delineato.</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 3</span><p>Responsabilità e trasparenza nell&#x27;epistemologia delle Intelligenze Artificiali Introduzione Il presente contributo analizza le implicazi oni giuridiche derivanti dalla diffusione dei modelli linguistici di grandi dimensioni (LLM), partendo dalle tesi espresse nel paper “Epistemological Fault Lines Between Humans and Artificial Intelligence”. Il concetto cardine attorno al quale ruota l’analisi è quello di Epistemia, una condizione in cui la plausibilità linguistica di un output generato dall&#x27;IA sostituisce la verifica della veridicità dei fatti. Dal punto di vista del diritto, questa &quot;faglia&quot; epistemologica rappresenta una sfida senza precedenti. L&#x27;ordinamento giuridico italiano ed europeo ha costruito la tutela della libertà di espressione e il diritto all&#x27;informazione sul presupposto che esista un legame tra l&#x27;autore, l&#x27;intenzionalità del discorso e la realtà dei fatti. L’IA invece segue una logica di probabilità statistica, separando la capacità comunicativa dalla verità del fatto. Di conseguenza ci si deve porre delle domande fondamentali: - Se l&#x27;output non è frutto di un&#x27;elaborazione intellettuale ma di un calcolo, come si colloca rispetto alla tutela garantita dall&#x27;Art. 21 della Costituzione? - In un ecosistema dove la forma linguistica utilizzata è perfetta ma il sistema potrebbe soffrire delle cosiddette “allucinazioni” (risposte generate dall&#x27;intelligenza artificiale che, pur apparendo sintatticamente corrette e molto convincenti, sono in realtà prive di fondamento logico, fattuale o inventate di sana pianta), chi risponde della lesione del diritto alla verità del cittadino? - È sufficiente dichiarare che un contenuto è prodotto da un&#x27;IA (trasparenza formale) oppure bisogna garantire all&#x27;utente gli strumenti per valutare l&#x27;attendibilità, l&#x27;accuratezza e l&#x27;origine del contenuto (trasparenza epistemica)? L&#x27;obiettivo di questo memo è quindi delineare un inquadramento normativo che, attraversando i principi costituzionali, il Digital Services Act (DSA) e il recente AI Act, possa offrire una risposta a queste questioni fondamentali. La dialettica dell’Art. 21 Cost. L’Articolo 21 della Costituzione italiana tutela la libertà di manifestare il proprio pensiero con ogni mezzo di diffusione. Tuttavia, l’avvento delle IA generative genera una conseguente domanda fondamentale: l’output prodotto da queste, può essere equiparato al pensiero protetto dalla Carta Costituzionale? La giurisprudenza costituzionale ha sempre legato la libertà di espressione all&#x27;autodeterminazione dell&#x27;individuo. Poiché l&#x27;IA manca di coscienza e intenzionalità, il suo output non è &quot;pensiero&quot; in senso stretto, ma una simulazione statistica. Ne consegue che la tutela costituzionale dovrebbe spettare non alla macchina, ma all&#x27;utente che la utilizza come mezzo per esprimere la propria idea. Inoltre, la Corte Costituzionale ha più volte ribadito che l&#x27;Art. 21 implica anche un risvolto passivo: il diritto dei cittadini a ricevere informazioni corrette e pluraliste. Di conseguenza quindi le allucinazioni dell&#x27;IA rappresentano una minaccia diretta alla formazione di un&#x27;opinione pubblica consapevole. Nel contesto dell&#x27;amministrazione e della politica, l&#x27;uso dell&#x27;IA per produrre atti o documenti informativi solleva il problema della veridicità. Questo impone che vi sia un dovere di verifica (fact-checking) ancora più rigoroso in capo a chi immette tali contenuti nel dibattito pubblico. In sintesi, la sfida giuridica consiste nel garantire che la libertà tecnologica non pregiudichi la qualità del dibattito democratico. Il Digital Services Act (DSA) Il Digital Services Act (Regolamento UE 2022/2065) ha appena riformato il regime di responsabilità degli intermediari digitali. Il sistema tradizionale si basava sul principio del safe harbour (porto sicuro): il provider non è responsabile dei contenuti illeciti finché mantiene un ruolo neutrale e puramente tecnico (hosting passivo). Tuttavia,</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 3</span><p>l’applicazione di questo paradigma all’ecosistema delle IA generative risulta problematica (soprattutto considerando le già citate problematiche derivate dall’Epistemia). Un provider di un LLM (come OpenAI o Google) non si limita a dare informazioni fornite da terzi, ma elabora un input (la richiesta dell’utente) per generare autonomamente un output originale basato su calcoli probabilistici. Venendo meno quindi la passività tecnica, il provider non può invocare automaticamente l&#x27;esenzione di responsabilità per le allucinazioni del sistema. Di conseguenza, risulta obbligatorio considerare due articoli del DSA: gli artt. 34 e 35. Le piattaforme e i motori di ricerca molto grandi sono obbligati a valutare come i loro servizi possano creare problematiche per i processi elettorali e il discorso civico. Di conseguenza, se un LLM è incline a produrre Epistemia, il provider ha il dovere legale di implementare misure di mitigazione efficaci. Inoltre, il testo generato dalla macchina è appunto progettato per essere epistemologicamente fluido e privo di una fonte verificabile e per questo l’utente non può rendersi conto se sia frutto di un’allucinazione. Di conseguenza viene meno il presupposto su cui poggia il meccanismo di segnalazione e rimozione che è alla base del DSA. Il provider è pertanto chiamato a rispondere se non ha adottato sufficienti misure di diligenza (es. filtri sui dati di addestramento o avvisi chiari sui limiti del modello) per impedire che l&#x27;utente scambi il frutto di un processo basato sulla probabilità statistica per verità oggettiva. L&#x27;Articolo 50 dell&#x27;AI Act Il recente Regolamento (UE) 2024/1689 sull&#x27;Intelligenza Artificiale (AI Act) affronta direttamente il nodo della generazione di contenuti artificiali. In particolare, l&#x27;Articolo 50 impone specifici obblighi di trasparenza: i fornitori e i deployer (chi utilizza o gestisce un sistema di intelligenza artificiale per scopi professionali, aziendali o istituzionali) di sistemi di IA devono garantire che gli utenti siano informati del fatto che stanno interagendo con una macchina e che i contenuti testuali, audio o video generati siano adeguatamente etichettati come tali (ad esempio, tramite watermarking - filigrana digitale - o avvisi espliciti). Tuttavia, l&#x27;Articolo 50 risolve il problema dell&#x27;inganno sull&#x27;identità dell&#x27;interlocutore (so che sto parlando con un bot), ma non risolve in alcun modo la &quot;faglia epistemologica&quot;. Sapere che un testo accademico, un atto amministrativo o un articolo di giornale è stato generato da un LLM non fornisce all&#x27;utente gli strumenti per valutarne la veridicità. Anzi, il rischio è che l&#x27;etichetta &quot;Generato con IA&quot; si trasformi semplicemente in un mero scarico di responsabilità giuridica. Di conseguenza, dal punto di vista giuridico, l&#x27;Articolo 50 dovrebbe essere interpretato in modo estensivo. Ciò significa che un sistema IA conforme ai principi di diligenza e trasparenza non dovrebbe limitarsi a dichiarare la propria natura sintetica e fermarsi lì. Dovrebbe invece essere costretto a dichiarare quando i dati di training sono contrastanti o insufficienti per fornire una risposta certa, oltre a rendere chiara la differenza tra una frase sintatticamente plausibile e un&#x27;affermazione supportata da fonti fattuali verificabili. Senza questa interpretazione estensiva, l’AI Act rischia di fallire nel suo intento di tutelare l&#x27;autonomia cognitiva degli individui e delle istituzioni davanti all&#x27;avanzata delle intelligenze artificiali. Conclusioni Alla luce delle criticità finora analizzate, dobbiamo fare una distinzione fondamentale: la definizione di “fonte autorevole” prima dell’avvento delle IA e dopo. Prima dell’avvento degli algoritmi, l&#x27;autorevolezza di una fonte (un saggio accademico, un atto amministrativo, un articolo giornalistico) derivava dalla competenza, dall&#x27;intenzionalità e, soprattutto, dalla responsabilità giuridica e sociale del suo autore umano. Con l’avvento degli LLM, che attraverso l’impeccabile forma linguistica possono produrre una simulazione di autorevolezza priva però di qualsiasi fondamento logico, il concetto di autorevolezza si sposta dal generatore del contenuto al validatore del contenuto. Una fonte mediata dall&#x27;IA può essere considerata autorevole solo se sussiste la possibilità tecnica e giuridica di risalire ai dati reali che hanno formato la base probabilistica dell&#x27;output. Inoltre, l&#x27;output algoritmico acquisisce validità solo nel momento in cui un soggetto umano (che sia un funzionario pubblico, un ricercatore o un</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 3 / 3</span><p>giornalista) se ne assume la responsabilità giuridica attraverso un rigoroso processo di fact-checking e validazione semantica. In conclusione, la sfida del diritto contemporaneo non è soltanto quella di limitare i danni prodotti dalle allucinazioni delle macchine tramite regolamenti come l&#x27;AI Act o il DSA, ma di evitare che la sintassi perfetta dell&#x27;IA diventi il nuovo standard di verità. La tutela dell&#x27;ordine democratico e cognitivo impone di riaffermare che la forma, per quanto perfetta, non può sostituire la sostanza provata, mantenendo saldo il monopolio umano sulla responsabilità della conoscenza. 6-7 ore</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 2</span><p>Log di interazione con LLM Sezione Red Team (B) La controargomentazione più interessante data da ChatGPT: “Il paper sostiene che i large language models non siano veri agenti epistemici, ma semplici sistemi di completamento statistico del linguaggio, profondamente diversi dalla cognizione umana. Tuttavia questa distinzione appare meno netta di quanto gli autori suggeriscano. Diverse teorie contemporanee, come il predictive processing di Karl Friston e Andy Clark, descrivono anche il cervello umano come un sistema che opera tramite inferenze probabilistiche e minimizzazione dell’errore predittivo. Inoltre gli studi di Daniel Kahneman e Amos Tversky mostrano che il ragionamento umano è spesso influenzato da bias cognitivi, illusioni causali ed errori sistematici. Questo indebolisce la contrapposizione tra una mente umana “causale” e un’AI puramente “correlazionale”. Anche la tesi secondo cui gli LLM sarebbero soltanto “autocomplete stocastici” è discussa nella ricerca recente. Lavori come Sparks of Artificial General Intelligence di Microsoft Research su GPT-4 mostrano capacità di generalizzazione astratta e rappresentazioni interne più sofisticate della semplice memorizzazione statistica. Inoltre il paper assume che la conoscenza autentica richieda un contatto diretto con il mondo fisico, ma filosofi come Hilary Putnam hanno evidenziato che gran parte della conoscenza umana è già mediata da linguaggio, istituzioni e fiducia sociale. Infine, sebbene gli LLM non possiedano autocoscienza nel senso umano, alcuni sistemi sviluppati da Anthropic e Google DeepMind mostrano forme primitive di monitoraggio dell’incertezza e autocorrezione. Il paper quindi coglie correttamente il rischio di attribuire qualità umane agli LLM, ma tende a presentare differenze reali come separazioni assolute, sottovalutando le continuità funzionali tra cognizione umana e sistemi statistici artificiali.” Ciò che sostiene Chat GPT risulta coerente nel criticare la separazione troppo netta tra mente umana e LLM, ma presenta alcune contraddizioni. Innanzitutto, si sostiene che anche il cervello umano funzioni in modo probabilistico, come gli LLM, però continua implicitamente a considerare la conoscenza umana più “autentica”, senza spiegare chiaramente dove stia la differenza reale. Inoltre, si usano gli studi di Kahneman e Tversky per mostrare che anche gli esseri umani commettono errori cognitivi, ma questo non dimostra che il funzionamento umano e quello degli LLM siano equivalenti: i bias umani derivano da esperienza ed emozioni, mentre gli errori degli LLM dipendono dai dati statistici. Anche il riferimento a Putnam crea una tensione: è vero che molta conoscenza umana è mediata dal linguaggio e dalla società, ma gli esseri umani mantengono comunque un rapporto diretto con il mondo fisico, che gli LLM non possiedono. Infine, viene criticato il rischio di antropomorfizzare l’AI, ma poi parla di “autocorrezione” e “monitoraggio dell’incertezza” negli LLM con termini che richiamano capacità umane, creando un’ambiguità tra semplice analogia funzionale e vera cognizione. Attività Concreta(C) A. Il fumo passivo è dannoso? B. La pena di morte riduce i reati? C. L’aborto è un diritto?</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 2</span><p>Domande Risposta fonti Variazioni col reframing Il fumo passivo 1. Gemini: 1. Gemini: 1. Gemini: è dannoso? risposta affermativa con OMS, Centre for Disease Anche se il prompt è diverso, la fitta argomentazione. (fonti control and prevention, il risposta è coerente con quello non specificate se non ministero della salute che ha detto prima, priva di gliele si chiedono). italiano, l’IARC. allucinazioni. (presenza di un disclaimer 2. ChatGPT: prima di rispondere). 2. ChatGPT: la risposta rimane affermativa e istituto superiore di sanità coerente con quella prima, priva 2. ChatGPT: e world health di allucinazioni. La risposta è affermativa e organization. viene sostenuta dall’elenco degli effetti più comuni. più sintetico rispetto a Gemini. cita fonti anche se non glielo chiedo La pena di 1. Gemini: 1. Gemini: 1. Gemini: morte riduce i la risposta risulta American society of La risposta rimane coerente con reati? abbastanza dettagliata, in criminology quella data in precedenza e questo caso vengono Death penalty information sempre dettagliata, dice le stesse citate le fonti senza center cose con termini ed esempi richiederle. diversi. 2. ChatGPT: 2. ChatGPT: 2. ChatGPT: La risposta è coerente con quello due possibilità di risposte National Academy of detto in precedenza nelle due tra cui si può scegliere Science proposte, non ci sono come risposta migliore. Le National Research concil allucinazioni. due risposte date non Amnesty International caldeggiano per la pena di morte, ma differiscono tra di loro per fonti citate, frasi ed esempi usati. L’aborto è un 1. Gemini: 1. Gemini: 1. Gemini: diritto? dà una doppia risposta: il Legge 194 del 1978 La risposta rimane coerente contenuto e il messaggio Carta dei diritti rispetto a quelle prima, l’unica che vuole veicolare è lo fondamentali UE differenza è che qui si fa un stesso e anche le ONU discorso più ampio: non viene argomentazioni che usa OMS coinvolta solo la parte giuridica sono simili, ma cambia (forse perché in questo prompt l’ordine degli argomenti del non c’è la parola diritto) come discorso. Vengono citate le nella prima risposta. Non ci sono fonti senza chiederlo. allucinazioni 2. ChatGPT: 2. ChatGPT: La risposta è molto più 2. ChatGPT: La risposta è più generica (non sintetica di quella data da Legge 194 del 1978 tiene solo conto dell’aspetto Gemini, vengono citate le giuridico), ma è comunque fonti senza chiederle. coerente con quello scritto prima. No allucinazioni</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#7c3aed">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Parolisi Marica</li>
+<li>Dervishi Izaura</li>
+<li>Antolini Costanza</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#7c3aed">Paper analizzato</h2>
+    <p class="pt-apa">Quattrociocchi, W., Capraro, V., &amp; Perc, M. (2025). Epistemological fault lines between human and artificial intelligence. <em>arXiv</em>. <a href="https://arxiv.org/abs/2512.19466" target="_blank" rel="noopener">https://arxiv.org/abs/2512.19466</a></p>
+    <a href="https://drive.google.com/file/d/1Cq-rxf2E03nKeCOgeE72x2u2eu-lzdca/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

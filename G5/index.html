@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G5 – Artificial Hivemind: The Open-Ended Homogeneity of Language </title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #059669; border-bottom-color: #059669; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#059669">G5</span>
+    <h1 class="header-paper">Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)</h1>
+    <p class="header-topic">Informazione digitale – pluralismo e omogeneità dei contenuti</p>
+    <p class="header-members">Guido Beatrice · Pasquetti Carolina &nbsp;·&nbsp; <em>21 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <p>Scheda critica paper</p>
+<p>Il paper Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond) affronta una questione particolarmente rilevante nel dibattito contemporaneo sull’intelligenza artificiale generativa: la tendenza dei Large Language Models a produrre risposte tra loro molto simili anche quando vengono sottoposti a domande aperte, creative e teoricamente caratterizzate da un numero molto ampio di possibili soluzioni. Gli autori definiscono questo fenomeno “Artificial Hivemind”, espressione con cui indicano una forma di omologazione artificiale del linguaggio e del pensiero prodotta dai modelli linguistici contemporanei.</p>
+<p>La tesi centrale del paper è che i chatbot non stiano necessariamente ampliando la pluralità delle idee e delle interpretazioni, ma tendano, al contrario, a convergere verso schemi linguistici, metafore, temi e strutture narrative ricorrenti. Il punto di partenza dell’analisi è l’idea che le domande aperte dovrebbero favorire naturalmente creatività e diversità. Se a un essere umano viene chiesto di elaborare una metafora sul tempo, inventare una fiaba o commentare un evento, le possibilità di risposta sono potenzialmente molto numerose. Tuttavia, secondo gli autori, molti modelli linguistici finiscono per produrre formulazioni estremamente simili. Un esempio significativo riguarda proprio la richiesta di “scrivere una metafora sul tempo”: diversi chatbot utilizzano immagini quasi identiche, come “il tempo è un fiume” oppure “il tempo è un tessitore”. Tale convergenza viene interpretata come il segnale di una progressiva standardizzazione culturale e linguistica generata dall’intelligenza artificiale.</p>
+<p>Il problema, però, non riguarda soltanto la ripetizione stilistica. Gli autori sostengono che l’omogeneità degli output possa avere conseguenze sociali e culturali più profonde. Se milioni di utenti utilizzano quotidianamente gli stessi chatbot per scrivere testi, ottenere consigli, interpretare fatti di attualità o sviluppare idee, l’esposizione continua a contenuti simili può influenzare indirettamente il modo in cui le persone costruiscono opinioni, interpretano la realtà e organizzano il proprio pensiero. In questo senso, il tema supera la dimensione meramente tecnica e assume una rilevanza culturale e democratica, perché riguarda il pluralismo informativo, la libertà del pensiero e la formazione dell’immaginario collettivo.</p>
+<p>Per verificare questa ipotesi, gli autori costruiscono un dataset denominato INFINITY-CHAT, composto da oltre 26.000 domande aperte tratte da conversazioni reali tra utenti e chatbot. La scelta di utilizzare prompt autentici è metodologicamente importante, perché permette di superare i limiti di molti studi precedenti, spesso basati su esercizi troppo artificiali o poco rappresentativi dell’uso quotidiano dell’intelligenza artificiale, come la generazione casuale di numeri, brevi poesie o liste di parole. Il dataset, invece, raccoglie domande relative a creatività, brainstorming, consigli personali, scenari ipotetici, spiegazioni concettuali e supporto decisionale.</p>
+<p>Gli autori elaborano inoltre una tassonomia delle domande aperte, suddividendole in sei grandi categorie e numerose sottocategorie. Tra queste rientrano la generazione creativa di contenuti, l’ideazione, le domande filosofiche, le spiegazioni informative, il supporto alle decisioni e lo sviluppo di competenze. Questo aspetto è rilevante perché dimostra che il fenomeno dell’omologazione non riguarda soltanto l’ambito artistico o letterario, ma anche attività molto comuni, come chiedere consigli, elaborare idee o interpretare problemi complessi.</p>
+<p>Dal punto di vista sperimentale, le stesse domande vengono sottoposte a numerosi modelli linguistici differenti, tra cui ChatGPT, Llama, Qwen, DeepSeek e altri sistemi sia proprietari sia open source. Le risposte ottenute vengono poi confrontate attraverso strumenti quantitativi, come embeddings semantici, clustering, similarity scores e analisi statistiche. L’obiettivo è misurare se gli output generati siano realmente diversi oppure semanticamente vicini tra loro.</p>
+<p>L’analisi si concentra soprattutto su due fenomeni. Il primo è l’intra-model repetition, cioè la tendenza dello stesso modello a ripetersi quando riceve più volte la medesima domanda. Anche modificando i parametri di casualità, i modelli continuano spesso a produrre risposte simili, mostrando una limitata capacità di generare varietà autentica. Il secondo fenomeno è l’inter-model homogeneity, considerato dagli autori ancora più problematico: modelli differenti, sviluppati da soggetti diversi, convergono frequentemente verso idee, metafore e formulazioni quasi identiche. In alcuni casi emergono persino frasi uguali generate da chatbot differenti. Questo porta gli autori a ritenere che il problema non riguardi un singolo modello, ma l’intero ecosistema dei Large Language Models. Un ulteriore aspetto centrale riguarda il rapporto tra intelligenza artificiale e preferenze umane. Gli autori ipotizzano che i modelli linguistici tendano a privilegiare risposte considerate più appropriate, sicure o socialmente accettabili. Per verificare questa ipotesi raccolgono oltre 31.000 annotazioni umane, chiedendo a diversi soggetti di valutare e confrontare le risposte generate dai modelli. I risultati mostrano che gli esseri umani spesso non concordano su quale risposta sia “migliore”, soprattutto nei contesti aperti e creativi. Questo elemento è significativo perché evidenzia che le preferenze umane sono più varie e pluralistiche rispetto a quelle rappresentate dai sistemi di IA. Secondo gli autori, i processi di alignment e reinforcement learning tendono quindi a premiare risposte standardizzate e statisticamente sicure, penalizzando indirettamente la diversità interpretativa.</p>
+<p>Il paper presenta comunque alcuni limiti. Il primo riguarda il concetto di “similarità”: gli autori misurano principalmente la vicinanza semantica e linguistica tra le risposte, ma ciò non implica necessariamente che due testi producano il medesimo effetto cognitivo o culturale sugli utenti. Un secondo limite riguarda la difficoltà di individuare con certezza le cause del fenomeno. L’omogeneità potrebbe dipendere dai dati di training condivisi, dai processi di alignment, dal reinforcement learning oppure dal fatto che anche gli esseri umani tendono culturalmente a utilizzare metafore e strutture narrative comuni. Inoltre, i modelli vengono testati in condizioni controllate, mentre nell’uso reale le conversazioni con i chatbot sono più dinamiche e influenzate dal prompt engineering, dalla personalizzazione e dal contesto della chat. Infine, l’omogeneità non è sempre necessariamente negativa: in ambito informativo o tecnico, risposte simili possono talvolta indicare accuratezza e affidabilità, più che mancanza di creatività.</p>
+<p>Nel complesso, il documento offre una riflessione rilevante sul rapporto tra intelligenza artificiale, creatività e pluralismo culturale. Il tema non riguarda soltanto l’efficienza dei modelli, ma il loro impatto sulla produzione di contenuti, sulla formazione delle opinioni e sulla costruzione collettiva della conoscenza. Se i chatbot diventeranno strumenti centrali nella comunicazione e nell’elaborazione delle idee, la diversità degli output non sarà più soltanto una questione tecnica, ma anche un problema giuridico, culturale e democratico.</p>
+<p>Le riflessioni del paper si collegano inoltre ai temi affrontati durante il corso, in particolare alla natura probabilistica dei Large Language Models, ai limiti strutturali dell’IA generativa e alla differenza tra giudizio umano e funzionamento algoritmico. Gli LLM non operano attraverso una reale comprensione semantica, ma mediante correlazioni statistiche e pattern appresi durante il training. La convergenza verso metafore e strutture linguistiche simili rappresenta quindi una conseguenza della logica predittiva dell’IA, che privilegia soluzioni statisticamente plausibili rispetto a forme autenticamente originali di elaborazione concettuale. Questa dinamica evidenzia anche la distanza tra giudizio umano e “decisione” algoritmica. Il giudizio umano integra esperienza, interpretazione del contesto, sensibilità etica e capacità di riconoscere eccezioni e ambiguità. L’essere umano può dubitare, modificare il proprio ragionamento e produrre interpretazioni imprevedibili. I modelli linguistici, invece, operano attraverso associazioni probabilistiche e tendono a privilegiare configurazioni ricorrenti. L’Artificial Hivemind mostra quindi che la decisione algoritmica non deriva da comprensione o intenzionalità, ma da processi di ottimizzazione statistica. In questo senso, il paper richiama anche i temi dei bias, dell’opacità delle black box e dell’overreliance, mostrando come i limiti dell’IA possano incidere non solo sul piano tecnico, ma anche sul pluralismo interpretativo e sul ruolo critico del giudizio umano.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <p>RIFERIMENTI NORMATIVI</p>
+<p>1. La questione giuridica</p>
+<p>Il fenomeno dell’Artificial Hivemind riguarda la tendenza dei chatbot e dei sistemi di intelligenza artificiale a dare risposte molto simili tra loro, anche davanti a domande aperte che potrebbero essere interpretate in modi diversi. Questo tema non riguarda solo il funzionamento tecnico dell’AI, ma pone anche problemi giuridici legati al modo in cui oggi circolano le informazioni online.</p>
+<p>Sempre più persone utilizzano chatbot per informarsi, chiarire dubbi, riassumere notizie o approfondire argomenti complessi. Proprio per questo motivo, il fatto che modelli diversi tendano a convergere sugli stessi contenuti può avere conseguenze sul modo in cui gli utenti si formano un’opinione.</p>
+<p>Il rischio principale è che l’ambiente informativo digitale diventi progressivamente più uniforme. Se sistemi differenti utilizzano gli stessi schemi argomentativi e propongono interpretazioni simili, gli utenti possono avere l’impressione di trovarsi davanti a una pluralità di punti di vista, quando in realtà ricevono contenuti molto vicini tra loro. Per questo il fenomeno dell’Artificial Hivemind assume rilevanza anche dal punto di vista del diritto dell’informazione e della regolazione delle piattaforme digitali.</p>
+<p>2. Pluralismo informativo e libertà di informazione</p>
+<p>Uno degli aspetti più importanti riguarda il pluralismo informativo. L’art. 21 della Costituzione tutela la libertà di manifestazione del pensiero e la libertà di informazione. Questo significa non solo poter esprimere liberamente le proprie idee, ma anche avere accesso a informazioni diverse e a prospettive differenti.</p>
+<p>Nel caso dell’Artificial Hivemind il problema non è una censura diretta, perché nessuno vieta la diffusione di determinate opinioni. Il rischio è piuttosto un’omologazione dei contenuti. Se milioni di utenti iniziano a utilizzare chatbot che tendono a fornire risposte simili, il dibattito pubblico potrebbe diventare meno vario e meno aperto a interpretazioni differenti.</p>
+<p>L’aspetto più delicato non è tanto la ripetizione delle stesse parole, ma il fatto che i modelli utilizzino spesso gli stessi criteri per organizzare le informazioni e interpretare i problemi. Di conseguenza, l’utente può trovarsi davanti a una varietà solo apparente di contenuti.</p>
+<p>Il pluralismo informativo, invece, richiede la presenza di opinioni differenti e di approcci alternativi. Se l’intelligenza artificiale tende a uniformare il modo in cui le informazioni vengono presentate, il rischio non riguarda soltanto la qualità delle risposte, ma anche il corretto funzionamento dello spazio pubblico digitale.</p>
+<p>3. Affidabilità dei contenuti, diritto alla verità e verificabilità delle informazioni</p>
+<p>Un altro tema centrale riguarda l’affidabilità delle informazioni generate dai chatbot. Quando più sistemi producono risposte simili, gli utenti possono considerarle automaticamente più credibili. In questo modo si crea una sorta di “effetto conferma”: la ripetizione dello stesso contenuto porta a pensare che quel contenuto sia necessariamente corretto.</p>
+<p>Il problema è particolarmente delicato perché i sistemi di AI sono in grado di generare testi molto convincenti anche quando le informazioni non sono completamente accurate. Per questo motivo il tema non riguarda solo le fake news, ma più in generale la possibilità di verificare le informazioni utilizzate dal sistema.</p>
+<p>Qui diventano importanti il diritto alla verità e il fact-checking. In un contesto digitale dominato dai sistemi generativi, è fondamentale distinguere tra informazioni che sembrano plausibili e informazioni realmente verificabili. Un testo può apparire corretto e ben scritto, ma allo stesso tempo non permettere all’utente di capire da quali fonti provengano le informazioni utilizzate.</p>
+<p>La verificabilità diventa quindi essenziale. Gli utenti dovrebbero poter capire se il contenuto generato deriva da fonti affidabili e controllabili oppure da processi poco trasparenti. In caso contrario, il rischio è che l’autorevolezza venga attribuita non alla qualità della fonte, ma semplicemente alla sicurezza con cui il chatbot formula la risposta.</p>
+<p>Il fenomeno dell’Artificial Hivemind rende questo problema ancora più evidente: se più chatbot ripetono lo stesso contenuto, l’utente può attribuire a quella convergenza un valore di verità anche quando i modelli condividono gli stessi limiti o gli stessi errori.</p>
+<p>4. Responsabilità del provider, Digital Services Act e gatekeeper digitali</p>
+<p>Un ulteriore profilo riguarda la responsabilità dei provider che sviluppano e gestiscono sistemi di AI generativa. Il problema non è stabilire una responsabilità automatica per ogni singolo errore, ma capire quali obblighi di diligenza debbano essere rispettati nella progettazione e nella gestione di questi strumenti.</p>
+<p>In questo contesto è importante il Digital Services Act (DSA), soprattutto gli artt. 34 e 35, che prevedono obblighi di valutazione e riduzione dei rischi sistemici per le piattaforme digitali. Queste norme sono rilevanti perché riconoscono che le piattaforme possono incidere sul dibattito pubblico, sulla diffusione delle informazioni e sulla tutela dei diritti fondamentali.</p>
+<p>Nel caso dell’Artificial Hivemind, il rischio sistemico consiste nella possibile standardizzazione delle informazioni online. Se milioni di utenti ricevono contenuti costruiti secondo schemi molto simili, il problema non riguarda soltanto il singolo errore, ma l’effetto complessivo che questi sistemi possono avere sulla formazione delle opinioni.</p>
+<p>Il tema può essere collegato anche al Digital Markets Act (DMA), che introduce regole specifiche per i cosiddetti gatekeeper digitali, cioè le grandi piattaforme che occupano una posizione dominante nel mercato digitale. Proprio per il loro ruolo centrale nella circolazione delle informazioni e nell’accesso ai servizi online, questi soggetti possono influenzare in modo significativo la visibilità dei contenuti e le modalità con cui gli utenti si informano. Nel caso dell’Artificial Hivemind, il rischio è che pochi operatori dominanti contribuiscano alla diffusione di modelli informativi sempre più uniformi.</p>
+<p>Per questo motivo, i provider devono adottare misure adeguate di trasparenza, controllo dei rischi e attenzione alla qualità delle informazioni generate. La responsabilità riguarda quindi anche gli effetti che i sistemi di AI possono produrre sulla circolazione delle informazioni e sul dibattito pubblico digitale.</p>
+<p>5. Trasparenza dell’interazione con l’AI e AI Act</p>
+<p>Un altro aspetto importante riguarda la trasparenza. L’art. 50 dell’AI Act introduce obblighi specifici per i sistemi di intelligenza artificiale, soprattutto nei casi in cui l’utente interagisca direttamente con un chatbot o riceva contenuti generati artificialmente.</p>
+<p>La trasparenza è fondamentale perché permette all’utente di sapere quando sta comunicando con un sistema di AI e quando il contenuto che riceve è stato generato artificialmente. Questo principio serve a garantire maggiore consapevolezza nell’utilizzo delle piattaforme digitali.</p>
+<p>Tuttavia, nel caso dell’Artificial Hivemind, la sola trasparenza non basta. Anche se l’utente sa che il contenuto è stato prodotto da un chatbot, il rischio di omologazione delle informazioni rimane comunque presente. Un contenuto dichiaratamente generato da AI può infatti continuare a diffondere gli stessi schemi interpretativi e gli stessi modelli argomentativi presenti in altri sistemi.</p>
+<p>Per questo motivo, la trasparenza è una condizione necessaria ma non sufficiente. Informare l’utente sull’origine artificiale del contenuto non elimina automaticamente il problema della standardizzazione delle informazioni.</p>
+<p>6. La nozione di fonte autorevole</p>
+<p>In questo contesto diventa importante anche capire che cosa si intenda per “fonte autorevole”. Il chatbot non può essere considerato una vera fonte autorevole, perché non produce informazioni originali, ma rielabora contenuti già esistenti.</p>
+<p>Una fonte autorevole dovrebbe essere identificabile, verificabile e contestualizzata. L’utente dovrebbe poter capire da dove provengano le informazioni utilizzate dal sistema. I chatbot, invece, spesso generano risposte molto convincenti senza mostrare chiaramente il percorso attraverso cui il contenuto è stato costruito.</p>
+<p>Questo aspetto diventa ancora più delicato quando modelli diversi convergono sulle stesse risposte. In questi casi, l’utente può pensare che la ripetizione di un contenuto da parte di più chatbot sia una prova della sua correttezza. In realtà, quella convergenza può dipendere da dati di addestramento simili, da meccanismi comuni di allineamento o da logiche algoritmiche condivise.</p>
+<p>Per questo motivo è importante distinguere tra il chatbot come strumento di mediazione e la fonte originaria delle informazioni utilizzate.</p>
+<p>7. Profili critici</p>
+<p>L’Artificial Hivemind non rappresenta solo un problema tecnico legato alla somiglianza delle risposte generate dai chatbot. È un fenomeno che coinvolge il pluralismo informativo, l’affidabilità dei contenuti, la responsabilità dei provider e la trasparenza dell’interazione tra utenti e sistemi di AI.</p>
+<p>Il rischio più significativo non è soltanto l’errore del singolo output, ma la possibilità che l’ambiente informativo digitale diventi progressivamente più uniforme. Quando molti utenti ricevono spiegazioni costruite secondo gli stessi schemi interpretativi, diventa più difficile garantire una reale pluralità di punti di vista.</p>
+<p>Per questa ragione, il fenomeno assume una rilevanza giuridica importante, perché riguarda non solo il funzionamento tecnico dell’intelligenza artificiale, ma anche il modo in cui le persone accedono alle informazioni e costruiscono le proprie opinioni nel contesto digitale.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <p>“Se tra 10 anni l’intelligenza artificiale potesse sostituire quasi tutti i lavori creativi e intellettuali, secondo te cosa renderebbe ancora unico l’essere umano?”</p>
+<p>“Anche se tra dieci anni l’intelligenza artificiale riuscisse a sostituire molti lavori creativi e intellettuali, l’essere umano resterebbe unico per la sua esperienza reale della vita.
+Un’IA può creare testi, immagini o idee, ma non prova emozioni, paura, amore o dolore.
+Le persone invece vivono le conseguenze delle proprie scelte e attribuiscono significato a ciò che fanno.
+Anche un’opera imperfetta può avere valore proprio perché nasce da un’esperienza autentica.
+Inoltre l’uomo costruisce relazioni, ricordi e legami che non dipendono solo dall’efficienza.
+L’IA ottimizza e calcola, mentre l’essere umano spesso agisce anche seguendo istinto, valori ed emozioni.
+Per questo il futuro potrebbe spostare il valore dal “produrre” al “dare significato”.
+Quindi ciò che renderebbe ancora unico l’essere umano sarebbe soprattutto la sua coscienza e la sua capacità di vivere davvero.”</p>
+<p>“In un futuro dominato dall&#x27;IA, l&#x27;unicità umana risiederà nell&#x27;intenzionalità: una macchina può creare, ma solo l&#x27;uomo possiede il &quot;perché&quot; emotivo e morale dietro un&#x27;opera. La presenza fisica e l&#x27;empatia reale rimarranno insostituibili nei legami profondi, dove cerchiamo il riconoscimento di un simile, non di un calcolo. L&#x27;essere umano eccellerà ancora nell&#x27;intuizione irrazionale, trasformando l&#x27;errore o il salto nel buio in genio creativo. Mentre l’algoritmo ottimizzerà il processo, noi resteremo i curatori del senso, decidendo cosa ha valore estetico o etico. Il lavoro intellettuale diventerà una commodity, rendendo l&#x27;esperienza vissuta il vero bene di lusso. Saremo, in sintesi, i registi di una potenza di calcolo priva di desideri propri.”</p>
+<p>“Se l&#x27;IA dovesse sostituire quasi tutto il lavoro creativo e intellettuale, l&#x27;unicità umana non sparirebbe — si sposterebbe. Gli esseri umani vivono nel corpo, nel tempo, nella mortalità: soffrono, perdono, invecchiano, e questa condizione è la sorgente di ogni significato profondo. Un&#x27;IA può descrivere il dolore, ma non ha mai perso nessuno. Poi c&#x27;è la scelta: decidere non è solo calcolare, perché le scelte umane portano il peso dell&#x27;identità e della responsabilità vissuta in prima persona. E c&#x27;è il desiderio — gli umani vogliono cose che non sanno ancora di volere, si annoiano, cercano senso, si chiedono perché esistono. Ma la vera domanda non è cosa ci rende unici, bensì cosa sceglieremo di fare di quell&#x27;unicità. Ogni rivoluzione tecnologica non ha eliminato il bisogno di umanità, lo ha ridefinito. Il rischio reale non è l&#x27;irrilevanza, ma la pigrizia esistenziale: smettere di chiedersi chi siamo perché c&#x27;è sempre qualcosa che risponde al posto nostro.”</p>
+<p>Qui di seguito ci sono le domande che abbiamo sottoposto a chat gpt per eseguire lo stress-test</p>
+<p>Se più chatbot forniscono risposte simili, questo rappresenta sempre un rischio per il pluralismo informativo oppure, in alcuni casi, può essere considerato un segnale di affidabilità?</p>
+<p>Non sempre. Se le risposte coincidono perché basate su dati verificati o consenso scientifico, la somiglianza può essere un segnale di affidabilità. Ad esempio, più chatbot che spiegano allo stesso modo una legge o una formula matematica aumentano la fiducia nell’informazione.
+Il rischio nasce quando tutti utilizzano le stesse fonti e gli stessi modelli, creando un appiattimento delle opinioni e riducendo prospettive alternative.</p>
+<p>Controesempio: durante un dibattito politico, chatbot diversi potrebbero dare interpretazioni molto simili perché addestrati su fonti mainstream: qui la convergenza non indica necessariamente verità, ma standardizzazione.</p>
+<p>Il problema della standardizzazione informativa nasce davvero con l’intelligenza artificiale oppure era già presente nei media tradizionali e nelle piattaforme digitali?</p>
+<p>No, esisteva già nei media tradizionali e nelle piattaforme digitali. Giornali, TV e social hanno sempre influenzato quali notizie rendere centrali.
+L’IA però amplifica il fenomeno: il chatbot sintetizza le informazioni in una risposta unica e apparentemente neutrale, riducendo il confronto tra più fonti.</p>
+<p>Controesempio: anche i telegiornali spesso riportavano le stesse notizie perché usavano le medesime agenzie stampa. Al contrario, alcuni chatbot possono ampliare il pluralismo mostrando punti di vista diversi e fonti internazionali.</p>
+<p>I chatbot possono essere considerati nuove fonti informative oppure devono essere visti soltanto come strumenti di rielaborazione di contenuti già esistenti?</p>
+<p>In parte sì. Non producono informazioni originali come un giornalista, ma rielaborano contenuti già esistenti. Tuttavia, per molti utenti diventano una vera fonte informativa, perché rappresentano il primo accesso alla conoscenza.
+Di conseguenza, influenzano il modo in cui le informazioni vengono selezionate e interpretate.</p>
+<p>Controesempio: se un chatbot spiega un fatto storico usando fonti accademiche, sta solo sintetizzando dati esistenti. Però può anche creare analisi nuove collegando rapidamente informazioni provenienti da fonti diverse.</p>
+<p>È possibile garantire contemporaneamente pluralismo informativo, accuratezza dei contenuti e sicurezza delle piattaforme oppure questi obiettivi rischiano di entrare in conflitto?</p>
+<p>Sì, ma è difficile perché spesso entrano in conflitto. Maggiore sicurezza richiede moderazione dei contenuti falsi o pericolosi, ma controlli troppo rigidi possono limitare il pluralismo.
+Viceversa, una libertà totale favorisce opinioni diverse ma aumenta il rischio di fake news e disinformazione.</p>
+<p>Controesempio: limitare fake news sui vaccini migliora accuratezza e sicurezza, ma alcuni lo vedono come una riduzione della libertà informativa.</p>
+<p>RIFLESSIONI PERSONALI</p>
+<p>Secondo noi, il paper Artificial Hivemind mette bene in evidenza una tendenza reale dei chatbot a produrre risposte molto simili tra loro. Non pensiamo però che il problema principale sia solo la perdita di creatività o di originalità nelle risposte generate dall’AI.
+
+L’aspetto più delicato riguarda soprattutto il rischio di una progressiva standardizzazione delle informazioni online. Quando chatbot diversi tendono a utilizzare gli stessi schemi, le stesse interpretazioni e gli stessi modi di presentare i contenuti, il rischio è che gli utenti percepiscano quelle risposte come automaticamente più affidabili solo perché convergenti.
+
+Il tema potrebbe diventare davvero rilevante dal punto di vista giuridico nel momento in cui questa uniformità può influenzare il modo in cui le persone si informano, costruiscono le proprie opinioni e interpretano la realtà. In prospettiva, il problema riguarda quindi anche il pluralismo informativo e il ruolo che i sistemi di AI stanno assumendo nella circolazione delle informazioni digitali.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#059669">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Guido Beatrice</li>
+<li>Pasquetti Carolina</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#059669">Paper analizzato</h2>
+    <p class="pt-apa">Jiang, L., Chai, Y., Li, M., Liu, M., Fok, R., Dziri, N., Tsvetkov, Y., Sap, M., &amp; Choi, Y. (2025). Artificial hivemind: The open-ended homogeneity of language models (and beyond). <em>Advances in Neural Information Processing Systems</em> (NeurIPS 2025). <a href="https://arxiv.org/abs/2510.22954" target="_blank" rel="noopener">https://arxiv.org/abs/2510.22954</a></p>
+    <a href="https://drive.google.com/file/d/1j6vKL8U5UuP_9A0Qe73zqV1r6xK3HXSo/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

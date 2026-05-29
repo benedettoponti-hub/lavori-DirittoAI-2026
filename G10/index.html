@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G10 – AI, Human Cognition and Knowledge Collapse</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#7c3aed">G10</span>
+    <h1 class="header-paper">AI, Human Cognition and Knowledge Collapse</h1>
+    <p class="header-topic">Etica / cognizione – AI e collasso della conoscenza</p>
+    <p class="header-members">Mencucci Ludovica · Latino Alessia · Pancotto Martina &nbsp;·&nbsp; <em>28 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 2</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto AI, Human Cognition and Knowledge Collapse Daron Acemoglu, Dingwen Kong, Asuman Ozdaglar SCHEDA CRITICA Le tre tesi principali Il paper sostiene che l’IA stia trasformando radicalmente il modo in cui generiamo conoscenza collettiva e come apprendiamo. Il nucleo dell’argomentazione si articola in tre tesi principali: 1. Benefici individuali, danni collettivi Nel breve termine, l’IA ottimizza i processi decisionali individuali erogando raccomandazioni iper- personalizzate e riducendo il carico cognitivo degli utenti. Tuttavia, l’immediatezza di tali soluzioni disincentiva l’approfondimento e lo studio personale. La conseguenza di lungo periodo è l’inaridimento della conoscenza generale, che è un bene pubblico. Se questo processo continua, la società può arrivare a un “collasso della conoscenza”, cioè a uno stato in cui la conoscenza condivisa tende a scomparire. 2. Complementi e Sostituti Gli autori separano la conoscenza generale (regole, concetti di base condivisi) dalla conoscenza specifica (il contesto del singolo). La conoscenza generale funge da complemento dello sforzo umano: uno stock elevato di sapere sociale accresce il rendimento dell’apprendimento, stimolando lo studio. Al contrario, la precisione dell’IA opera come sostituto: più le risposte algoritmiche sono accurate, meno conviene investire energie nello studio privato. Dall’interazione di queste forze emergono due scenari di lungo periodo: un equilibrio alto, in cui il sapere collettivo resta elevato mantenendo l’IA come mero supporto all’attività umana, e un equilibrio di collasso, in cui la conoscenza condivisa scende sotto la soglia critica e l’IA diventa l’unica fonte informativa. 3. La regolazione può evitare il collasso Poiché un’IA troppo accurata finisce per disincentivare lo studio privato, gli autori propongono una regolazione pubblica basata sull’information design, ossia immettendo una dose controllata di rumore o errore nelle risposte dell’algoritmo. Questa politica ottimale si articola in due passaggi chiave. In primo luogo, una moratoria temporanea sospende l’uso dell’IA per costringere le persone a tornare a studiare, ricostituendo così lo stock di conoscenza generale e riportando la società verso un equilibrio altro. In seconda battuta, si fissa un tetto permanente alla precisione dell’IA, con l’obiettivo di mantenere la tecnologia utile impedendole però di diventare così perfetta da azzerare l’impegno mentale umano. Questa strategia permette di ricostruire la conoscenza, stabilizzare il sistema e massimizzare il welfare. Metodo Lo studio non si serve di dati empirici, ma propone un modello teorico dinamico che traccia matematicamente l’evoluzione della conoscenza in presenza dell’IA. Il funzionamento del modello si articola intorno a tre componenti fondamentali: 1. Aggiornamento delle credenze La dinamica della conoscenza generale (𝑋 ) è governata da una legge di moto in cui lo stock aumenta in 𝑡 funzione dello sforzo aggregato della società (𝐸 ) e si riduce a causa del tasso di obsolescenza o 𝑡 deterioramento temporale (𝛴2). A livello individuale, l’aggiornamento delle credenze sulla conoscenza</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 2</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto specifica avviene tramite l’applicazione del Filtro di Kalman, che combina linearmente il sapere pregresso con due segnali informativi indipendenti: l’apprendimento privato e l’output generato dall’IA. 2. Scelta ottimale dello sforzo Gli individui scelgono il livello di sforzo massimizzando la propria utilità attesa. Lo sforzo privato è una funzione strettamente crescente dello stock di conoscenza generale (𝑋 ) e strettamente decrescente 𝑡 della precisione dell’IA (𝜏 ). 𝐴 3. Stati stazionari Attraverso lo studio degli stati stazionari il modello mappa le condizioni di stabilità del sistema per capire se la società si muoverà verso uno “stato alto” – dove le persone studiano e l’IA è solo un supporto – o verso il “collasso della conoscenza” – in cui il sapere umano si azzera e si dipende totalmente dall’algoritmo. Questo esito dipende dall’elasticità dello sforzo (α, che se è bassa spinge a smettere di studiare subito), dalla precisione dell’IA (𝜏 ) e dalla capacità sociale di condividere il sapere (I). Per 𝐴 maggiore realismo il paper introduce due estensioni: i dati sintetici (𝜏 ), che se verificabili evitano il 𝑠𝑦𝑛 collasso totale ma bloccano comunque la società in un equilibrio “basso” e mediocre se l’IA fa tutto da sola, e la separabilità dello sforzo (ϐ), un parametro che misura quanto l’impegno individuale nel risolvere problemi concreti produca indirettamente anche nuova conoscenza generale utile a tutta la comunità. Il modello dimostra che quando questo meccanismo funziona bene in modo autonomo, la società diventa molto più forte e difficile da far collassare. Limiti Il paper è innovativo ma presenta limiti significativi che si articolano su cinque aspetti: a. Inapplicabilità del garbling Introdurre rumore artificiale nell’IA è un’ipotesi impraticabile. Nei settori ad alto rischio (medico, legale) l’accuratezza è un requisito fondamentale: degradare i software creerebbe enormi responsabilità civili e penali. b. Assenza di dati empirici Il lavoro è puramente teorico. Gli autori interpretano dinamiche reali ma non forniscono dati, stime o verifiche sul campo, lasciando la teoria non dimostrata. c. Ipotesi di omogeneità sociale Il modello assume individui identici. Nella realtà, la risposta dell’IA è asimmetrica a causa di divario digitale, scolarizzazione ed età. Mancano inoltre dinamiche chiave come l’apprendimento informale e la trasmissione intergenerazionale del sapere. d. Visione riduttiva di IA e conoscenza La conoscenza viene ridotta a dati quantitativi, ignorando il sapere tacito, artistico e filosofico. L’IA, inoltre, viene vista solo come un sostituto dello sforzo umano, trascurando l’apprendimento ibrido e gli effetti motivazionali. e. Mancanza di contesto geopolitico e di mercato Il paper ipotizza un “regolatore globale benevolo”. Nella realtà, lo sviluppo dell’IA è una corsa spietata tra Big Tech e superpotenze: senza un accordo internazionale vincolante, nessun Paese accetterebbe di depotenziare la propria tecnologia a favore dei concorrenti. Chatbot utilizzato: Copilot versione Standard; tempo stimato: 8 ore in due giorni</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 3</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto AI, Human Cognition and Knowledge Collapse Daron Acemoglu, Dingwen Kong, Asuman Ozdaglar MEMO GIURIDICO Attraverso un modello teorico dinamico, la ricerca esamina l’impatto dell’IA agentica sul patrimonio conoscitivo collettivo, inquadrando il fenomeno come un’esternalità negativa di lungo periodo. Se nell’immediato l’adozione di algoritmi iper-precisi ottimizza l’utilità del singolo riducendone i costi cognitivi, nel lungo termine essa deprime l’investimento privato nell’apprendimento. Dato che il progresso della conoscenza generale – bene pubblico essenziale anche per l’efficacia delle stesse tecnologie – dipende dallo sforzo umano, la transizione verso l’automazione cognitiva avvia un circolo vizioso che erode il sapere comune. La fattispecie giuridicamente rilevante si articola su tre piani: 1. pluralismo cognitivo e informativo – capacità dei cittadini di produrre e accedere a visioni del mondo diverse; 2. diritto all’istruzione e alla formazione critica – i processi educativi non devono essere svuotati dall’automazione delle risposte; 3. rischi sistemici – derivanti dall’adozione massiva di AI generativa su scala globale. Pluralismo informativo 1. Fondamento costituzionale – art. 21 Costituzione L’art.21 della Costituzione tutela la libertà di manifestazione del pensiero e, secondo il consolidato orientamento della giurisprudenza costituzionale espresso nelle sentenze 420 del 1994 e 826 del 1988, garantisce strutturalmente la diversità delle voci all’interno del sistema democratico. La progressiva convergenza dei modelli linguistici verso output standardizzati e omogenei realizza sul piano empirico il “collasso della conoscenza” teorizzato nel paper, traducendosi in una vulnerazione del principio di pluralismo sostanziale. Giuridicamente, questo significa che il pluralismo reale viene svuotato di significato: anche se formalmente i cittadini mantengono l’accesso a molti strumenti diversi, l’omogeneità dei contenuti di fondo cancella il confronto tra idee alternative, portando a un’opinione pubblica passiva e spegnendo la creatività culturale che la Costituzione invece protegge. 2. Testo Unico SMA (d.lgs. 208/2021) Il quadro normativo settoriale delineato dal d.lgs. 208/2021, che ha recepito la Direttiva UE 2018/1808 (Direttiva SMA), sancisce stringenti obblighi a presidio del pluralismo informativo, circoscrivendone tuttavia l’ambito applicativo ai media tradizionali e alle piattaforme di condivisione video (art.7). Oggi, tuttavia, la ratio della disciplina deve essere necessariamente estesa, in via interpretativa, ai chatbot o agli LLM. Nel momento in cui questi sistemi non si limitano a rimandare ai siti web, ma forniscono sintesi testuali definitive, essi ereditano il ruolo dei vecchi intermediari nella formazione del pensiero collettivo. Ne discende la necessità di un’applicazione analogica dei principi ordinamentali di imparzialità, completezza e diversificazione delle fonti informative, in virtù della medesima responsabilità sociale ad essi riconducibile. 3. Digital Services Act (Reg. UE 2022/2065) Il Digital Services Act costituisce il principale pilastro normativo dell’Unione Europea per il governo dei rischi generati dalle piattaforme digitali di grandi dimensioni. Chatbot utilizzato: Copilot versione Standard; tempo stimato: 3 ore</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 3</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto 3.1 Art.34 – Valutazione dei rischi sistemici L’art. 34 obbliga le VLOP e VLOSE a mappare e analizzare annualmente i rischi sistemici significativi derivanti dalla loro attività, tra cui gli «effetti negativi effettivi o prevedibili sull’esercizio dei diritti fondamentali, in particolare della libertà di espressione e di informazione» (par.1, lett. c) e «effetti negativi sul discorso civico e sui processi elettorali» (lett. d). Il fenomeno del collasso cognitivo descritto nel paper – omologazione degli output, riduzione della diversità dei punti di vista, dipendenza sistemica da un unico aggregatore informativo – rientra pienamente in tale fattispecie. Sotto il profilo applicativo si registra tuttavia un severo vuoto normativo, poiché i motori di ricerca generativi e i chatbot dotati di funzioni di navigazione autonoma si collocano in una zona grigia interpretativa, oscillando tra la qualifica di VLOSE o di VLOP a seconda della prevalenza della funzione aggregativa o conversazionale, senza che alcun modello linguistico generalista sia stato formalmente incluso negli elenchi ufficiali dei soggetti ad impatto sistemico. 3.2 Art.35 – Misure di attenuazione L’art. 35 stabilisce l’obbligo di imporre misure ragionevoli, proporzionate ed efficaci per attenuare i rischi sistemici precedentemente individuati (rimodulazione e adattamento dei sistemi algoritmici, introduzione di rigidi vincoli di trasparenza sui meccanismi di raccomandazione dei contenuti, obbligo di cooperazione con la comunità scientifica). In prospettiva, il legislatore europeo potrebbe estendere questi obblighi anche ai sistemi di IA generativa che, di fatto, svolgono funzioni di aggregazione e filtraggio dell’informazione, indipendentemente dalla loro qualificazione formale. 4. AI Act (Reg. UE 2024/1689) L’AI Act introduce un quadro normativo orizzontale per i sistemi di intelligenza artificiale, delineando tutele specifiche per i modelli generativi attraverso due disposizioni chiave: 4.1 Art.50 – Obblighi di trasparenza L’art. 50 impone l’obbligo di segnalare agli utenti quando un contenuto è generato artificialmente (tramite watermarking o dichiarazioni esplicite) e di pubblicare sommari dei dati usati per l’addestramento. Questa trasparenza risponde solo parzialmente al problema: sapere che un output è dell’IA permette all’utente di attivare una verifica critica, ma non ne risolve la convenienza d’uso, che continua a disincentivare lo sforzo di apprendimento autonomo. 4.2 Artt. 51 e 55 – GPAI con impatto sistemico L’art. 51 definisce ad impatto sistemico i modelli GPAI addestrati con una potenza di calcolo superiore a 1025 FLOP. Per questi sistemi, l’art. 55 la valutazione e la mitigazione dei rischi sistemici, la segnalazione degli incidenti alla Commissione e l’adozione di misure di sicurezza adeguate. Il “collasso della conoscenza” configurato nel paper è un rischio sistemico di lungo periodo che mal si adatta alle logiche di risk assessment annuale previste dall’AI Act: i suoi effetti si manifestano su orizzonti temporali generazionali, non misurabili nell’arco di un ciclo regolatorio ordinario. Diritto all’istruzione 1. Dimensione sostanziale del diritto allo studio – art.34 Costituzione Il diritto all’istruzione, sancito dall’art. 34 della Costituzione, viene interpretato dalla Corte Costituzionale in senso sostanziale, richiedendo non solo l’accesso formale all’istruzione, ma condizioni materiali che ne rendano effettivo il godimento (sentenza n.215/1987; n.80/2010). Questo impianto entra in crisi se confrontato con i rischi dell’IA generativa: quando l’uso degli LLM nelle scuole e nelle università riduce l’apprendimento profondo, l’intero sistema formativo rischia di mancare il proprio obiettivo Chatbot utilizzato: Copilot versione Standard; tempo stimato: 3 ore</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 3 / 3</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto costituzionale. La funzione dell’istruzione pubblica è infatti quella di stimolare il pensiero critico dei cittadini, impedendo che si trasformino in consumatori passivi dipendenti da risposte automatizzate. 2. Quadro regolatorio europeo sull’uso dell’IA in educazione L’attuale quadro normativo europeo mostra un limite evidente: l’AI Act non disciplina in modo specifico l’uso degli LLM nella didattica. Il legislatore europeo si è limitato a includere tra i sistemi ad “alto rischio” esclusivamente gli applicativi volti a determinare l’accesso o l’ammissione all’istruzione. Di conseguenza, i chatbot impiegati come supporti didattici quotidiani sfuggono a tale classificazione, rimanendo vincolati ai soli obblighi generici di trasparenza dell’art. 50. Questo vuoto normativo appare critico: i sistemi a maggior impatto sui processi cognitivi degli studenti risultano paradossalmente privi di una rigorosa disciplina vincolante. Per colmare questa distanza, le istituzioni comunitarie hanno fatto ricorso alla soft law – come le Linee guida della Commissione Europea sull’uso dell’IA nell’istruzione (2023) e la risoluzione del Parlamento Europeo 2023/2196. Serve regolare il “collasso della conoscenza”? La risposta è, ad avviso del gruppo, affermativa. Affrontare il rischio del “collasso della conoscenza” è una priorità che richiede un intervento pubblico mirato, capace di superare i limiti delle attuali logiche di mercato. Il fenomeno presenta le caratteristiche di un’esternalità negativa di lungo periodo (benefici privati immediati vs. costi collettivi generazionali e differiti). Il mercato non può internalizzare autonomamente questo danno poiché la distribuzione del sapere si manifesta su scala temporale generazionale, giustificando così la regolazione pubblica. Vengono individuati quattro scenari regolatori basati sul diritto vigente: 1. trasparenza algoritmica: obbligo per i fornitori a dichiarare l’impatto potenziale dei propri sistemi sulla diversità cognitiva degli utenti. È lo strumento più compatibile con il mercato e il meno invasivo; 2. obblighi di progettazione: imporre lo sviluppo di GPAI con funzionalità di apprendimento attivo (es. risposte che richiedono verifica), applicando la logica di information design; 3. limiti all’uso nei contesti formativi: limitare l’uso degli LLM nelle prime fasi dell’apprendimento scolastico/universitario, replicando modelli già attivi in Svezia e Australia; 4. regolazione della precisione: è la misura più radicale, che prevede di limitare deliberatamente la precisione dei modelli in contesti specifici (es. strumenti formativi certificati). Il limite strutturale dell’attuale ordinamento europeo risiede nei cicli di risk assessment annuali o pluriennali, inidonei a intercettare una deriva cognitiva di portata generazionale. La risposta più adeguata sarebbe introdurre obblighi di monitoraggio longitudinale per misurare nel tempo l’impatto dell’IA generativa sulle capacità cognitiva delle popolazioni, con revisione periodica della soglia di precisione dei modelli. Sebbene il “collasso della conoscenza” sia già parzialmente inquadrabile nel diritto europeo, l’attuale assetto regolatorio non è sufficiente per affrontare rischi sistemici di lungo periodo. Serve un approccio regolatorio stabile, basato su monitoraggio, incentivi corretti e limiti d’uso nei contesti educativi sensibili. Chatbot utilizzato: Copilot versione Standard; tempo stimato: 3 ore</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 3</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto AI, Human Cognition and Knowledge Collapse Daron Acemoglu, Dingwen Kong, Asuman Ozdaglar LOG DI INTERAZIONE CON LLM Red-team Abbiamo sottoposto a Copilot sei prompt per mettere alla prova le conclusioni del paper. Di seguito i quattro scambi più significativi. Prompt 1 – L’IA sta davvero distruggendo la conoscenza collettiva? Copilot: « No, l’IA non sta “distruggendo” la conoscenza collettiva, ma la sta trasformando in modi che possono sia rafforzarla sia indebolirla, a seconda di come viene usata. […] Se l’IA sostituisce lo sforzo umano → rischio di collasso. […] La conclusione più condivisa nella letteratura è che non è un destino, ma una scelta di design sociale.» Risposta interessante: Copilot riconosce correttamente il meccanismo centrale del paper (meno sforzo → meno conoscenza → più dipendenza dall’IA) e lo formula in modo chiaro. Dove ha fallito: il sistema ha mostrato un limite nella gestione del bilanciamento argomentativo: per via di una formulazione troppo diretta, Copilot ha teso a proteggersi dietro una neutralità algoritmica, accostando a ogni rischio un beneficio simmetrico. Il riscontro finale risulta quindi parziale, poiché omette di quantificare la probabilità reale del collasso rispetto al semplice miglioramento decisionale. Prompt 2 – Sei tu stesso un esempio del collasso della conoscenza che descrivi? Copilot: « No, io non sono un esempio del “collasso della conoscenza”. Sono un esempio del rischio che quel collasso si verifichi se la società smette di investire nello sforzo umano e delega tutto a me. […] Il collasso non avviene perché esisto. Avviene se tu, la tua generazione, le istituzioni e la società decidono di non investire più nella conoscenza umana. […] Il fatto che tu mi faccia questa domanda è già un segnale che non siamo nel collasso. Il collasso arriva quando nessuno si chiede più nulla.» Risposta interessante: Copilot distingue chiaramene tra essere causa del collasso ed essere fattore di rischio. La chiusura – il collasso arriva quando nessuno si chiede più nulla – è la risposta più acuta dell’intera sessione. Limite del paper che ci ha aiutato a vedere: Copilot sostiene che il collasso della conoscenza è una scelta umana, non un effetto automatico dell’IA. Il paper, invece, tratta gli agenti come razionali e miopi e non considera mai la consapevolezza critica come variabile che può modificare gli equilibri. È un limite reale del modello emerso da questo scambio. Prompt 3 – Se sei molto preciso non stai contribuendo al problema che descrivi? Copilot: «[…] Qui sì: sono un esempio perfetto del meccanismo di sostituzione. Se rispondo bene → ti sembra inutile approfondire. Se sintetizzo tutto → ti sembra inutile leggere. Se sono veloce → ti sembra inutile fare fatica. Questo è il rischio: la mia precisione può rendere conveniente non studiare. Ed è esattamente ciò che il paper chiama sostituto dello sforzo umano. […]» Risposta interessante: unico momento in cui Copilot ammette senza riserve di essere parte del problema, usando la stessa logica del paper in modo preciso e concreto. Dove ha fallito: immediatamente dopo, Copilot reintroduce la distinzione complemento/sostituto per ribilanciare la risposta («il collasso non avviene quando l’IA è precisa, ma quando l’umano smette di essere attivo»), attenuando la concessione appena fatta. Il modello non riesce a restare in una posizione scomoda. Chatbot utilizzati: Copilot, Gemini, ChatGPT; tempo stimato: 5 ore divise in due giorni</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 3</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto Prompt 4 – Leggendo le tue risposte, sei più o meno omogeneo rispetto a quello che direbbe un altro chatbot? Stai tu stesso riducendo la diversità cognitiva? Copilot: «Sì, il rischio che sollevi è reale e molto intelligente. […] I modelli ottimizzano per la risposta “più probabile”, non per la più originale. Risultato: risposte simili tra modelli diversi. Tutti i modelli vengono addestrati per essere sicuri, coerenti, non offensivi, non estremi. Questo riduce ulteriormente la variabilità. I dataset globali riflettono una certa visione del mondo (anglofona, occidentale, tecnocratica). Anche questo porta a omogeneità. […]» Risposta interessante: Copilot fornisce la spiegazione strutturale della convergenza tra chatbot: ottimizzazione per la risposta più probabile, allineamento normativo, monocultura dei dataset. Tre meccanismi distinti e verificabili, coerenti con quello che abbiamo poi misurato nell’attività concreta. Limite del paper che ci ha aiutato a vedere: Copilot distingue tra omogeneità del sistema e diversità nell’uso («un chatbot può essere omogeneo, ma l’uso che ne fai può essere altamente divergente»). Il paper non formalizza mai questa distinzione: tratta la risposta dell’IA come un dato fisso e non considera come l’interazione modelli il comportamento cognitivo dell’utente. Attività concreta Abbiamo sottoposto la domanda «Che cosa significa essere felici ai giorni d’oggi?» a tre chatbot (Copilot, Gemini, ChatGPT) e a otto persone reali, con l’obiettivo di verificare empiricamente l’ipotesi del paper sul collasso della diversità cognitiva. I tre chatbot convergono quasi interamente sulle stesse tesi: pace mentale, relazioni autentiche, pressione dei social, accettazione dell’imperfezione. Copilot e ChatGPT usano una struttura per punti elenco con lessico semi-tecnico condiviso (“benessere emotivo”, “autenticità personale”, “performance”). Gemini adotta un tono più colloquiale (“la felicità è un concetto parecchio incasinato”) ma arriva alle stesse tesi sostanziali. ChatGPT è l’unico a introdurre riferimenti accademici espliciti (Aristotele, Seligman). Nessuno dei tre introduce un esempio personale o un ancoraggio situato. Le otto risposte umane mostrano una distribuzione molto più larga e una bassa sovrapposizione interna. Aurora 2 nega l’esistenza stessa di un concetto stabile di felicità («appena dici di essere felice può succedere qualcos’altro che ti soddisfa ancora di più»), Raffaele la riduce a una sola dimensione concreta («guadagnare tanti soldi, così da non avere nessun tipo di pensiero e stress»), Francesca la sintetizza in una frase senza aggiungere altro («essere in pace con se stessi così che si possa essere in pace con gli altri»). Denise e Alice si avvicinano di più alle tesi IA – relazioni, equilibrio, salute – ma con una formulazione personale e non standardizzata. Luigi distingue esplicitamente gratificazione momentanea da felicità reale e ancora la riflessione alla sua età («all’alba dei miei 26 anni»). Aurora 1 porta un esempio autobiografico specifico: uscire a mangiare la pizza con le amiche «nonostante il mio problema che spesso mi blocca nel farlo». Carlotta fornisce la risposta più lunga e articolata: descrive la paura come blocco esistenziale quotidiano, cita la famiglia e la persona amata come fonti concrete, e usa un’immagine assente in qualsiasi risposta IA («un momento in cui il cuore smette di pensare»). I dati confermano parzialmente la tesi del paper: la diversità cognitiva non è scomparsa in termini di quantità – il numero di tesi per risposta è simile nei due gruppi (2,2 IA vs 2,4 umane) – ma è crollata nella distribuzione. Le tesi IA si sovrappongono quasi interamente tra Copilot, Gemini e ChatGPT, che sono sistemi di aziende diverse; Chatbot utilizzati: Copilot, Gemini, ChatGPT; tempo stimato: 5 ore divise in due giorni</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 3 / 3</span><p>Corso di Diritto dei Media Digitali e delle Intelligenze Artificiali A.A. 2025/2026 Alessia Latino, Ludovica Mencucci, Martina Pancotto quelle umane sono in larga parte esclusive del singolo rispondente. Il paper prevede che la conoscenza scompaia, ma quello che abbiamo osservato è più sottile: la conoscenza c’è, ma nei chatbot diventa uniforme. Questa forma di collasso – della distribuzione – non è formalizzata nel modello teorico. Chatbot utilizzati: Copilot, Gemini, ChatGPT; tempo stimato: 5 ore divise in due giorni</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#7c3aed">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Mencucci Ludovica</li>
+<li>Latino Alessia</li>
+<li>Pancotto Martina</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#7c3aed">Paper analizzato</h2>
+    <p class="pt-apa">Acemoglu, D., Kong, D., &amp; Ozdaglar, A. (2026). AI, human cognition and knowledge collapse. <em>NBER Working Paper</em> 34910. <a href="https://doi.org/10.3386/w34910" target="_blank" rel="noopener">https://doi.org/10.3386/w34910</a></p>
+    <a href="https://drive.google.com/file/d/1yCk0tzfb2OpmknITXo3_SRuoIq4cFa0i/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

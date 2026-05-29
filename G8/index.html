@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G8 – Creative Ownership in the Age of AI</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #059669; border-bottom-color: #059669; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#059669">G8</span>
+    <h1 class="header-paper">Creative Ownership in the Age of AI</h1>
+    <p class="header-topic">AI e tutela del copyright – proprietà intellettuale opere generative</p>
+    <p class="header-members">Vizzutti Alessia · Ricci Matteo · Barulli Riccardo &nbsp;·&nbsp; <em>27 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Creative Ownership in the Age of AI</button>
+<button class="tab-btn " onclick="showTab(1)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 10</span><p>GRUPPO 8: MATTEO RICCI E RICCARDO BARULLI Creative Ownership in the Age of AI SCHEDA CRITICA DEL PAPER 1. Introduzione all’argomento: il dibattito attuale sul diritto d’autore nell’era AI Il documento si colloca al centro del dibattito globale sull&#x27;intersezione tra intelligenza artificiale generativa e diritto d&#x27;autore. Tradizionalmente, le normative sul copyright si basano sul criterio della sostanziale somiglianza (substantial similarity) per accertare se un&#x27;opera violi i diritti di un&#x27;altra. Questo approccio valuta se l&#x27;output finale riproduca elementi espressivi protetti dall&#x27;opera originale. Tuttavia, i modelli di IA generativa odierni possiedono la capacità di estrarre e replicare lo stile di uno specifico autore senza copiarne letteralmente il contenuto protetto. Gli autori citano l&#x27;esempio di un testo prodotto da ChatGPT in grado di imitare perfettamente la prosa di Cormac McCarthy: pur essendo immediatamente riconoscibile dal lettore come un&#x27;imitazione, l&#x27;output non contiene frasi direttamente copiate dal romanzo The Road. Di conseguenza, secondo l&#x27;attuale dottrina giuridica, la stragrande maggioranza di questi output non costituisce una violazione del diritto d’autore. Questa discrepanza ha generato una forte insoddisfazione tra i creatori umani, sfociata in importanti azioni legali collettive, tra cui spiccano i casi Andersen vs Stability AI e The New York Times v. OpenAI. Un quadro normativo che protegge l&#x27;espressione testuale ma ignora lo stile rischia di consentire la sostituzione economica del lavoro umano con repliche artificiali legittime. Al contempo la fazione opposta fa notare che estendere il copyright allo stile rischierebbe di bloccare l&#x27;innovazione e concedere ai creatori un controllo eccessivo su interi territori espressivi. 2. La tesi del Paper: da somiglianza sostanziale a violazione controfattuale Per risolvere questo conflitto dottrinale, la ricerca propone un paradigma radicalmente nuovo: un criterio di violazione controfattuale. L&#x27;idea cardine è che un output generato da un&#x27;IA viola un&#x27;opera preesistente se e solo se quell&#x27;output non avrebbe potuto essere generato qualora l&#x27;opera in questione fosse stata esclusa dal corpus di addestramento. Per rendere oggettivo e pratico questo criterio, lo studio introduce un modello matematico rigoroso in cui ogni creazione è un punto di uno spazio euclideo ed il corpus è il sottoinsieme misurabile delle creazioni in questo spazio. Il generatore è la tecnologia che mappa il corpus esistente in un insieme di nuove opere generabili e deve soddisfare tre proprietà fondamentali: Preservazione: Deve essere in grado di riprodurre fedelmente tutte le opere che ricevute in input. Monotonicità: Se il patrimonio di dati di partenza si espande, l&#x27;insieme degli output generabili deve debolmente ampliarsi o rimanere uguale, ma non può mai ridursi. Idempotenza: L&#x27;applicazione del generatore sui suoi stessi prodotti non genera nulla di nuovo. 3. I due macro-inisemi: ammissibile e delle violazioni Una volta stabilita la struttura del generatore, viene formalizzato il criterio controfattuale dividendo lo spazio generabile in due macro-insiemi: L&#x27;insieme ammissibile (opere generabili anche se si rimuove una specifica opera fonte) e l’insieme delle violazioni (opere che dipendono in modo essenziale dalla presenza di una specifica creazione nel database). L’insieme ammissibile, dimostra due proprietà fondamentali: Monotonicità (Se il corpus di addestramento si espande, l&#x27;insieme delle opere ammissibili si amplia a sua volta, indicando che l&#x27;aggiunta di nuove opere fornisce al sistema nuove rotte e combinazioni) e stabilità (l’insieme è chiuso, quindi la</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 10</span><p>combinazione di soli output ammissibili non potrà mai dare origine a un output illegittimo o in violazione). 4. Questioni critiche e risposte matematiche: Numero di Radon e teoria delle “code” Una questione critica viene posta sulla reale esistenza di questo spazio sicuro, per escludere lo scenario in cui sia vuoto e che quindi l’AI risulti impossibilitata di generare senza commettere reato. Gli autori dimostrano che l&#x27;insieme ammissibile non è vuoto se la dimensione del corpus supera una costante nota come “Numero di Radon”, pari a d+2. Di conseguenza, se un database contiene almeno d+2 opere, la presenza di una zona di generazione ammissibile e non vuota è matematicamente garantita. Gli autori del saggio proseguono la loro analisi chiedendosi se, in un mercato in cui il corpus di addestramento cresce all&#x27;infinito, il rischio di violazione sia destinato a svanire del tutto. Per rispondere, introducono il concetto di rapporto di ammissibilità (permissible ratio), tra lo spazio delle opere ammissibili e l&#x27;intero spazio delle opere generabili. Il comportamento di questa relazione nel lungo periodo dipende interamente dal comportamento della &quot;coda&quot; della distribuzione statistica da cui provengono le creazioni umane: Nei mercati a “coda leggera” dove queste si evolvono in modo incrementale, l&#x27;aggiunta di nuove opere al database fa sì che la dipendenza da ogni singola opera svanisca, rendendo quasi tutte le generazioni dell&#x27;IA ammissibili. L&#x27;intuizione economica è profonda: il corpus di addestramento diventa talmente denso e ricco di informazioni da generare una massiccia ridondanza di percorsi. Di conseguenza, la rimozione di un singolo autore non sottrae capacità al generatore, rendendo l&#x27;insieme delle violazioni un insieme di misura quasi nulla. In mercati commerciali dominati da innovazioni incrementali, la regolamentazione controfattuale perde efficacia nel tempo, lasciando i creatori privi di appigli legali per difendere la rilevanza del proprio contributo individuale. La situazione cambia radicalmente nei settori a “coda pesante”, caratterizzati dall&#x27;emergere periodico di singoli capolavori rivoluzionari (economia delle superstar). In questi ambiti, la probabilità che un nuovo autore superi in modo dirompente l&#x27;intera frontiera dei contenuti realizzati fino a quel momento rimane significativa a prescindere da quanto sia esteso l&#x27;archivio storico. Poiché l&#x27;ultima opera pionieristica sposta in avanti l&#x27;intera frontiera generabile, essa definisce da sola una fetta sostanziale del volume delle violazioni. Pertanto, nei mercati dell&#x27;arte d&#x27;avanguardia o della letteratura d&#x27;autore, il diritto di protezione individuale mantiene inalterata la propria forza vincolante anche nel lungo periodo. 5. Traiettorie future: Endogenizzazione e trade off Il saggio si conclude evidenziando due importanti traiettorie di ricerca aperte, focalizzate sull&#x27;equilibrio strategico e sul benessere collettivo: Endogenizzazione delle scelte dei creatori: se gli autori umani comprendono il meccanismo controfattuale dell&#x27;IA, modificheranno attivamente i propri comportamenti di produzione, al fine di preservare il proprio valore economico e non diventare facilmente sostituibili all&#x27;interno dei database densi, gli artisti sposteranno i propri sforzi verso l&#x27;estrema frontiera dell&#x27;innovazione. Questo posizionamento strategico rende più “spesse” le code della distribuzione, espandendo e mantenendo in vita l&#x27;insieme delle violazioni nel tempo. Il trade-off dell&#x27;ottimalità sociale: Le autorità di regolamentazione si trovano di fronte a un dilemma strutturale. Consentire che il rapporto di ammissibilità azzeri i rischi legali per lo sviluppo tecnologico dell&#x27;IA, rischiando di distruggere completamente gli incentivi economici per la produzione di nuova cultura umana o mantenere un impianto sanzionatorio che preservi un</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 3 / 10</span><p>insieme delle violazioni ampio, limitando i guadagni sociali legati alla diffusione delle tecnologie di automazione. 6. Considerazioni: Una terza via comprensibile La certezza che la regolamentazione vada aggiornata è da tempo consolidata, la proposta del Paper però presenta una soluzione complicata da mettere in atto e da essere tradotta in vincolo giuridico. Trasformare un calcolo puramente matematico in legge è molto complicato, sia per i legislatori, sia per la giurisprudenza che si troverebbe nella condizione di dover decidere sanzioni anche molto onerose, sia per i cittadini che devono sempre aver cognizione di cosa potrebbe indurli nel commettere un reato e comprendere un’operazione euclidea non è alla portata di tutti, come la nostra Costituzione richiede. A nostro avviso serve dunque una terza strada, che assorbisca l’idea che l’AI è in grado di replicare esattamente lo stile, che in alcune materie soggette al diritto d’autore rappresenta esso stesso un copyright, ma che renda evidente a tutti coloro che usano LMM per creare nuovi prodotti testuali, visivi o uditivi cosa possa farli cadere in sanzione.</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 4 / 10</span><p>INQUADRAMENTO GIURIDICO 1. Il paradigma tradizionale: personalismo e requisito creativo Il sistema giuridico italiano della proprietà intellettuale poggia storicamente su un pilastro antropocentrico, caratterizzato da un legame indissolubile tra l&#x27;opera intellettuale e la persona fisica che l&#x27;ha generata. Questo principio personalistico trova la sua consacrazione formale nei primi articoli della Legge sul Diritto d&#x27;Autore (L. 633/1941). L&#x27;articolo 1, infatti, delimita l&#x27;oggetto della protezione stabilendo che sono tutelate le opere dell&#x27;ingegno di carattere creativo che appartengono a campi tradizionali quali la letteratura, la musica, le arti figurative, l&#x27;architettura, il teatro e la cinematografia, a prescindere dal loro modo o forma di espressione. Il successivo articolo 6 chiarisce la genesi di tale diritto, individuando l&#x27;atto della creazione (il lavoro dell’uomo) come il titolo originario per l&#x27;acquisto dei diritti d&#x27;autore. Al centro di questa architettura si colloca il concetto normativo di “carattere creativo”. La creatività protetta dal diritto d&#x27;autore risiede fondamentalmente nella soggettività dell&#x27;espressione; un&#x27;opera può dirsi autenticamente creativa quando funge da specchio della personalità del suo autore, riflettendo un percorso di scelte libere, consapevoli e personali nella determinazione della forma espressiva finale. 2. L&#x27;evoluzione giurisprudenziale in Italia: Il ruolo delle scelte autonome I confini di ciò che è giuridicamente tutelabile sono stati progressivamente affinati e delineati sia dalla giurisprudenza di legittimità che da quella di merito, le quali hanno dovuto tradurre i concetti astratti della legge di fronte alle evoluzioni tecnologiche. Un passaggio chiarificatore è rappresentato dall&#x27;Ordinanza n. 1107/2023 della Corte di Cassazione, pronunciata in un caso legato al software e alla grafica pop-art. In questa sede, gli Ermellini hanno precisato che la creatività non richiede slanci artistici rivoluzionari o un&#x27;originalità assoluta, al contrario, per attivare la tutela è sufficiente la presenza di un “atto di scelta” minimale, purché non sia banale o scontato. La Suprema Corte ha così sancito che persino idee semplici, o combinazioni di elementi già ampiamente noti al pubblico, possono legittimamente accedere alla protezione del diritto d&#x27;autore, a patto che l&#x27;impronta personale</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 5 / 10</span><p>dell&#x27;artista emerga chiaramente dalle specifiche modalità di assemblaggio, coordinamento e presentazione dell&#x27;opera. Su una linea analoga si muove il Tribunale di Milano che, attraverso la sua Sezione Specializzata in materia di Impresa, si è confermato negli anni come uno dei fori più dinamici nell&#x27;interpretazione del diritto industriale e d&#x27;autore. Nelle sentenze più recenti in materia di riproduzione grafica e design, i giudici milanesi hanno adottato un severo criterio interpretativo basato sul cosiddetto test dell&#x27;assenza di vincoli tecnici. Secondo questo approccio, se lo spazio di manovra del creatore è interamente compresso o dettato da ragioni di utilità pratica, standardizzazione o necessità ingegneristiche, non vi è spazio per la creatività e, di conseguenza, la tutela viene negata. Al contrario, il diritto d&#x27;autore si attiva ogni qual volta residui un margine di libertà sufficiente a compiere una “scelta estetica autonoma”, che si distacchi dalla mera funzione utilitaristica del prodotto. 3. Il confine tra forma e funzione: La lezione europea del “Caso Brompton” Il delicato equilibrio tra estetica e funzionalità tecnica è stato affrontato anche a livello europeo dalla Corte di Giustizia dell&#x27;Unione Europea nella storica sentenza Brompton Bicycle (C-833/18). La controversia ruotava attorno alla possibilità di proteggere tramite diritto d&#x27;autore le forme geometriche di un prodotto industriale (la celebre bicicletta pieghevole). Nel pronunciarsi sul caso, la Corte di Lussemburgo ha enunciato un principio di grande rilevanza: un oggetto la cui forma sia, anche in parte, necessaria al conseguimento di un risultato tecnico non è escluso dalla protezione autorale a priori. Il criterio chiave stabilito dai giudici europei per l&#x27;accesso alla tutela risiede nell&#x27;originalità intrinseca del prodotto, il quale deve comunque risultare da scelte intellettuali attraverso cui l&#x27;autore è riuscito a esprimere la propria personalità in modo libero e creativo. Tuttavia, la Corte ha tracciato un limite invalicabile: laddove la conformazione del prodotto sia unicamente dettata dalla sua funzione tecnica, la protezione del diritto d&#x27;autore deve essere fermamente negata. Spetta quindi ai giudici nazionali il compito di valutare, caso per caso, se lo stilista abbia optato per una determinata forma spinto da una reale visione estetica autonoma, a prescindere dal fatto che potessero esistere altre soluzioni tecniche per raggiungere il medesimo risultato funzionale. 4. Il requisito dell&#x27;umanità di fronte alle macchine: La giurisprudenza comparata L&#x27;avvento di tecnologie capaci di generare autonomamente testi, immagini e suoni ha costretto la giurisprudenza internazionale a interrogarsi su un quesito fondamentale: è possibile riconoscere la titolarità dei diritti d&#x27;autore in totale assenza di una mano umana? La risposta dei tribunali d&#x27;oltreoceano è stata, fino ad ora, negativa. Un primo caso emblematico, sebbene non legato all&#x27;intelligenza artificiale, è la celebre causa Naruto v. Slater del 2018. In quell&#x27;occasione, la Corte d&#x27;Appello del Nono Circuito degli Stati Uniti affrontò il caso di un autoscatto realizzato da un macaco (Naruto) utilizzando la fotocamera</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 6 / 10</span><p>lasciata incustodita dal fotografo David Slater. I giudici stabilirono che gli animali non possiedono la legittimazione giuridica per agire in giudizio per violazione del copyright, dichiarando lo scatto di pubblico dominio e fissando il principio cardine secondo cui il diritto d&#x27;autore è un istituto giuridico concepito a esclusivo beneficio degli esseri umani. Questo orientamento antropocentrico ha trovato una diretta applicazione nel campo dei sistemi algoritmici con il recente caso Thaler, giunto all&#x27;attenzione del U.S. Copyright Office e successivamente confermato dalle corti federali di Washington D.C. nel 2023. Stephen Thaler ha tentato di registrare un&#x27;opera d&#x27;arte visiva (A Recent Entrance to Paradise) indicando come autore esclusivo un algoritmo di IA da lui creato (&quot;Creativity Machine&quot;). Il U.S. Copyright Office, ha respinto la domanda statuendo il principio della Human Authorship: il copyright non può proteggere opere generate da una macchina o da un sistema meccanico che operi senza alcun intervento o controllo creativo da parte di un essere umano. 5. Il nuovo quadro regolatorio: Trasparenza e Governance nell&#x27;AI Act europeo Sul fronte normativo, l&#x27;Unione Europea ha scelto di non rimanere ferma dinanzi alla diffusione dei modelli generativi, introducendo un impianto di regole organico attraverso l’AI Act. Il testo introduce una serie di stringenti obblighi per i fornitori di sistemi di IA, con un impatto profondo sulla tutela dei mercati creativi e del diritto d&#x27;autore. In quest&#x27;ottica, l&#x27;articolo 50 stabilisce precisi obblighi di trasparenza per tutti i sistemi dedicati alla generazione o alla manipolazione di contenuti testuali, audio o video, inclusi i fenomeni dei deepfake. I fornitori devono garantire che gli output artificiali siano chiaramente contrassegnati e identificabili come tali attraverso formati leggibili meccanicamente (come le tecniche di watermarking), al fine di salvaguardare la buona fede dei consumatori e permettere la tracciabilità delle opere umane. Parallelamente, l&#x27;articolo 53 definisce lo statuto e i doveri dei fornitori di modelli di IA di uso generale (i cosiddetti General Purpose AI o GPAI, come i software alla base di GPT o Claude). Tali soggetti sono obbligati per legge a implementare politiche aziendali stringenti volte a garantire il pieno rispetto della normativa sul diritto d&#x27;autore dell&#x27;Unione Europea, comprese le espresse riserve dei diritti avanzate dai titolari. Inoltre, per consentire un controllo diffuso sulla legalità delle operazioni, l&#x27;AI Act impone a questi operatori l&#x27;obbligo di redigere e rendere pubblica una sintesi sufficientemente dettagliata dei contenuti e dei dati utilizzati per l&#x27;addestramento (training data) del modello, basandosi su uno standard universale predisposto dall&#x27;Ufficio europeo per l&#x27;IA. 6. L&#x27;estrazione dei dati e la fase di input: La disciplina del Text and Data Mining L&#x27;intersezione tra la tutela del copyright e lo sviluppo dei modelli algoritmici si gioca non soltanto nella fase di output (il contenuto generato), ma anche in quella preliminare di input, legata alla raccolta massiva dei dati presenti sul web per l&#x27;addestramento delle reti neurali. Nel diritto italiano, questa complessa attività è governata dagli articoli 70-ter e 70-quater della Legge sul Diritto d&#x27;Autore, introdotti in recepimento degli articoli 3 e 4 della Direttiva europea sul Copyright nel Mercato Unico Digitale (Direttiva DSM 2019/790).</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 7 / 10</span><p>L&#x27;articolo 70-ter introduce un&#x27;eccezione rigida e inderogabile a favore delle attività di Text and Data Mining (TDM) effettuate per scopi di ricerca scientifica. La norma consente a organismi di ricerca, università e istituti di tutela del patrimonio culturale di estrarre liberamente testi e dati da opere a cui hanno legittimamente accesso, purché l&#x27;attività sia priva di finalità di lucro. Di portata ancor più centrale per il mercato tecnologico è l&#x27;articolo 70-quater, che disciplina il Text and Data Mining commerciale, aprendo la strada all&#x27;estrazione di dati anche per fini di lucro e per l&#x27;addestramento di intelligenze artificiali, la condizione necessaria di ciò è che: l&#x27;estrazione è lecita a meno che l&#x27;utilizzo delle opere non sia stato espressamente riservato dai legittimi titolari dei diritti attraverso il meccanismo dell&#x27;opt-out. Gli autori e gli editori hanno infatti il potere di escludere i propri contenuti dai dataset di addestramento mediante una dichiarazione esplicita, espressa in modo appropriato e con strumenti leggibili meccanicamente nel caso di contenuti distribuiti online (come i metadati o le istruzioni inserite nel file robots.txt). Qualora un titolare attivi validamente il proprio opt-out, l&#x27;eventuale attività di scraping e addestramento compiuta dall&#x27;azienda tecnologica senza una specifica licenza negoziale costituisce a tutti gli effetti una violazione del diritto d&#x27;autore. STRESS-TEST DI UN CHATBOT (GEMINI 3.5 Flash)</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 9 / 10</span><p>DEPOSITO SIAE DI UNA CANZONE CREATA CON UN APP TEXT-TO SING</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 10 / 10</span><p>Abbiamo ripreso una canzone creata da questo prompt fornito all’applicazione “SUNO”, AI generativa audio e text-to-sing e abbiamo provato a registrarla con il modulo Siae (presente nell’immagine sotto). Abbiamo riscontrato immediatamente difficoltà nel comprendere a chi attribuire la voce compositore, generatore parte musicale ed editore, riservando noi soltanto la voce di autori del testo.</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#059669">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Vizzutti Alessia</li>
+<li>Ricci Matteo</li>
+<li>Barulli Riccardo</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#059669">Paper analizzato</h2>
+    <p class="pt-apa">Liang, A., &amp; Lu, J. (2026). Creative ownership in the age of AI. <em>arXiv</em>. <a href="https://arxiv.org/abs/2602.12270" target="_blank" rel="noopener">https://arxiv.org/abs/2602.12270</a></p>
+    <a href="https://drive.google.com/file/d/17d5_bqJaTzKiVtaiW992dn4IEKCAcXCl/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

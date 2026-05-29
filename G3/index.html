@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G3 – Future of Work with AI Agents – Auditing Automation and Augm</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#2563eb">G3</span>
+    <h1 class="header-paper">Future of Work with AI Agents – Auditing Automation and Augmentation Potential</h1>
+    <p class="header-topic">AI e lavoro – agenti AI, automazione e augmentation</p>
+    <p class="header-members">Villa Guglielmo · Stefanini Greta · Monacchia Marco &nbsp;·&nbsp; <em>20 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Punto C del progetto</button>
+<button class="tab-btn " onclick="showTab(4)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <h3>1. Introduzione e Metodologia d&#x27;Analisi</h3>
+<p>Il presente documento documenta l&#x27;analisi critica condotta dal gruppo di ricerca sul paper di Stanford &quot;Future of Work with AI Agents&quot;. L&#x27;obiettivo principale è stato quello di validare la tenuta delle tesi ottimistiche del report.</p>
+<p>Il processo si è articolato nelle seguenti fasi sequenziali:</p>
+<p>Studio del Framework: Lettura e scomposizione del paper originale.</p>
+<p>Isolamento delle Tesi: Selezione dei tre pilastri concettuali sostenuti dagli autori (il paradosso dell&#x27;automazione, il primato delle soft skills, e l&#x27;AI come co-pilota).</p>
+<p>Stress-Testing tramite LLM: Utilizzo di un modello linguistico avanzato come controparte dialettica, istruito specificamente a confutare il paper proponendo controesempi, ipotesi rivali e dati empirici contrastanti.</p>
+<p>Mappatura dei Prompt: Tracciamento sistematico delle interazioni (Prompt di sfida) e delle risposte fornite dall&#x27;AI per evidenziare i punti di debolezza del framework di Stanford.</p>
+<h3>2. Le Tesi del Paper e i risultati dello Stress-Test</h3>
+<h4>Tesi 1: Il Paradosso dell&#x27;Automazione</h4>
+<p>All’interno del paper viene evidenziata l’esistenza di una discrepanza tra la percezione pubblica e i desideri reali. Sebbene il 23% dei lavoratori esprima il timore di essere sostituito dall&#x27;AI, quasi un lavoratore su due (circa il 50%) desidera attivamente l&#x27;automazione delle proprie mansioni per &quot;delegare i task routinari e liberare tempo per attività a maggiore valore aggiunto&quot;.
+Il modello di LLM confuta questa tesi affermando che la delega dei task operativi rischia di essere un&#x27;arma a doppio taglio. L&#x27;argomentazione si poggia sull&#x27;errore del &quot;lavoro residuo&quot;: l&#x27;automazione del 50% dei task di un ufficio non porta al raddoppio della produzione, ma più probabilmente al dimezzamento del personale. Inoltre, il desiderio di delegare riflette un bias del conforto immediato dovuto allo stress attuale, ignorando che l&#x27;utente sta di fatto addestrando l&#x27;agente AI a ridimensionare o eliminare la sua stessa posizione lavorativa nel lungo periodo.</p>
+<h4>Tesi 2: La Larga Diffusione dell&#x27;AI e l&#x27;Importanza delle Soft Skills</h4>
+<p>La posizione del Paper riguardo questa tesi è che con il trasferimento dei compiti informativi e analitici alle macchine, il mercato del lavoro vedrà un netto sorpasso delle competenze relazionali (soft skills), come l&#x27;empatia, la comunicazione e il coordinamento, ritenute insostituibili.
+LLM confuta questa tesi affermando che definire il futuro come il &quot;regno delle soft skills&quot; è una tesi ipersemplificata e fuorviante. I dati del database WORKBank dimostrano che le professioni protette nella zona HAS H5 (massimo controllo umano) includono ruoli ad altissima densità tecnica come matematici, ingegneri aerospaziali e scienziati puri. Inoltre, emerge un problema di supervisione analitica (Human-in-the-loop): il 45% dei lavoratori teme la mancanza di accuratezza e le allucinazioni dell&#x27;AI. Di conseguenza, la competenza più richiesta e pagata sarà la capacità tecnica avanzata (hard skill) di fare auditing, validazione e controllo di qualità sugli output generati dalle macchine.</p>
+<h4>Tesi 3: L&#x27;AI come Co-Pilota (Equal Partnership - Livello H3)</h4>
+<p>La posizione del Paper è la seguente: Il livello ottimale di integrazione dell&#x27;AI non è la sostituzione totale (H1), ma il livello H3 (Equal Partnership), dove uomo e macchina collaborano in sinergia per ottenere risultati superiori. Questo livello rappresenta la preferenza dominante per il 45,2% delle professioni mappate.
+La confutazione dell&#x27;LLM invece propone: Il modello del co-pilota rischia di essere una transizione instabile. Lo stress-test ha evidenziato una forte disconnessione tra preferenze dichiarate (nei sondaggi) e preferenze rivelate (metriche d&#x27;uso reale su piattaforme come Claude.ai, dove le mansioni desiderate pesano solo per l&#x27;1,26%). L&#x27;arroccamento sul livello H3 è spesso un meccanismo di difesa psicologica dall&#x27;ansia da sostituzione, che si scontra però con la logica del capitale: il 41% degli investimenti delle startup si concentra proprio nelle zone in cui la fattibilità tecnica è alta ma il desiderio del lavoratore è basso, spingendo verso l&#x27;automazione totale (H1/H2).</p>
+<h3>3. Risultati dello Stress-Test ed Evidenze Raccolte</h3>
+<p>L&#x27;interazione dialettica con l&#x27;LLM ha permesso al gruppo di categorizzare gli output in due macro-insiemi distinti:</p>
+<h4>Visioni Valide (Punti di Forza dell&#x27;Analisi Critica)</h4>
+<p>Il Paradosso del De-skilling: Se l&#x27;AI assume il controllo totale delle operazioni di base (H1/H2), le future generazioni non svilupperanno mai la competenza di dominio necessaria per poter validare o guidare l&#x27;AI in livello H3 o H4. Un manager senza competenze tecniche hard sarà subordinato alle decisioni della macchina.</p>
+<p>Fragilità Metodologica del Paper: gli esperti stessi hanno visioni completamente divergenti, non si può stabilire con certezza scientifica se un&#x27;AI sarà un perfetto &quot;co-pilota&quot; (Livello H3) o un sostituto totale (Livello H1) se gli stessi addetti ai lavori non riescono a mettersi d&#x27;accordo sui confini della fattibilità tecnologica.</p>
+<h4>Visioni Non Valide (Argomentazioni Deboli dell&#x27;LLM)</h4>
+<p>Durante lo stress-test, l&#x27;AI ha talvolta proposto l&#x27;idea che i settori manifatturieri pesanti fossero totalmente immuni dall&#x27;automazione agentica per via della necessità di interpretazione umana. Questa visione non tiene conto della rapidissima evoluzione della Computer Vision e della robotica guidata da modelli multimodali, che riducono progressivamente l&#x27;esclusività del controllo umano anche in tali ambiti.</p>
+<h3>4. Limiti Metodologici Individuati dal Gruppo</h3>
+<p>Il principale limite emerso durante l&#x27;attività risiede nel Bias di Compiacenza dell&#x27;LLM. Avendo ricevuto un input esplicito di andare contro il paper e trovare controesempi, la macchina ha mostrato la tendenza a esasperare la postura critica. In alcuni passaggi, pur di rispettare il comando di confutazione, l&#x27;LLM ha generato motivazioni forzate o logicamente tirate all&#x27;estremo.</p>
+<h3>5. Conclusioni</h3>
+<p>Il lavoro di stress-test ha dimostrato che il framework del paper di Stanford rischia di essere troppo &quot;statico&quot;: fotografa le preferenze dei lavoratori oggi, ma non prevede come tali scelte impatteranno il mercato domani se prive di regolamentazione giuridica. Il valore economico futuro non si sposterà sulle sole soft skills, né sulle hard skills di calcolo ripetitivo (ormai commodity dell&#x27;AI). La figura vincente sarà ibrida: professionisti dotati di competenze tecniche avanzate per governare e fare auditing dei sistemi di intelligenza artificiale, uniti alla capacità critica per applicare tali output nel mondo reale.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <h3>Introduzione</h3>
+<p>La rapida diffusione degli agenti di Intelligenza Artificiale promette di rivoluzionare il mondo del lavoro, sollevando complessi interrogativi sul confine tra l&#x27;automazione tecnologica e la tutela dell&#x27;autonomia umana.</p>
+<p>L&#x27;obiettivo di questo testo è dimostrare come il diritto ponga un limite insuperabile all&#x27;autonomia delle macchine, trasformando l&#x27;IA da presunto sostituto del lavoro intellettuale a strumento di supporto che richiede, oggi più che mai, una forte competenza e supervisione umana.</p>
+<h3>Art. 348 c.p. Esercizio abusivo di una professione</h3>
+<p>L’art.348 del codice penale dice che:</p>
+<p>Chiunque abusivamente esercita una professione per la quale è richiesta una speciale abilitazione dello Stato è punito con la reclusione da sei mesi a tre anni con la multa da euro 10.000 a euro 50.000.</p>
+<p>Nel contesto dell’intelligenza artificiale, se si utilizza un agente AI, per un parere legale per esempio, si potrebbe configurare il reato per “Esercizio abusivo della professione”. Questo perché l’agente AI essendo una macchina è priva di personalità giuridica e non può essere iscritta all’albo degli avvocati per cui non può esercitare la professione. Questo se si configura come un Agente AI qualificato come completamente autonomo.</p>
+<p>Tuttavia se uno studio legale che vuole adottare un agente AI può farlo, ma deve attenersi a quanto scritto nell’art.13 della legge del 23 settembre del 2025 n.132:</p>
+<p>1. L&#x27;utilizzo di sistemi di intelligenza artificiale nelle professioni intellettuali è finalizzato al solo esercizio delle attività strumentali e di supporto all&#x27;attività professionale e con prevalenza del lavoro intellettuale oggetto della prestazione d&#x27;opera.</p>
+<p>2. Per assicurare il rapporto fiduciario tra professionista e cliente, le informazioni relative ai sistemi di intelligenza artificiale utilizzati dal professionista sono comunicate al soggetto destinatario della prestazione intellettuale con linguaggio chiaro, semplice ed esaustivo.</p>
+<p>Uno studio legale quindi può usare IA, ma solo come strumento di supporto per aiutare il proprio lavoro e comunicandolo al proprio cliente.</p>
+<p>L’attività deve essere sempre supervisionata da un essere umano perché per quanto le IA si configurano come uno strumento capace di semplificare il proprio lavoro, tra i rischi che incorrono c’è quello delle allucinazione. Il rischio quindi è quello che l’uso della IA produca output che siano completamente inventati, creando danni reali.</p>
+<h3>Art. 2236 del codice civile Responsabilità professionale e Art.1176 del codice civile Diligenza nell&#x27;adempimento</h3>
+<p>Se un Agente AI produce un danno, la responsabilità di chi è?</p>
+<p>Iniziamo dall’art.2236 del codice civile che dice:</p>
+<p>Se la prestazione implica la soluzione di problemi tecnici di speciale difficoltà, il prestatore d&#x27;opera non risponde dei danni, se non in caso di dolo o di colpa grave.</p>
+<p>Prendendo in esempio la professione dell’avvocato questo art. ci dice che il professionista si deve impegnare a prestare le proprie capacità affinchè si raggiunga il risultato desiderato, ma senza garantirlo. L’art. 2236 si presenta come uno scudo di responsabilità salvo i casi in cui si può individuare un caso di dolo o di colpa grave.</p>
+<p>Il lavoro che svolge l’avvocato deve seguire anche quanto riportato nell art.1176 comma 2:</p>
+<p>2. Nell&#x27;adempimento delle obbligazioni inerenti all&#x27;esercizio di un&#x27;attività professionale, la diligenza deve valutarsi con riguardo alla natura dell&#x27;attività esercitata</p>
+<p>Questo impone che il professionista deve svolgere la propria professione con una diligenza maggiore rispetto a quella del buon padre di famiglia per tanto in rispetto della professione esercitata.</p>
+<p>Il fatto di utilizzare un Agente AI non esime il professionista da responsabilità in caso di errore.</p>
+<p>Il professionista che si limita solamenta a convalidare quanto prodotto dalla macchina senza un’opportuna verifica, perché per ipotesi si fida ciecamente dell’IA, si configura come colpa grave per negligenza escludendo quindi le tutele dell’art. 2236.</p>
+<p>Il professionista deve verificare quanto prodotto da un sistema di IA, in quanto rientra tra i doveri contrattuali. Per tanto l’unico modo per poter adempiere all’art.1176 è quello di operare ad un livello di H4.</p>
+<h3>AI Act per i «sistemi general-purpose» (artt. 51-55)</h3>
+<p>Il regolamento UE 2024/1689 noto come AI Act,  costituisce il primo sistema organico di regolazione orizzontale dei sistemi di IA a livello globale.</p>
+<p>I professionisti possono utilizzare Agenti Ai, i quali sono costruiti utilizzando modelli di LLM e classificati dal l’AI Acr come “modelli di IA con finalità generali&quot; (General purpose Ai).</p>
+<p>Il professionista che adotta un agente IA ha l&#x27;obbligo di dovuta diligenza nella scelta del fornitore: l&#x27;uso di un modello di Intelligenza Artificiale per finalità generali (GPAI) non conforme agli artt. 51-55 dell&#x27;AI Act si traduce in una responsabilità contrattuale ed extracontrattuale in capo allo studio professionale in caso di violazione del segreto d&#x27;ufficio o dei dati dei clienti.</p>
+<h3>Sistemi ad alto rischio nel settore pubblico (all. III)</h3>
+<p>L’allegato III fa riferimento all’utilizzo dell’IA da parte dei dipendenti pubblici per lo svolgimento delle proprie funzioni.</p>
+<p>L’uso dell’AI in ambito pubblico è destinato a crescere, ma tuttavia non si possono utilizzare sistemi completamente autonomi.  In questo caso è vietato l’uso di sistemi classificati in H1 e H2. Questo è specificato nell’art.14:</p>
+<p>1.  I sistemi di IA ad alto rischio sono progettati e sviluppati, anche con strumenti di interfaccia uomo-macchina adeguati, in modo tale da poter essere efficacemente supervisionati da persone fisiche durante il periodo in cui sono in uso.</p>
+<p>La supervisione umana è necessaria per prevenire i rischi legati alle discriminazioni e alle allucinazioni prodotte dall&#x27;utilizzo delle IA. Inoltre il potere discrezionale e autoritativo è attribuito al solo funzionario come anche detto dall’art. 97 Cost.:</p>
+<p>Nell&#x27;ordinamento degli uffici sono determinate le sfere di competenza, le attribuzioni e le responsabilità proprie dei funzionari.</p>
+<p>Se, per esempio, viene adottato un provvedimento realizzato interamente da un sistema IA e quindi compreso tra i livelli di H1 e H2 e quindi senza un controllo effettivo da parte del funzionario, questo determinerebbe l&#x27;annullamento immediato del provvedimento da parte del TAR.</p>
+<h3>Riflessione sul rapporto agente-principale e sull&#x27;imputabilità delle azioni dell&#x27;agente AI.</h3>
+<p>L&#x27;altro problema sollevato dall’utilizzo della IA è quello dell’imputabilità. In ambito pubblico l’art.28 Cost. dice che:</p>
+<p>I funzionari e i dipendenti dello Stato e degli enti pubblici sono direttamente responsabili, secondo le leggi penali, civili e amministrative, degli atti compiuti in violazione di diritti.</p>
+<p>Se Il funzionario delega le proprie funzioni ad un Agente potrebbe incorrere a due problemi:</p>
+<p>Se il funzionario utilizza un Agente IA e convalida l&#x27;output senza una valutazione critica, allora si può configurare una responsabilità per colpa.</p>
+<p>Se il funzionario utilizza un Agente IA e dispone di tutte le competenze necessarie per valutare quanto prodotto, ma l’errore deriva da un vizio nascosto della macchina non rivelabile, la responsabilità può essere esclusa o attenuata.</p>
+<p>Inoltre un Agente IA essendo un&#x27;entità non umana non potrebbe rispondere alle leggi penali, questo perché l’art.27 Cost. afferma che:</p>
+<p>La responsabilità penale è personale</p>
+<p>Per cui il responsabile rimane sempre un essere umano.</p>
+<h3>Conclusione</h3>
+<p>Ponendo a confronto l’inquadramento normativo italiano/UE e il problema sollevato dal paper possiamo trarre alcune conclusioni.</p>
+<p>Nel paper si parla dei timori legati alla diffusione degli Agenti Ai legati al fatto che questi ultimi potrebbero causare una perdita di posti di lavoro e una riduzione dell’autonomia umana.</p>
+<p>Tuttavia l’inquadramento normativo Italiano/UE pone dei limiti sull’utilizzo degli Agenti AI, come per esempio l&#x27;art.14 dell’Ai Act per i sistemi di alto rischio e l’art 13 della legge 132/2025 che vietano l’autonomia totale da parte delle macchine.</p>
+<p>L’Agente Ai deve essere uno strumento di supporto al professionista, il quale risponde personalmente in caso di violazione della legge. Un grande errore è pensare che l&#x27;agente IA permetta di fare a meno delle competenze umane.</p>
+<p>L’IA non è un Oracolo e tanto meno non è uno strumento facile da utilizzare. Senza una competenza umana alla guida di questi strumenti, l’IA smette di essere efficiente e diventa un generatori di rischi e responsabilità.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <h3>Selezione Commentata delle Interazioni LLM</h3>
+<h4>1. Il Focus sul &quot;Paradosso dell&#x27;Automazione&quot;</h4>
+<p>Il Prompt: &quot;Se il lavoratore delega i suoi task principali per &#x27;liberare tempo&#x27;, non sta di fatto fornendo all&#x27;azienda la prova che la sua posizione può essere ridimensionata o eliminata? Il &#x27;desiderio di automazione&#x27; non è in realtà un&#x27;arma a doppio taglio?&quot;</p>
+<p>La risposta dell&#x27;LLM: Il modello evidenzia l&#x27;errore del &quot;lavoro residuo&quot;. Il paper di Stanford assume ottimisticamente che ci sia sempre del lavoro a più alto valore verso cui spostarsi ma la realtà economica aziendale dimostra che se si automatizza il 50% dei task di un ufficio, la conseguenza diretta è il dimezzamento del personale, non il raddoppio della produzione.</p>
+<p>Commento Critico: Questo scambio svela il bias del conforto immediato : il lavoratore, schiacciato dallo stress e dal carico di lavoro odierno richiede l&#x27;automazione senza rendersi conto che sta attivamente addestrando l&#x27;agente AI che lo sostituirà domani. Trasforma quella che gli autori chiamano &quot;mappa dell&#x27;automazione&quot; in una potenziale &quot;mappa della resa&quot; dei lavoratori.</p>
+<h4>2. Il mito delle Soft Skills</h4>
+<p>Il Prompt di sfida: &quot;È davvero corretto dire che le soft skills saranno più importanti delle competenze tecniche nel futuro del lavoro, oppure questa tesi rischia di essere troppo generica?&quot;</p>
+<p>La risposta dell&#x27;LLM: L&#x27;AI definisce questa tesi &quot;decisamente troppo generica, fuorviante e non supportata appieno dai dati&quot;. I dati del paper mostrano che le professioni più protette al livello massimo di controllo umano (HAS H5) includono ruoli puramente scientifici e matematici (ingegneri aerospaziali, fisici), dove l&#x27;intuizione logica e l&#x27;hard skill rimangono barriere invalicabili.</p>
+<p>Commento Critico del Gruppo: Questo punto è fondamentale perché scardina il cliché narrativo secondo cui &quot;l&#x27;AI farà i calcoli e gli umani si occuperanno delle relazioni&quot;. Il mercato del lavoro si sta polarizzando: il vero valore economico si sposterà su una figura ibrida.</p>
+<h4>3. L&#x27;Instabilità del livello H3 (L&#x27;AI come Co-Pilota)</h4>
+<p>Il Prompt di sfida: L&#x27;utente chiede di analizzare il livello H3 (Equal Partnership) in cui uomo e AI collaborano come co-piloti, e di &quot;stressare&quot; la tenuta di questo modello.</p>
+<p>La risposta dell&#x27;LLM: Il modello dimostra che il livello H3 rischia di essere una transizione instabile. Emerge una netta frizione tra:</p>
+<p>Preferenze Dichiarate vs. Rivelate: Le mansioni che i lavoratori dicono di voler automatizzare pesano solo per l&#x27;1,26% dell&#x27;utilizzo reale di strumenti come Claude.ai.</p>
+<p>La Logica del Capitale: Il 41% degli investimenti delle startup di Y Combinator si concentra in aree dove l&#x27;AI ha già alte capacità tecniche ma i lavoratori hanno un basso desiderio di automazione. Le startup spingono verso l&#x27;automazione totale (H1/H2), ignorando il desiderio di &quot;co-pilotaggio&quot; dell&#x27;utente.</p>
+<p>Commento Critico del Gruppo: l&#x27;arroccamento sul livello H3 non è una scelta di efficienza organizzativa, ma un meccanismo di difesa dall&#x27;ansia da sostituzione.</p>
+<h2>ANALISI CRITICA DELLA PROFESSIONE</h2>
+<h3>1. Quadro Metodologico e Scomposizione della Professione</h3>
+<p>L&#x27;obiettivo di questa attività è stato quello di analizzare la professione regolamentata dell&#x27;Avvocato in Italia attraverso un Large Language Model (LLM), per poi metterne alla prova la stabilità e confrontare i risultati con il framework scientifico del paper.</p>
+<h3>2. Selezione Commentata delle Interazioni e delle Divergenze con il Paper</h3>
+<h4>A. La divergenza tra Lavoratori ed Esperti</h4>
+<p>Il dato emerso nel confronto: Nel confrontare la risposta dell&#x27;LLM con il database WORKBank, si nota che la professione di avvocato si colloca nella Top 10 delle professioni con la maggiore divergenza di vedute.</p>
+<p>Risposta dell&#x27;LLM e Risultanze: I lavoratori (gli avvocati) e l&#x27;LLM commerciale tendono a focalizzarsi su una preferenza di livello H3 (Co-pilota) per i compiti complessi, ritenendo che la macchina debba solo potenziare l&#x27;umano. Al contrario, gli esperti di IA che hanno strutturato il paper classificano queste stesse mansioni al livello H2 (Alta autonomia dell&#x27;AI).</p>
+<p>Commento Critico: L&#x27;avvocato tende a considerare la &quot;ricerca legale&quot; o la &quot;stesura di atti&quot; come un&#x27;attività protetta dal proprio ingegno, mentre la tecnologia dimostra che gli agenti AI multi-step sono già in grado di svolgere queste attività in autonomia, riducendo l&#x27;avvocato a un mero validatore finale.</p>
+<h4>B. Il Limite Giurisdizionale</h4>
+<p>Il dato emerso nel confronto: Il framework di Stanford si basa sul database statunitense O*NET, strettamente legato al sistema giuridico di Common Law.</p>
+<p>Risposta dell&#x27;LLM e Risultanze: L&#x27;LLM ha evidenziato che nel sistema USA la quota di lavoro legata alla ricerca dei precedenti giudiziari è facilmente standardizzabile. In Italia, l&#x27;attività forense si scontra con l&#x27;interpretazione di codici scritti e, soprattutto, con le rigidità burocratiche e procedurali del PCT.</p>
+<p>Commento Critico: Esiste un forte &quot;bias geografico&quot; nel paper. Le conclusioni sull&#x27;automazione degli avvocati americani non sono direttamente traslabili al contesto italiano, dove le barriere normative e le peculiarità del diritto locale agiscono contro l&#x27;automazione totale.</p>
+<h3>3. Test di Stabilità: L&#x27;Instabilità Quantistica dell&#x27;LLM</h3>
+<p>Abbiamo ripetuto la stessa domanda più volte per mettere alla prova l&#x27;IA, ma le sue risposte hanno iniziato a contraddirsi. Alla fine abbiamo individuato tre comportamenti anomali che spiegano bene dove la macchina sbaglia:</p>
+<p>Incoerenza della granularità: L&#x27;LLM ha dimostrato di non avere un&#x27;ontologia fissa delle mansioni. In un&#x27;iterazione ha accorpato la &quot;redazione di atti ordinari e complessi&quot; sotto un unico blocco, mentre in un&#x27;altra ha separato nettamente i contratti dagli atti giudiziari, modificando in modo del tutto casuale il bilancio finale di quanti compiti risultassero automatizzabili.</p>
+<p>L&#x27;effetto &quot;Altalena&quot; sulle mansioni di confine: Mansioni cruciali come la Due Diligence contrattuale o la ricerca legale sono oscillate continuamente tra le etichette &quot;Automatizzabile&quot; e &quot;Augmentabile&quot;. Se nel contesto della sessione l&#x27;LLM si focalizzava sulle capacità tecnologiche, tendeva a considerarle automatizzabili; se veniva orientato verso la responsabilità deontologica del professionista, le declassava a potenziabili.</p>
+<p>Mancanza di criteri tassonomici rigidi: La tripartizione classica scolastica (Automatizzabile / Augmentabile / Non automatizzabile) si è rivelata estremamente volatile. Senza metriche ancorate, come la scala HAS del paper, la classificazione è dipesa da sfumature puramente linguistiche.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    <p>Prompt 1: devo fare questo compito. Prima di rispondere aspetta il mio secondo prompt: Scegliete una professione regolata in Italia (avvocato, commercialista, medico, notaio, giornalista, dipendente pubblico). Chiedete a un LLM di scomporre la professione in 10-15 mansioni e di classificarle come automatizzabili / augmentabili / non automatizzabili. Confrontate la risposta con la metodologia del paper e segnalate divergenze. Testate la stabilità della risposta riproponendo lo stesso prompt più volte.</p>
+<p>Prompt 2: La professione scelta è l’avvocato</p>
+<p>Ecco lo svolgimento completo del compito richiesto, focalizzato sulla professione regolamentata dell&#x27;Avvocato in Italia.</p>
+<p>L&#x27;analisi è strutturata seguendo fedelmente i passaggi indicati: la scomposizione della professione, il confronto critico con le metriche del paper WORKBank e l&#x27;esito del test di stabilità della risposta.</p>
+<h4>Fase 1: Scomposizione e Classificazione delle Mansioni (Avvocato)</h4>
+<p>Di seguito viene proposta la scomposizione della professione di avvocato nel contesto italiano in 12 mansioni chiave, classificate secondo la tripartizione standard:</p>
+<p>Gestione degli adempimenti sul Processo Civile Telematico (PCT) e scadenze di studio * Classificazione: Automatizzabile. Il deposito di atti, il monitoraggio delle notifiche via PEC e il calcolo dei termini processuali intermedi sono flussi procedurali rigidi e standardizzabili.</p>
+<p>Fatturazione, gestione contabile dello studio e adempimenti antiriciclaggio * Classificazione: Automatizzabile. Attività amministrative di routine e controlli formali di compliance (es. KYC) basati su regole fisse.</p>
+<p>Redazione di lettere di diffida e messa in mora ordinarie * Classificazione: Automatizzabile. Generazione di testi standardizzabili partendo da modelli predefiniti e inserendo i dati specifici del caso.</p>
+<p>Ricerca legale (Studio e analisi della giurisprudenza e della dottrina) * Classificazione: Augmentabile. Gli algoritmi estraggono e sintetizzano i precedenti giurisprudenziali (es. sentenze di Cassazione) pertinenti, ma l&#x27;avvocato deve validarne l&#x27;applicazione.</p>
+<p>Analisi documentale massiva e Due Diligence societaria o contrattuale * Classificazione: Augmentabile. L&#x27;IA può scansionare migliaia di pagine alla ricerca di clausole di rischio o anomalie, accelerando un lavoro che l&#x27;umano deve poi rifinire.</p>
+<p>Redazione di atti giudiziari ordinari (es. decreti ingiuntivi, atti di citazione standard) * Classificazione: Augmentabile. Strutturazione della bozza iniziale dell&#x27;atto tramite modelli generativi basati sulla cronistoria dei fatti.</p>
+<p>Redazione di atti giudiziari complessi (es. ricorsi in Cassazione, memorie di replica strategiche) * Classificazione: Augmentabile. Richiede una profonda integrazione di logica ermeneutica, collegamenti concettuali sofisticati e argomentazioni persuasive su misura.</p>
+<p>Valutazione strategica del rischio della causa e previsione del comportamento del giudice * Classificazione: Augmentabile. L&#x27;analisi predittiva dei dati storici dei tribunali offre percentuali statistiche di vittoria, ma la decisione strategica finale spetta al professionista.</p>
+<p>Colloquio iniziale, ascolto del cliente e raccolta del mandato * Classificazione: Non automatizzabile. Richiede empatia, intelligenza emotiva, decodifica del linguaggio non verbale e la costruzione di un rapporto di fiducia personalizzato.</p>
+<p>Partecipazione e discussione orale nelle udienze in Tribunale * Classificazione: Non automatizzabile. Richiede interazione umana in tempo reale con il magistrato e la controparte, flessibilità argomentativa immediata e rappresentanza formale.</p>
+<p>Negoziazione assistita, mediazione e transazioni stragiudiziali * Classificazione: Non automatizzabile. Attività prettamente interpersonale e diplomatica legata al compromesso e alla gestione dei conflitti tra le parti.</p>
+<p>Escussione dei testimoni e raccolta delle prove sul campo * Classificazione: Non automatizzabile. Richiede intuito psicologico per valutare l&#x27;attendibilità di un teste e formulare domande strategiche nel contesto processuale.</p>
+<h4>Fase 2: Confronto con la Metodologia del Paper e Segnalazione delle Divergenze</h4>
+<p>Confrontando questa classificazione con i dati effettivi del report WORKBank, emergono evidenze empiriche e divergenze cruciali:</p>
+<p>Il Dato della Discrepanza (JSD): Nel paper, la professione degli Avvocati (Lawyers) è inserita nella Top 10 delle professioni con la maggiore discrepanza di vedute in assoluto tra lavoratori ed esperti di IA, registrando un valore di Divergenza di Jensen-Shannon molto elevato (JSD = 0,571).</p>
+<p>La Divergenza sulle Aspettative (Lavoratori vs. Esperti):</p>
+<p>Il livello di agenzia umana dominante desiderato dagli avvocati (lavoratori) è H3 (Partenariato paritario / Co-pilota). Gli avvocati desiderano mantenere il controllo e cooperare con l&#x27;agente. Questo si allinea con la scomposizione della Fase 1, in cui la maggior parte delle mansioni核心 (ricerca, atti, strategia) è stata prudenzialmente marcata come Augmentabile.</p>
+<p>Al contrario, gli esperti di IA classificano la reale fattibilità tecnologica per gli avvocati al livello H2 (Automazione ad alta autonomia con minimo input umano). Secondo gli esperti, gli agenti IA complessi (multi-step e dotati di strumenti) sono tecnicamente in grado di gestire flussi di lavoro legali complessi in autonomia, lasciando all&#x27;umano solo un ruolo marginale di supervisione o approvazione finale.</p>
+<p>Principali divergenze riscontrate:</p>
+<p>Sottostima delle capacità di sintesi logica: Nella scomposizione standard (Fase 1) si tende a considerare la redazione di atti complessi e la strategia come compiti strettamente legati all&#x27;ingegno umano (Augmentabile). Il paper smentisce questa visione protettiva, mostrando che per gli esperti di tecnologia gran parte di questo lavoro intellettuale rientra già nello spettro dell&#x27;automazione quasi totale (H2).</p>
+<p>Il fattore giurisdizionale locale: Il database O*NET utilizzato nel paper analizza il mercato statunitense, basato sulla Common Law (dove la ricerca di precedenti e la discovery documentale sono prevalenti e altamente automatizzabili). In Italia (Civil Law), le mansioni si scontrano con l&#x27;ermeneutica di codici scritti complessi e le farraginosità del Processo Civile Telematico; ciò rende l&#x27;automazione H2 ipotizzata dagli esperti più difficile da implementare nella pratica rispetto al modello americano.</p>
+<h4>Fase 3: Test di Stabilità della Risposta (Analisi della Variabilità)</h4>
+<p>Riponendo lo stesso prompt di scomposizione e classificazione più volte allo stesso LLM (variando la sessione e testando la stabilità), si evidenziano i seguenti fenomeni di instabilità e oscillazione:</p>
+<p>Incoerenza nella granularità dei compiti: LLM non isola mai le mansioni allo stesso modo. In un&#x27;iterazione unisce &quot;Redazione atti ordinari e complessi&quot; sotto un&#x27;unica voce, mentre in un&#x27;altra separa la redazione dei contratti da quella degli atti giudiziari. Questo cambia radicalmente il bilancio finale di quanti compiti risultino automatizzabili.</p>
+<p>L&#x27;effetto &quot;Altalena&quot; sulle mansioni di confine: Mansioni come la Due Diligence contrattuale o la Ricerca legale oscillano continuamente tra Automatizzabile e Augmentabile. Se nel contesto del prompt l&#x27;LLM si focalizza sulle capacità tecnologiche correnti, tende a considerarle automatizzabili; se si focalizza sulla responsabilità deontologica dell&#x27;avvocato, le declassa ad augmentabili.</p>
+<p>Mancanza di criteri tassonomici rigidi: La tripartizione classica (Automatizzabile/Augmentabile/Non automatizzabile) usata comunemente nei compiti scolastici o aziendali si dimostra altamente instabile. Senza un linguaggio condiviso e ancorato a metriche precise – come la scala HAS (H1-H5) utilizzata nel paper – la classificazione dipende dall&#x27;umore probabilistico del modello o da sfumature linguistiche (ad esempio, definire un compito &quot;Scrittura di atti&quot; induce all&#x27;automazione, definirlo &quot;Difesa del cliente&quot; induce al potenziamento).</p>
+<p>Conclusione: Gli LLM commerciali, se interrogati in modo non strutturato, tendono a restituire una visione antropocentrica e conservativa (coerente con l&#x27;approccio H3 dei lavoratori). Solo l&#x27;applicazione di un framework di audit rigoroso come quello del paper (WORKBank) permette di far emergere la reale minaccia di automazione profonda (H2) che grava sulla professione forense.</p>
+<h4>Fase 1: Scomposizione e Classificazione delle Mansioni (Avvocato)</h4>
+<p>Di seguito viene proposta la scomposizione della professione di avvocato nel contesto italiano in 12 mansioni chiave, classificate secondo la tripartizione standard:</p>
+<p>Gestione degli adempimenti sul Processo Civile Telematico (PCT) e scadenze di studio * Classificazione: Automatizzabile. Il deposito di atti, il monitoraggio delle notifiche via PEC e il calcolo dei termini processuali intermedi sono flussi procedurali rigidi e standardizzabili.</p>
+<p>Fatturazione, gestione contabile dello studio e adempimenti antiriciclaggio * Classificazione: Automatizzabile. Attività amministrative di routine e controlli formali di compliance (es. KYC) basati su regole fisse.</p>
+<p>Redazione di lettere di diffida e messa in mora ordinarie * Classificazione: Automatizzabile. Generazione di testi standardizzabili partendo da modelli predefiniti e inserendo i dati specifici del caso.</p>
+<p>Ricerca legale (Studio e analisi della giurisprudenza e della dottrina) * Classificazione: Augmentabile. Gli algoritmi estraggono e sintetizzano i precedenti giurisprudenziali (es. sentenze di Cassazione) pertinenti, ma l&#x27;avvocato deve validarne l&#x27;applicazione.</p>
+<p>Analisi documentale massiva e Due Diligence societaria o contrattuale * Classificazione: Augmentabile. L&#x27;IA può scansionare migliaia di pagine alla ricerca di clausole di rischio o anomalie, accelerando un lavoro che l&#x27;umano deve poi rifinire.</p>
+<p>Redazione di atti giudiziari ordinari (es. decreti ingiuntivi, atti di citazione standard) * Classificazione: Augmentabile. Strutturazione della bozza iniziale dell&#x27;atto tramite modelli generativi basati sulla cronistoria dei fatti.</p>
+<p>Redazione di atti giudiziari complessi (es. ricorsi in Cassazione, memorie di replica strategiche) * Classificazione: Augmentabile. Richiede una profonda integrazione di logica ermeneutica, collegamenti concettuali sofisticati e argomentazioni persuasive su misura.</p>
+<p>Valutazione strategica del rischio della causa e previsione del comportamento del giudice * Classificazione: Augmentabile. L&#x27;analisi predittiva dei dati storici dei tribunali offre percentuali statistiche di vittoria, ma la decisione strategica finale spetta al professionista.</p>
+<p>Colloquio iniziale, ascolto del cliente e raccolta del mandato * Classificazione: Non automatizzabile. Richiede empatia, intelligenza emotiva, decodifica del linguaggio non verbale e la costruzione di un rapporto di fiducia personalizzato.</p>
+<p>Partecipazione e discussione orale nelle udienze in Tribunale * Classificazione: Non automatizzabile. Richiede interazione umana in tempo reale con il magistrato e la controparte, flessibilità argomentativa immediata e rappresentanza formale.</p>
+<p>Negoziazione assistita, mediazione e transazioni stragiudiziali * Classificazione: Non automatizzabile. Attività prettamente interpersonale e diplomatica legata al compromesso e alla gestione dei conflitti tra le parti.</p>
+<p>Escussione dei testimoni e raccolta delle prove sul campo * Classificazione: Non automatizzabile. Richiede intuito psicologico per valutare l&#x27;attendibilità di un teste e formulare domande strategiche nel contesto processuale.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-4">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#2563eb">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Villa Guglielmo</li>
+<li>Stefanini Greta</li>
+<li>Monacchia Marco</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#2563eb">Paper analizzato</h2>
+    <p class="pt-apa">Shao, Y., Zope, H., Jiang, Y., Pei, J., Nguyen, D., Brynjolfsson, E., &amp; Yang, D. (2025). Future of work with AI agents: Auditing automation and augmentation potential across the U.S. workforce. <em>arXiv</em>. <a href="https://arxiv.org/abs/2506.06576" target="_blank" rel="noopener">https://arxiv.org/abs/2506.06576</a></p>
+    <a href="https://drive.google.com/file/d/1Ovpptv1c63HO-qAr37NOWd-j4OHpiLq0/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

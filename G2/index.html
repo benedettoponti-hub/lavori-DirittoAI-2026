@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G2 – The AI Layoff Trap</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#2563eb">G2</span>
+    <h1 class="header-paper">The AI Layoff Trap</h1>
+    <p class="header-topic">AI e lavoro – licenziamenti e mercato del lavoro</p>
+    <p class="header-members">Sammito Alessandra · Diosono Alessio · Cantarini Aurora &nbsp;·&nbsp; <em>20 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Analisi critica del paper</button>
+<button class="tab-btn " onclick="showTab(1)">Inquadramento giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 2</span><p>ANALISI CRITICA DEL PAPER “The AI Layoff Trap” è un documento scritto da Brett Hemenway Falk e Gerry Tsoukalas, pubblicato il 2 marzo 2026. Il lavoro ammonisce le imprese contemporanee, sempre più esasperatamente intente a cercare metodi per massimizzare i profitti e ridurre le spese, circa un paradosso che potrebbe sgretolare le fondamenta del sistema economico su scala globale. Il paradosso denunciato dalla ricerca è il seguente: le aziende stanno cominciando a sostituire parte dei lavoratori con sistemi automatizzati che sfruttano meccanismi di Intelligenza Artificiale. La logica di questa sostituzione è spiegata dal fatto che, in questo modo, i datori di lavoro possono ridurre il numero di dipendenti e, in ultima istanza, pagare meno stipendi. Sostituire i lavoratori con l’IA, in sintesi, permette agli imprenditori di tagliare i costi. Tuttavia, e qui si cela il paradosso, la disoccupazione che deriva da questo processo conduce ad un’inevitabile contrazione dei consumi e degli acquisti da parte dei consumatori (che si ritrovano senza lavoro o meno remunerati, in quanto l’IA ora svolge tutte o parte delle loro mansioni). Il calo della domanda finirebbe per mettere in difficoltà le stesse imprese che hanno innescato questa dinamica, perché venderebbero più faticosamente. Infatti, è bene ricordare che i lavoratori costituiscono anche la maggior parte dei consumatori. Dunque, un peggioramento delle possibilità economiche dei lavoratori nuocerebbe ai consumi e, di conseguenza, alle aziende. Tale paradosso significa che, se nel breve termine soltanto i dipendenti rimpiazzati vengono danneggiati dall’implementazione dell’IA, nel lungo termine anche le stesse aziende che hanno optato per quest’implementazione subiranno danni economici. La frenetica ricerca del tornaconto individuale può provocare, in prospettiva futura, danni per l’intera collettività. Questa considerazione rappresenta la tesi fondamentale sostenuta da Falk e Tsoukalas. Per avvalorare questa tesi, gli autori riportano anche altre ricerche che dimostrano come un’eccessiva automazione possa nuocere, nel lungo periodo, persino ai profitti delle stesse imprese che scelgono di implementarla. Gli autori del paper notano che dovrebbero essere le stesse imprese, consapevoli dei rischi sistemici enunciati precedentemente, a frenare la sostituzione del personale con meccanismi automatizzati. Il problema è che la suddetta sostituzione è vantaggiosa per la singola azienda, in quanto solo se praticata da molteplici soggetti eroderebbe in maniera effettiva i consumi, danneggiando i datori di lavoro stessi. Siccome i rischi sono, allo stato attuale, “solo” potenziali e futuri, la tendenza delle aziende è quella di procedere con la sostituzione. Alla luce di siffatte problematiche, gli autori della ricerca suggeriscono una soluzione precisa e originale, che consiste nell’introduzione di una tassa pigouviana sull’automazione. Si tratterebbe di una tassa, a carico degli imprenditori, che mira a compensare i costi sociali derivanti dalla perdita di posti di lavoro. Secondo la prospettiva di Falk e Tsoukalas, questo approccio sarebbe particolarmente efficace perché opererebbe anche come deterrente ex- ante, e non solo come correttivo ex-post. Falk e Tsoukalas sostengono che le tradizionali misure normative e giurisdizionali non sono adeguate a regolare la tecnologia dell’IA, in quanto essa si evolve più velocemente della politica e del diritto. Al contrario, una tassa simile potrebbe riuscire ad anticipare il progresso tecnico, prevenendo pratiche lesive dei</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 2</span><p>diritti dei lavoratori. Il paper passa in rassegna altre possibili linee di intervento per salvaguardare i diritti dei lavoratori (upskilling dei dipendenti; l’introduzione di un sussidio universale; l’eventuale partecipazione azionaria dei lavoratori alle quote dell’impresa), ma dopo un’analisi critica ritrae la già citata tassa pigouviana sull’automazione come la migliore soluzione possibile. Idealmente, tale tassa dovrebbe essere pari alla contrazione della domanda causata dai licenziamenti e il gettito potrebbe essere utilizzato per finanziare l’upskilling dei dipendenti. Il documento termina affermando che ancora non è avvenuta una sostituzione di lavoratori con l’IA abbastanza significativa da poter verificare empiricamente la tesi degli autori. Non a caso, i due studiosi ritengono che il contributo della ricerca si risolva nell’identificazione di una vulnerabilità strutturale del sistema, piuttosto che nella diagnosi di una crisi già in atto. Dunque, il paper analizza una situazione ancora solo ipotetica, seppure realistica. A nostro avviso, proprio questa caratteristica costituisce una delle lacune principali del lavoro di Falk e Tsoukalas. Infatti, il paper utilizza delle formule matematiche, elaborate in ambito economico, per supportare la sua tesi e l’eventuale efficacia della tassa proposta, ma la carenza di evidenze empiriche rende le argomentazioni teoriche, concettuali, poco concrete e verificabili. Questa lacuna, ad ogni modo, è giustificata dalla scarsità dei dati empirici attualmente disponibili, un fattore che rende senz’altro difficile verificare le effettive conseguenze economiche dei licenziamenti “ai-driven”. Un’altra criticità evidente riguarda la soluzione proposta dagli autori, ovvero la speciale tassa, rivolta agli imprenditori che sostituiscono i propri dipendenti con sistemi automatizzati, che dovrebbe compensare i costi sociali causati dai licenziamenti. Un simile rimedio si espone a due principali problematiche. Innanzitutto, si tratta di una soluzione alquanto originale e, pertanto, non si può essere certi che si traduca in uno strumento efficace per tutelare i lavoratori. Ad ogni modo, la problematica più evidente è, a nostro avviso, la possibilità stessa di applicare una simile tassa: come si può stabilire, con criteri oggettivi e proporzionati, quanto debba essere consistente tale tassa? Si tratta di una tassa che dovrebbe compensare i costi sociali e il crollo dei consumi derivanti dai licenziamenti “ai-driven”. Tuttavia, identificare di quanto cali la domanda a causa della sostituzione dei lavoratori con l’IA e a quanto ammontino i costi sociali complessivi non è banale. Inoltre, siccome il fine ultimo di tale tassa è la tutela dei lavoratori, occorrono ulteriori misure per assicurarsi che il gettito ottenuto dallo Stato grazie a questa tassa sia investito per reinserire gli individui sostituiti nel mercato del lavoro con successo, altrimenti verrebbe meno l’utilità stessa della soluzione proposta. Nonostante le criticità riscontrate, condividiamo la tesi di fondo del paper: l’esasperata ricerca del vantaggio economico individuale a discapito della società può erodere le fondamenta su cui la stessa si poggia, danneggiando anche gli individui che hanno avviato il processo. Nell’era odierna, questo fenomeno pericoloso si presenta anche sottoforma di imprenditori che, per massimizzare i profitti nel breve termine, rimpiazzano parte dei lavoratori con sistemi di Intelligenza Artificiale. Visti gli effetti potenzialmente catastrofici di tale tendenza, è necessario adottare misure adeguate a tutelare sia i diritti dei lavoratori sia l’equilibrio economico dell’intera collettività. Occorre evidenziare che casi di licenziamenti causati dalla sostituzione di lavoratori con sistemi di Intelligenza Artificiale, come quelli denunciati dal paper, sono già in atto. Noi ne analizziamo due, ovvero quelli che hanno coinvolto le aziende Klarna e InvestCloud.</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 3</span><p>La sostituzione con AI può configurare giustificato motivo oggettivo di licenziamento? • Riferimento art. 3 L.64/1996 “Il licenziamento per giustificato motivo con preavviso è determinato da un notevole inadempimento degli obblighi contrattuali del prestatore di lavoro ovvero da ragioni inerenti all&#x27;attività produttiva, all&#x27;organizzazione del lavoro e al regolare funzionamento di essa”. Il giustificato motivo oggettivo non può basarsi sulla riduzione dei costi, deve essere relativo ad una riorganizzazione reale dell’azienda e il datore di lavoro deve dimostrare che non esistono opzioni di ricollocamento. Rientrano nel giustificato motivo oggettivo: la crisi dell’impresa, la cessazione dell’attività e, anche solo, il venir meno delle mansioni cui era in precedenza assegnato il lavoratore, senza che sia possibile la ricollocazione del medesimo in altre mansioni esistenti in azienda e compatibili con il livello di inquadramento. Vengono ricondotti alla figura del giustificato motivo oggettivo (GMO) anche le ipotesi in cui il lavoratore perda, non per propria colpa, le capacità necessarie a svolgere le mansioni per cui venne assunto. Sia che si tratti di motivo oggettivo che di motivo soggettivo, è richiesto un preavviso, oppure il pagamento della rispettiva indennità sostitutiva. La sostituzione con AI può rientrare nei giustificati motivi oggettivi di licenziamento. • Decreto legislativo 152/1997 (il testo è stato integrato dal Decreto Trasparenza, D. Lgs 104/2022) Obbliga il datore di lavoro a informare i lavoratori sull’uso di sistemi decisionali o di monitoraggio automatizzati, cioè devo informare il lavoratore se l’AI incide sulla gestione o cessazione del rapporto di lavoro. • Direttiva UE 2002/14 In caso di cambiamenti tecnologici che mettono a rischio l&#x27;occupazione, il datore è tenuto a consultare i rappresentanti dei lavoratori per cercare soluzioni alternative al licenziamento. L&#x27;obiettivo è prevenire i licenziamenti selvaggi favorendo la riqualificazione (reskilling) o il ricollocamento interno, rendendo l&#x27;AI un supporto e non una causa automatica di espulsione dal mercato del lavoro • AI Act art. 26.7 Quando un datore di lavoro (&quot;utilizzatore&quot; o deployer) intende mettere in servizio o utilizzare un sistema di AI ad alto rischio sul luogo di lavoro, deve informare i rappresentanti dei lavoratori e i lavoratori interessati che saranno soggetti al sistema. L&#x27;informativa deve chiarire che l&#x27;AI verrà utilizzata nelle mansioni lavorative, rispettando le norme nazionali e dell&#x27;Unione. Se l&#x27;azienda licenzia il lavoratore perché lo ha sostituito con un&#x27;AI ad alto rischio senza aver prima adempiuto all&#x27;obbligo di informativa ex art. 26.7, il licenziamento potrebbe essere contestato per vizio procedurale. L&#x27;AI Act impone che i sistemi ad alto rischio siano sempre supervisionati da persone. Se il licenziamento è motivato da un&#x27;automazione &quot;totale&quot; che esclude ogni controllo umano (cioè se la decisione è stata presa esclusivamente dalla macchina), ciò contrasta con i principi di sicurezza del Regolamento. In sostanza, il datore di lavoro che vuole licenziare per GMO per sostituzione della persona con l’AI deve dimostrare che ci sia G.M.O, provare il Repêchage, rispettare i criteri di trasparenza e informare adeguatamente il dipendente. Se i passaggi non vengono rispettati il licenziamento può essere considerato illegittimo. Ma l’AI Act prevede obblighi di informazione</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 3</span><p>quando vengono utilizzati sistemi AI ad alto rischio sul lavoro, in questo caso: l’azienda deve informare lavoratori e rappresentanti e devono esserci supervisione umana e trasparenza. Però non ogni chatbot o software AI è automaticamente ad “alto rischio”, bisogna verificare in che categoria rientra il sistema (l’AI usata per gestire i rapporti di lavoro è classificata come ad alto rischio) • Licenziamenti collettivi L223/91 La procedura di licenziamento collettivo (regolata dalla Legge 223/91) è un iter obbligatorio che ogni azienda con più di 15 dipendenti deve seguire quando intende licenziare almeno 5 lavoratori nell&#x27;arco di 120 giorni, a causa di una riduzione, trasformazione o cessazione di attività (come l&#x27;introduzione massiccia di AI). A differenza del licenziamento individuale, qui l&#x27;interesse non è solo il singolo lavoratore, ma l&#x27;impatto sociale della riduzione del personale. Il datore di lavoro non può licenziare per “ragioni tecnologiche” in modo generico, ma deve specificare secondo quali parametri dell’AI è stata determinata la sostituzione del dipendente, e deve avvertire i sindacati prima di cominciare a usare i sistemi di AI nel caso in cui questi potrebbero determinare dei cambiamenti o una sostituzione nel loro lavoro I sindacati possono contestare l&#x27;uso dell&#x27;AI chiedendo se siano possibili forme di &quot;collaborazione uomo-macchina&quot; invece della sostituzione integrale e l’azienda deve dimostrare di aver valutato se i lavoratori coinvolti possano essere formati per supervisionare la stessa AI che li sta sostituendo. Se il sistema di scelta di licenziamento dei lavoratori viene gestito dalla macchina potrebbero esserci delle discriminazioni nella scelta, non perchè il sistema discrimina di per sè, bensì a causa di bias algoritmici: ad esempio un lavoratore con figli, che il sistema considera meno disponibile a fare straordinari e che quindi viene “scartata” prima rispetto ad un altro lavoratore con medesima mansione e capacità ma senza figli e quindi, teoricamente, più disponibile a fare straordinari. In questo caso il licenziamento potrebbe essere considerato illegittimo, infatti se il lavoratore pensa di aver subito un licenziamento illegittimo può richiedere l’accesso ai dati e il datore dovrà indicare: a che cosa serve l’algoritmo, i parametri che pesano di più, e se la decisione finale è stata presa dalla macchina. Se l’azienda non fornisce tali dati potrebbe esserci l’annullamento del licenziamento e un risarcimento. Confronto con i casi di licenziamento analizzati I casi Klarna e InvestCloud Italy possono rientrare nelle norme citate. La sostituzione con AI, ovvero quella avvenuta nei due esempi illustrati, può integrare un GMO perché rientra nella “riorganizzazione aziendale”. Il datore però deve dimostrare che la riorganizzazione è reale e non pretestuosa e che non esistono mansioni alternative disponibili (repêchage): nel caso Klarna c’è stata la riduzione del customer service tramite chatbot AI, quindi il licenziamento è potenzialmente classificabile come GMO. InvestCloud ha subito una riorganizzazione/chiusura della sede con automazione, quindi, è considerato possibile GMO o licenziamento collettivo (in base al numero di lavoratori licenziati). La semplice giustificazione di “taglio dei costi” da sola non basta. Per i licenziamenti collettivi (L.223/91) Nel caso InvestCloud il licenziamento ha coinvolto 37 lavoratori, tutti della stessa sede, con la causa di riduzione/trasformazione attività. Di conseguenza i sindacati devono essere coinvolti e l’uso di AI è contestabile (e in questo caso in particolare, i sindacati hanno lamentato “irresponsabilità sociale” e hanno chiesti il ritiro dei licenziamenti). Ruolo contrattazione collettiva di nuova generazione</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 3 / 3</span><p>L&#x27;espressione “di nuova generazione” segna il passaggio ad una una contrattazione attiva, che si adatta alle evoluzioni tecnologiche e al moderno mercato del lavoro, dando particolare attenzione al reskilling/upskilling, welfare aziendale (rimborsi, smart-working, assistenza sanitaria integrativa), inclusione e lotta ai contratti pirata. Lo scopo generale è quello di evitare i licenziamenti e favorire il reskilling: infatti i contratti collettivi di nuova generazione agiscono prima che avvenga il licenziamento, in quanto vige l’obbligo per l’azienda di informare i sindacati dell’introduzione di nuovi algoritmi e dei possibili impatti sui lavoratori. I sindacati da parte loro devono vigilare sull’uso dell’AI in questione, puntando alla riduzione al minimo dei licenziamenti a causa AI. Cosa deve fare l’azienda Non esiste ancora una norma italiana che obblighi espressamente il datore a “specificare i parametri dell’AI che hanno determinato la sostituzione”. Più correttamente: il lavoratore ha diritto a informazioni significative sulla logica del sistema automatizzato; soprattutto se l’algoritmo contribuisce alla decisione ma non sempre l’azienda deve rivelare integralmente il modello o il codice.</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <div class="pdf-page"><span class="page-label">Pagina 1 / 2</span><p>Log di interazione con LLM Il presente elaborato analizza il rapporto tra intelligenza artificiale e trasformazione del lavoro, prendendo come riferimento il paper The AI Layoff Trap. Lo studio approfondisce in particolare i casi di InvestCloud Italy (ex Finantix) e Klarna, evidenziando come l’adozione di strumenti di AI possa influenzare l’organizzazione aziendale. L’elaborato include inoltre un confronto tra le risposte fornite da sistemi di AI generativa, nello specifico ChatGPT e Gemini, a domande riguardanti i due casi studio e il tema dei licenziamenti collegati all’automazione. L’obiettivo è come le tecnologie interpretano e descrivono tali fenomeni. 1. Interazione con Chatgpt La mia domanda: Sei d&#x27;accordo con la tesi del nostro paper (the AI layoff trap) se sì perché se no perché? La risposta generata da ChatGPT(rielaborata) risulta interessante perché non si limita a confermare la tesi del paper The AI Layoff Trap, ma ne evidenzia sia i punti di forza sia le possibili limitazioni teoriche. In particolare, viene considerato convincente il meccanismo competitivo che spinge le aziende ad automatizzare per non perdere vantaggio rispetto ai concorrenti, anche quando questo può produrre effetti negativi sull’economia nel suo complesso. Allo stesso tempo, la risposta sottolinea che il modello del paper potrebbe semplificare eccessivamente il funzionamento dell’economia reale, trascurando fattori come la creazione di nuovi mercati, l’innovazione nei consumi e l’apertura globale dei sistemi economici. Nel complesso, l’analisi proposta dall’AI appare equilibrata e critica, poiché riconosce la validità del rischio di “over-automation” senza però considerare inevitabile un collasso economico causato dall’intelligenza artificiale. La mia domanda: mostrami dei controesempi a favore dell&#x27;intelligenza artificiale. La risposta generata da Chatgpt: L’intelligenza artificiale non solo distrugge lavori, ma ne crea di nuovi (es. nuove professioni come prompt engineer). Inoltre, aumenta la produttività, riduce i costi e i prezzi, e questo può generare nuova domanda in altri settori e quindi nuovi posti di lavoro. Sostiene anche che l’IA spesso “potenzia” i lavoratori invece di sostituirli completamente, lasciando agli umani i compiti più creativi e complessi. A livello economico, l’IA può far crescere il PIL e creare occupazione anche attraverso investimenti in infrastrutture (data center, chip, energia). Infine, può rendere più accessibili competenze avanzate, riducendo le differenze tra lavoratori esperti e meno esperti. 2. Interazione con Gemini La mia domanda: Klarna(un&#x27;azienda &quot;FinTech&quot;) ha ridotto il personale del 20%, sostituendo 700 agenti di supporto clienti con un sistema di IA in grado di svolgere il lavoro di oltre 1.000 persone. Che ne pensi al riguardo è stata una mossa strategica per il loro settore e se si ha portato profitti? E parlami degli svantaggi che invece hanno avuto le persone che sono state licenziate. La risposta di Gemini: il caso klarna è diventato cita gemini “poster child” rappresentando esattamente il momento in cui la teoria economica dell&#x27;automazione incontra la realtà aziendale brutale e velocissima. Secondo gemini è stata una mossa strategica: “per diverse ragioni: 1. Scalabilità infinita: A differenza degli agenti umani, l&#x27;assistente IA può gestire picchi di traffico (ad esempio durante il Black Friday) senza dover assumere personale interinale.2. Velocità e precisione: Klarna ha dichiarato che l&#x27;IA risolve le pratiche in meno di 2 minuti rispetto ai 11 minuti precedenti, con una precisione equivalente a quella umana. 3.Riduzione del debito tecnico: L&#x27;integrazione con OpenAI ha permesso di unificare la conoscenza aziendale in un unico modello, eliminando silos informativi tra diversi dipartimenti di supporto.” La mia domanda: Ha portato profitti? La risposta di Gemini: “Sì, Klarna ha previsto un miglioramento dei profitti di circa 40 milioni di dollari su base annua grazie a questa automazione. Ha avuto risultati finanziari infatti nel 2024,</p></div>
+<div class="pdf-page"><span class="page-label">Pagina 2 / 2</span><p>l’implementazione massiccia dell&#x27;IA, Klarna è tornata alla redditività dopo anni di perdite, e l&#x27;efficienza dell&#x27;IA è stata citata come fattore chiave.” La mia domanda: Mentre gli svantaggi per le persone licenziate? La risposta di Gemini: Nel paper &quot;The AI Layoff Trap&quot; descrive questa crisi come l&#x27;inizio di una crisi sociale: 1. Solvenza rapida delle competenze, ovvero se l&#x27;AI prende il sopravvento l&#x27;intera categoria professionale potrebbe scomparire. Come ci spiega il paper, quando l’AI diventa un sostituto perfetto dell&#x27;essere umano ha un costo più basso e i salari dei lavoratori rimasti tendono a scendere (perdita di potere contrattuale). Con una difficoltà di reinserimento poiché se tutti fanno come Klarna i licenziati non troveranno posto dai concorrenti (PayPal, Affirm, Revolut). La mia domanda: pensi che sia giusto o sbagliato? La risposta di Gemini: è economicamente &quot;giusto&quot;: L&#x27;azienda aumenta l&#x27;efficienza, riduce i costi e garantisce la propria competitività nel tempo. Ma socialmente &quot;sbagliato&quot;: Il profitto tecnologico favorisce pochi, mentre il costo del licenziamento e della riqualificazione ricade interamente sui lavoratori e sulla collettività. La mia domanda: Se ti parlo di quest’altro caso capitato in Italia ovvero, il caso della InvestCloud Italy (ex Finantix) che ha causato il licenziamento collettivo di tutti i 37 dipendenti della sede veneziana. Cosa ne pensi? La risposta di Gemini: Invest Cloud ha deciso di chiudere l&#x27;intera sede veneziana, cancellando 37 posti di lavoro di alto livello. L’azienda ha dichiarato che le &quot;personalizzazioni regionali&quot; (il lavoro fatto dagli esperti di Venezia per adattare il software al mercato locale) sono diventate &quot;antieconomiche e inefficienti&quot; rispetto a una piattaforma globale centralizzata e gestita dall&#x27;IA. Come nota il nostro paper di riferimento, non è la mancanza di soldi a spingere ai licenziamenti, ma la ricerca di un&#x27;efficienza algoritmica superiore. La mia domanda: dimmi come l&#x27;intelligenza artificiale svolge questo lavoro e perché è meglio dei lavoratori laureati. La risposta di Gemini: Nel 2026, l&#x27;IA non è più solo una chatbot, ma un agente operativo. Mentre un lavoratore umano legge una mail o ascolta una chiamata, interpreta il linguaggio e cerca una soluzione in un database, l&#x27;IA opera su tre livelli simultanei: 1. Analisi sistematica (non &quot;legge&quot; parola per parola, ma mappa l&#x27;intenzione del cliente), 2. Accesso totale ai dati (L&#x27;IA ha l&#x27;intero &quot;cervello&quot; aziendale (manuali, procedure legali, cronologia dei pagamenti) integrato nel suo modello.), 3. esecuzione diretta (Nel caso di Klarna o Invest Cloud, l&#x27;IA non si limita a rispondere. Può emettere rimborsi, sbloccare account o ricalcolare piani di ammortamento direttamente nel software gestionale, senza errori di trascrizione.) Perché viene considerata &quot;meglio&quot; di un laureato? La risposta di Gemini: Gemini ci dà due punti chiave che spingono le aziende a preferire Ai dal lavoratore; Velocità di elaborazione vs. Riflessione: Un laureato impiega tempo per riflettere, scrivere correttamente e verificare i dati. L&#x27;IA riduce i tempi di risoluzione in nemmeno 2 minuti. Per un&#x27;azienda, 9 minuti risparmiati su milioni di clienti valgono milioni di euro. Un lavoratore umano ha bisogno di pause, formazione, ferie e può avere giornate &quot;no&quot;. L&#x27;IA ha un&#x27;efficienza costante (100%) h24, 7 giorni su 7. Se domani i clienti raddoppiano, l&#x27;IA si adatta istantaneamente. Per un team di laureati, servirebbero mesi di colloqui, assunzioni e formazione. Per Gemini il punto critico è “Il &quot;sorpasso&quot; sui colletti bianchi ovvero che l&#x27;IA sta diventando eccellente in compiti che prima richiedevano una laurea. Molti sviluppatori junior (come a Venezia) vedono l&#x27;IA scrivere righe di codice più velocemente e con meno bug iniziali. Ma Gemini ci mostra che comunque il laureato vince ancora, poiché se un cliente ha un problema umano complesso e tragico, l&#x27;IA può apparire fredda o ripetitiva. Il laureato possiede l&#x27;empatia e il giudizio critico per &quot;rompere le regole&quot; quando ha senso farlo per salvare la reputazione del marchio.</p></div>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#2563eb">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Sammito Alessandra</li>
+<li>Diosono Alessio</li>
+<li>Cantarini Aurora</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#2563eb">Paper analizzato</h2>
+    <p class="pt-apa">Falk, B. H., &amp; Tsoukalas, G. (2026). The AI layoff trap. <em>arXiv</em>. <a href="https://arxiv.org/abs/2603.20617" target="_blank" rel="noopener">https://arxiv.org/abs/2603.20617</a></p>
+    <a href="https://drive.google.com/file/d/1EQ52_m7mF72AfNQHc9I3jktrJEBo346r/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

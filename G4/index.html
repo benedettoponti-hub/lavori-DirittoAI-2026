@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G4 – Augmenting or Automating Labor? The Effect of AI Development</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#2563eb">G4</span>
+    <h1 class="header-paper">Augmenting or Automating Labor? The Effect of AI Development on New Work, Employment, and Wages</h1>
+    <p class="header-topic">AI e lavoro – augmentation vs automation, salari</p>
+    <p class="header-members">PEPIYE Hurel jhanin · Marinaro Francesco Pio · Giuliano Onorati &nbsp;·&nbsp; <em>21 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica paper</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <h1>Scheda critica del paper</h1>
+<p>Diritto dei media digitali &amp; AI – Lavoro di gruppo</p>
+<p>Gruppo: G4 – Pepiye Hurel jhanin, Marinaro Francesco Pio, Giuliano Onorati</p>
+<p>Paper: David Marguerit, Augmenting or Automating Labor? The Effect of AI Development on New Work, Employment, and Wages, LISER, marzo 2025</p>
+<h2>1. Domanda di ricerca e tesi centrale</h2>
+<p>Il paper studia il rapporto tra sviluppo dell&#x27;intelligenza artificiale e mercato del lavoro negli Stati Uniti tra il 2015 e il 2022. La sua idea di partenza è che non si debba parlare di AI in modo generico: lo stesso termine può indicare tecnologie che sostituiscono il lavoro umano oppure tecnologie che lo potenziano. Per questo l&#x27;autore distingue tra automation AI, cioè AI orientata ad automatizzare mansioni prima svolte da lavoratori, e augmentation AI, cioè AI che aumenta la qualità, la varietà o l&#x27;utilità del lavoro umano.</p>
+<p>La tesi principale è che i due tipi di AI producono effetti diversi. L&#x27;AI di automazione tende a comprimere il valore del lavoro, soprattutto nelle occupazioni meno qualificate; l&#x27;AI di augmentation, invece, può generare nuove mansioni e nuove figure professionali, con benefici concentrati soprattutto nei lavori più qualificati. Il risultato finale è ambivalente: l&#x27;AI non distrugge necessariamente il lavoro, ma può aumentare la distanza tra lavoratori forti e lavoratori deboli.</p>
+<h2>2. Metodo utilizzato</h2>
+<p>Il lavoro costruisce due indici originali di esposizione all&#x27;AI. Per misurare lo sviluppo delle tecnologie AI, l&#x27;autore usa le domande pubblicate su Stack Overflow, assumendo che tali discussioni riflettano almeno in parte le tecnologie sviluppate dai programmatori per uso professionale. Successivamente collega queste tecnologie alle professioni attraverso banche dati statunitensi.</p>
+<p>Per l&#x27;automation AI, le tecnologie AI vengono collegate alle abilità richieste dalle occupazioni, usando O*NET: se una tecnologia può svolgere una capacità richiesta in una professione, quella professione risulta più esposta all&#x27;automazione.</p>
+<p>Per l&#x27;augmentation AI, le tecnologie vengono collegate ai beni e servizi prodotti dalle professioni e dalle industrie, usando il Census Alphabetical Index: se una tecnologia migliora il prodotto o servizio del lavoratore, viene considerata augmenting.</p>
+<p>Per misurare il new work, cioè il nuovo lavoro, l&#x27;autore osserva i nuovi titoli professionali apparsi negli aggiornamenti O*NET tra il 2015 e il 2022.</p>
+<p>Per rafforzare la parte causale, il paper usa una strategia con variabili strumentali, basata sullo sviluppo precedente dell&#x27;AI in Paesi con deboli legami economici con gli Stati Uniti.</p>
+<h2>3. Risultati principali</h2>
+<p>Primo risultato: l&#x27;augmentation AI stimola la nascita di nuovo lavoro, mentre l&#x27;automation AI non produce un effetto positivo misurabile sulla creazione di nuove mansioni.</p>
+<p>Secondo risultato: l&#x27;augmentation AI è associata a una crescita dell&#x27;occupazione, perché le imprese assumono per svolgere i nuovi compiti che emergono intorno alle tecnologie AI.</p>
+<p>Terzo risultato: l&#x27;automation AI ha un effetto negativo sui salari orari medi. L&#x27;autore interpreta questo dato come segnale del fatto che l&#x27;effetto di sostituzione del lavoro prevale sui benefici di produttività.</p>
+<p>Quarto risultato: gli effetti sono molto diversi per livello di competenze. Le occupazioni meno qualificate subiscono maggiormente l&#x27;automazione; quelle più qualificate beneficiano soprattutto dell&#x27;augmentation, con crescita di nuovo lavoro e salari.</p>
+<h2>4. Limiti del paper</h2>
+<p>Il paper riguarda gli Stati Uniti e non può essere trasferito automaticamente al mercato italiano, dove pesano molto i CCNL, la struttura delle imprese e la disciplina delle mansioni.</p>
+<p>Stack Overflow è una fonte innovativa ma parziale: non tutte le tecnologie AI sviluppate in azienda vengono discusse pubblicamente, e alcune soluzioni proprietarie possono non lasciare tracce visibili.</p>
+<p>Il periodo 2015-2022 coglie l&#x27;ascesa dell&#x27;AI ma solo in parte l&#x27;esplosione dell&#x27;AI generativa successiva al lancio di ChatGPT.</p>
+<p>Il new work viene misurato tramite nuovi titoli professionali: questo è utile, ma un nuovo titolo non sempre corrisponde a una reale nuova mansione, e una mansione nuova può esistere anche senza un nuovo nome ufficiale.</p>
+<p>Il paper è forte sul piano econometrico, ma meno sviluppato sul piano giuridico: non affronta direttamente il problema dell&#x27;inquadramento contrattuale, della contrattazione collettiva e della tutela dei lavoratori nelle nuove attività AI.</p>
+<h2>5. Posizione del gruppo</h2>
+<p>La posizione del gruppo è di sostanziale accordo con il paper, ma con una integrazione critica. La distinzione tra automazione e augmentation è convincente, perché evita l&#x27;errore di considerare l&#x27;AI come un fenomeno unico. Tuttavia, nel contesto italiano il punto decisivo non è solo economico, ma anche giuridico-contrattuale: molte professioni legate all&#x27;AI esistono già nel mercato, ma non sono sempre nominate o disciplinate espressamente dai CCNL. Il rischio è che i lavori più qualificati vengano assorbiti in vecchie categorie senza riconoscere correttamente competenze e retribuzioni, mentre le attività più povere, come il data labeling, restino ai margini del lavoro tutelato.</p>
+<h2>Indicazioni finali</h2>
+<p>Modello e versione del chatbot usato: ChatGPT – GPT-5.5 Thinking (13 maggio 2026).</p>
+<p>Stima del tempo dedicato: circa 2 ore per lettura del paper, sintesi e discussione critica.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <h1>Memo giuridico</h1>
+<p>AI, nuove professioni, inquadramento contrattuale e salari</p>
+<p>Gruppo: G4 – Pepiye Hurel jhanin, Marinaro Francesco Pio, Giuliano Onorati</p>
+<p>Paper: David Marguerit, Augmenting or Automating Labor? The Effect of AI Development on New Work, Employment, and Wages, LISER, marzo 2025</p>
+<h2>1. Problema giuridico</h2>
+<p>Il paper mostra che l&#x27;AI non produce un solo effetto sul lavoro: alcune tecnologie sostituiscono mansioni umane, altre potenziano il lavoratore e generano nuove occupazioni. Il problema giuridico, nel contesto italiano, è capire come queste nuove figure possano essere inquadrate nei contratti collettivi e quali tutele servano per evitare due rischi opposti: da un lato la svalutazione del lavoro meno qualificato, dall&#x27;altro il mancato riconoscimento del valore professionale dei lavori ad alta competenza.</p>
+<h2>2. Art. 2095 c.c. e classificazione dei lavoratori</h2>
+<p>Il primo riferimento è l&#x27;art. 2095 c.c., che distingue i prestatori di lavoro subordinato in dirigenti, quadri, impiegati e operai. La norma non crea profili professionali dettagliati: offre categorie generali. Per stabilire livello, mansioni e retribuzione concreta diventano quindi decisivi i contratti collettivi.</p>
+<p>Le nuove figure AI possono essere ricondotte a categorie già esistenti, ma con soluzioni diverse. Un MLOps engineer o un AI specialist tendono a collocarsi tra impiegati tecnici ad alta specializzazione o quadri, a seconda di autonomia, responsabilità e coordinamento. Un prompt engineer può essere inquadrato come figura tecnica, comunicativa o di product/content design, ma il suo profilo è ibrido. Un AI ethicist può essere vicino a compliance, risk management, privacy o consulenza organizzativa. Il data labeler, invece, è spesso più esposto a inquadramenti bassi, lavoro esternalizzato o micro-lavoro a cottimo digitale.</p>
+<h2>3. Art. 2103 c.c., mansioni e trasformazione del lavoro</h2>
+<p>L&#x27;art. 2103 c.c., come modificato dal D.lgs. 81/2015, è importante perché disciplina il rapporto tra mansioni, livello di inquadramento e retribuzione. Se l&#x27;AI modifica il contenuto della prestazione, il lavoratore deve essere adibito alle mansioni per le quali è stato assunto, a mansioni equivalenti nello stesso livello e categoria legale oppure a mansioni superiori con il relativo trattamento. Quando l&#x27;organizzazione cambia, il demansionamento è possibile solo entro limiti precisi, con comunicazione scritta e conservazione del trattamento retributivo, salvo specifiche eccezioni.</p>
+<p>Questo significa che l&#x27;introduzione dell&#x27;AI non dovrebbe essere usata per svuotare professionalità senza adeguata formazione o senza riconoscimento contrattuale. Se, ad esempio, un lavoratore passa da attività esecutive a controllo, validazione e supervisione di sistemi AI, le nuove competenze dovrebbero essere riconosciute nell&#x27;inquadramento.</p>
+<h2>4. Verifica sulle nuove occupazioni AI e sui CCNL</h2>
+<p>La mini-attività svolta con il chatbot ha individuato quattro figure nate o trasformate dall&#x27;AI. La verifica sull&#x27;Archivio CNEL e su CCNL consultabili mostra che alcune figure informatiche tradizionali, come analista, programmatore, programmatore analista o responsabile sistemi informatici, sono già presenti in vari contratti. Non emerge però, nella verifica mirata, un riconoscimento espresso e uniforme di figure come prompt engineer, AI ethicist, MLOps engineer o data labeler. Il problema non è l&#x27;assenza assoluta di una tutela, ma l&#x27;adattamento di profili nuovi a categorie vecchie.</p>
+<h2>5. Contrattazione collettiva e salari</h2>
+<p>Il ruolo dei CCNL è centrale perché le nuove professioni non possono essere lasciate solo al mercato. La contrattazione collettiva dovrebbe aggiornare declaratorie, livelli e profili professionali, distinguendo tra attività AI ad alta autonomia e attività AI meramente esecutive. In assenza di aggiornamento, l&#x27;effetto previsto dal paper può accentuarsi: i lavoratori qualificati riescono a negoziare salari più alti individualmente, mentre quelli meno qualificati restano in posizioni deboli.</p>
+<h2>6. AI Act, informazione e organizzazione del lavoro</h2>
+<p>L&#x27;AI Act è rilevante soprattutto quando l&#x27;AI entra nell&#x27;organizzazione del lavoro e nella gestione dei lavoratori. I sistemi AI impiegati in ambito occupazionale e nella gestione del personale possono rientrare tra i sistemi ad alto rischio, in particolare se incidono su selezione, assegnazione di compiti, valutazione, promozione o cessazione del rapporto. In questi casi il datore che usa il sistema non può limitarsi ad acquistare una tecnologia: deve considerare trasparenza, sorveglianza umana, dati, monitoraggio e informazione dei lavoratori quando previsto.</p>
+<h2>7. Lavoro intellettuale, copyright e valore creativo</h2>
+<p>Un ulteriore profilo riguarda il lavoro intellettuale. Se l&#x27;AI cattura parte del valore creativo, il problema non è solo chi sia titolare dell&#x27;output finale, ma anche come riconoscere il contributo umano. Nei lavori di prompt design, content generation, data curation e model evaluation, il valore non sta sempre nell&#x27;opera finale, ma nel processo: scelta del prompt, selezione dei dati, valutazione degli output e decisione finale. Il diritto d&#x27;autore protegge il contributo creativo umano, mentre l&#x27;output puramente generato da AI pone problemi di attribuzione e titolarità.</p>
+<h2>8. Rischio di lavoro sommerso nel data labeling</h2>
+<p>La figura più problematica è il data labeler. Il lavoro può apparire semplice, ma è essenziale per addestrare o migliorare i sistemi AI. Se viene svolto tramite piattaforme, micro-task, compensi bassi e controllo algoritmico, può nascere una zona grigia tra lavoro autonomo, collaborazione e subordinazione. Il punto giuridico è verificare chi organizza tempi, modalità, standard qualitativi e potere di controllo. Quando il lavoratore è formalmente autonomo ma sostanzialmente inserito nell&#x27;organizzazione del committente, il rischio è una subordinazione mascherata o una collaborazione etero-organizzata.</p>
+<h2>9. Conclusione argomentata</h2>
+<p>Il diritto vigente offre già strumenti utili: categorie legali dell&#x27;art. 2095 c.c., disciplina delle mansioni, contrattazione collettiva, tutela previdenziale e regole europee sull&#x27;AI. Tuttavia, questi strumenti devono essere aggiornati e applicati in modo sostanziale. La nostra tesi è che non serva necessariamente una categoria giuridica completamente nuova per ogni mestiere AI, ma serva una contrattazione collettiva capace di riconoscere le nuove competenze e di impedire che le attività meno visibili dell&#x27;AI, come il data labeling, diventino lavoro povero o non tutelato. In questo senso il paper è utile perché mostra la direzione economica del fenomeno; il diritto deve impedire che tale direzione diventi disuguaglianza strutturale.</p>
+<h2>Indicazioni finali</h2>
+<p>Modello e versione del chatbot usato: ChatGPT – GPT-5.5 Thinking (13 maggio 2026).</p>
+<p>Stima del tempo dedicato: circa 2 ore e 30 minuti per ricerca normativa, confronto con il paper e verifica sui profili professionali.</p>
+<p>Fonti essenziali: paper assegnato; consegna del corso; Codice civile artt. 2095 e 2103; D.lgs. 81/2015; Regolamento (UE) 2024/1689 (AI Act); Archivio CNEL dei CCNL; fonti di mercato consultate per i salari indicativi.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <h1>Log di interazione con LLM</h1>
+<p>Red-team del paper e mini-attività concreta</p>
+<p>Gruppo: G4 – Pepiye Hurel jhanin, Marinaro Francesco Pio, Giuliano Onorati</p>
+<p>Paper: David Marguerit, Augmenting or Automating Labor? The Effect of AI Development on New Work, Employment, and Wages, LISER, marzo 2025</p>
+<h2>Obiettivo</h2>
+<p>Il chatbot è stato usato come strumento critico: prima per stress-testare il paper, poi per costruire la mini-attività sulle nuove occupazioni AI e verificare i punti deboli delle risposte ottenute.</p>
+<h2>Esiti della mini-attività</h2>
+<p>La verifica è stata svolta cercando nell’Archivio CNEL dei CCNL le parole chiave “prompt engineer”, “MLOps”, “AI ethicist” e “data labeler/data labeller”. Non è emerso un riconoscimento espresso e uniforme di tali figure, che risultano quindi riconducibili a profili contrattuali già esistenti. Questo passaggio è stato importante perché ha mostrato che il chatbot tendeva inizialmente a proporre inquadramenti plausibili, ma non sempre supportati da una fonte primaria.</p>
+<p>Le figure emerse mostrano bene la distinzione del paper: prompt engineer, MLOps engineer e AI ethicist sono casi di augmentation, perché l’AI crea nuove competenze e ruoli di progettazione, controllo e governance. Il data labeler mostra invece il lato fragile dell’ecosistema AI: attività essenziale ma spesso ripetitiva, esternalizzata e meno tutelata.</p>
+<h2>Conclusione del log</h2>
+<p>Il chatbot è stato più utile quando gli è stato chiesto di criticare e correggere, non quando gli è stato chiesto solo di riassumere. La principale acquisizione è che le risposte dell’AI sono un punto di partenza: diventano affidabili solo se discusse dal gruppo e verificate con fonti normative o contrattuali.</p>
+<h2>Indicazioni finali</h2>
+<p>Modello e versione del chatbot usato: ChatGPT – GPT-5.5 Thinking (13 maggio 2026).</p>
+<p>Stima del tempo dedicato: circa 1 ora e 30 minuti per prompt, confronto, selezione e commento critico.</p>
+<p>Fonti essenziali: Codice civile artt. 2095 e 2103; D.lgs. 81/2015; Regolamento (UE) 2024/1689; Archivio CNEL dei CCNL; fonti di mercato consultate per i salari indicativi.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#2563eb">Team di analisi</h2>
+    <ul class="pt-members">
+<li>PEPIYE Hurel jhanin</li>
+<li>Marinaro Francesco Pio</li>
+<li>Giuliano Onorati</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#2563eb">Paper analizzato</h2>
+    <p class="pt-apa">Marguerit, D. (2025). Augmenting or automating labor? The effect of AI development on new work, employment, and wages. <em>arXiv</em>. <a href="https://arxiv.org/abs/2503.19159" target="_blank" rel="noopener">https://arxiv.org/abs/2503.19159</a></p>
+    <a href="https://drive.google.com/file/d/11xc1wjMMoBBh4VF9nJynpe06HG0AIuuz/view" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>

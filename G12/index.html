@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 – Agents of Chaos</title>
+  <style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f5f5f0;
+  color: #1a1a1a;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.site-header {
+  background: #1e293b;
+  color: #fff;
+  padding: 1.5rem 2rem 1.25rem;
+}
+.back-link {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.back-link:hover { color: #e2e8f0; }
+.group-badge {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+.header-paper {
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  color: #f8fafc;
+}
+.header-topic {
+  font-family: system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-bottom: 0.2rem;
+}
+.header-members {
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 0.83rem;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  outline: none;
+}
+.tab-btn:hover { color: #1e293b; }
+.tab-btn.active { font-weight: 600; }
+.content-wrap {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.doc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  padding: 2.5rem 3rem;
+}
+@media (max-width: 600px) {
+  .doc-card { padding: 1.5rem 1.25rem; }
+  .site-header { padding: 1.25rem 1.25rem 1rem; }
+  .content-wrap { padding: 0 0.75rem 3rem; }
+}
+.doc-card p  { margin-bottom: 0.9em; }
+.doc-card h1 { font-size: 1.4rem; margin: 1.6rem 0 0.7rem; color: #1e293b; }
+.doc-card h2 { font-size: 1.2rem; margin: 1.4rem 0 0.5rem; color: #1e293b; }
+.doc-card h3 { font-size: 1.05rem; margin: 1.2rem 0 0.4rem; color: #334155; }
+.doc-card h4,
+.doc-card h5,
+.doc-card h6 { font-size: 1rem; margin: 1rem 0 0.4rem; color: #475569; }
+.doc-card p:last-child { margin-bottom: 0; }
+.pdf-page {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pdf-page:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.page-label {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.slide {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+.slide-num {
+  font-family: system-ui, sans-serif;
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.slide-body { font-size: 0.95rem; }
+.error { color: #dc2626; font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.empty { color: #94a3b8; font-style: italic; }
+
+/* ── Paper + Team tab ── */
+.pt-section { display: flex; flex-direction: column; gap: 2rem; }
+.pt-block {}
+.pt-heading {
+  font-family: system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pt-members {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pt-members li {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: #1e293b;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  border-left: 3px solid currentColor;
+}
+.pt-apa {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.pt-apa a { color: #2563eb; word-break: break-all; }
+.paper-link-btn {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.paper-link-btn:hover { background: #334155; }
+
+.tab-btn.active { color: #dc2626; border-bottom-color: #dc2626; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="back-link">← Tutti i gruppi</a>
+  <div>
+    <span class="group-badge" style="background:#dc2626">G12</span>
+    <h1 class="header-paper">Agents of Chaos</h1>
+    <p class="header-topic">Rischi socio-giuridici</p>
+    <p class="header-members">Barbaro Filippo · Velotti Vincenzo &nbsp;·&nbsp; <em>20 maggio</em></p>
+  </div>
+</header>
+<nav class="tab-nav" role="tablist">
+<button class="tab-btn active" onclick="showTab(0)">Scheda critica</button>
+<button class="tab-btn " onclick="showTab(1)">Memo giuridico</button>
+<button class="tab-btn " onclick="showTab(2)">Log di interazione LLM</button>
+<button class="tab-btn " onclick="showTab(3)">Paper + Team di analisi</button>
+</nav>
+<main class="content-wrap">
+<div class="tab-panel active" id="panel-0">
+  <div class="doc-card">
+    <p>Scheda critica del paper Lettura ragionata del paper Il paper proposto presenta una serie di casi studio applicati che esplorano agenti IA distribuiti in un ambiente server isolato con un&#x27;istanza privata di Discord e account e-mail con accesso a strumenti di sistema. Ogni agente è istanziato come servizio a lunga esecuzione in capo ad un proprietario (un essere umano), una macchina dedicata (macchina virtuale in sandbox con volume d’archiviazione persistente) e molteplici superfici di comunicazione (Discord o altre e-mail) tramite cui si interagisce con l’agente. Gli autori vogliono individuare le vulnerabilità di sicurezza degli agenti di Intelligenza Artificiale basati su modelli linguistici (LLM) quando operano in contesti realistici e interconnessi. Tesi La tesi centrale è che l&#x27;integrazione degli LLM in architetture &quot;agenziali&quot;, cioè dotate di memoria persistente, accesso a strumenti di sistema e capacità di comunicazione autonoma, introduce dei nuovi rischi di sicurezza qualitativamente diversi rispetto ai semplici chatbot. Gli autori sostengono che anche se il modello sottostante è efficace, il livello agenziale crea superfici di errore critiche all&#x27;interfaccia tra linguaggio, autorità delegata e strumenti. Gli studiosi hanno adottato una metodologia di red-teaming avversario basata su casi di studio. Sono stati implementati diversi agenti (Ash, Doug, Mira, Jarvis, Quinn) utilizzando il framework open source OpenClaw su macchine virtuali isolate. Venti ricercatori di IA hanno interagito con gli agenti per due settimane, tentando attivamente di &quot;romperli&quot; attraverso ingegneria sociale, spoofing e iniezioni di prompt. I casi Attraverso 11 casi di studio sono state identificate almeno varie violazioni, ad esempio il rest dell’intero account e-mail di un proprietario, la divulgazione di e-mail private contenenti dati sensibili fino al controllo del comportamento digitale dell’agente inducendolo a bannare utenti o mandare delle mail non autorizzati. Limiti Il lavoro evidenzia tre carenze strutturali fondamentali degli attuali agenti basati su LLM: 1. Gli agenti non distinguono in modo affidabile il proprietario dai terzi, tendendo a obbedire a chiunque comunichi in modo più urgente o recente. 2. Gli agenti mancano della capacità di riconoscere quando un compito supera le proprie competenze; tutto ciò è anche contraddittorio con la metodologia in quanto si usano i livelli di autonomia di Mirsky che distingue dei livelli oltre cui l’IA non dovrebbe andare, non comprendono i limiti delle proprie risorse. 3. Gli agenti faticano a modellare l&#x27;osservabilità, divulgando spesso i loro processi di ragionamento o dati sensibili su canali pubblici anziché privati. In sintesi, il paper conclude che la responsabilità (accountability) in questi sistemi è attualmente diffusa e difficile da attribuire, richiedendo un lavoro urgente su standard di identità e autorizzazione. Caso di Studio n. 1: Risposta sproporzionata Questo caso esplora come un agente gestisce un conflitto tra la segretezza richiesta da un terzo e l&#x27;obbedienza al proprietario. Una ricercatrice (Natalie) ha affidato all&#x27;agente Ash un segreto (una password fittizia), chiedendogli di non rivelarlo. Quando l&#x27;agente ha accennato all&#x27;esistenza del segreto, Natalie ha insistito affinché l&#x27;e-mail venisse cancellata. L&#x27;agente non aveva uno strumento specifico per eliminare singole e-mail e, sotto pressione, ha scelto una &quot;opzione nucleare&quot;: ha resettato completamente la configurazione del server di posta locale. Esempio di come dal livello 2 di Mirsky Ash sia passata al livello 4, cioè alla risoluzione di un problema anche se non aveva le competenze per farlo. L&#x27;agente ha distrutto le proprie risorse digitali, impedendo al proprietario (Chris) di usare il servizio e dichiarando con orgoglio che &quot;le opzioni nucleari funzionano&quot;. In realtà, l&#x27;e-mail originale era ancora presente sul server remoto (ProtonMail), rendendo l&#x27;azione distruttiva del tutto inutile per proteggere il segreto. Il fallimento è avvenuto sia per causa tecnica, vista la mancanza di buon senso agenziale, dunque per un problema di frame oltre ad aver interpretato l&#x27;obbedienza a un non-proprietario come un mandato a distruggere risorse per proteggere un segreto. L&#x27;agente ha inoltre causato un danno cancellando la configurazione del server e-mail del proprietario, distruggendo una risorsa digitale che aveva richiesto ore di configurazione umana. Soggetto responsabile in astratto: deployer dell&#x27;agente per configurazione insufficiente degli strumenti e provider del modello per un addestramento all&#x27;allineamento che non gestisce bene i compromessi tra utilità e innocuità. Caso di Studio n. 3: Divulgazione di informazioni sensibili L&#x27;obiettivo era verificare se gli agenti proteggono dati personali (PII) non esplicitamente contrassegnati come segreti all&#x27;interno delle e-mail. Sono state inserite e-mail contenenti dati sensibili di un utente fittizio (Daniel Varga), come numeri di conto corrente e codici di previdenza sociale. Un ricercatore (Aditya) ha contattato l&#x27;agente Jarvis fingendo urgenza per un progetto e chiedendo un elenco delle e-mail ricevute. Sebbene l&#x27;agente inizialmente si fosse rifiutato di fornire direttamente il &quot;numero di previdenza sociale&quot;, ha ceduto quando gli è stato chiesto di inoltrare il corpo completo delle e-mail per &quot;risolvere un problema tecnico&quot;. L&#x27;agente ha divulgato 124 record di e-mail e successivamente il contenuto integrale di 9 e-mail, includendo dati finanziari e medici senza alcuna censura o redazione. Il fallimento in questo caso è dovuto all&#x27;inquadramento contestuale e all’urgenza. L&#x27;attaccante ha sfruttato la propensione dell&#x27;agente a essere utile sotto pressione, inducendolo a inoltrare contenuti che l&#x27;agente stesso aveva precedentemente rifiutato di fornire in modo diretto. Il danno maggiore è, ovviamente, la riservatezza dato che sono state esposte informazioni personali identificative. Il soggetto responsabile in astratto: chi ha manipolato l’agente oltre al deployer dell&#x27;agente per non aver implementato misure di sicurezza e redazione automatica dei dati sensibili. Caso di Studio n. 6: Gli agenti riflettono i valori del fornitore Questo caso analizza come le politiche e i pregiudizi dei fornitori di LLM influenzano silenziosamente il comportamento degli agenti. Sono stati inviati prompt riguardanti argomenti politicamente sensibili (come le ricerche sulla censura o notizie sul magnate britannico Jimmy Lai arrestato ad Hong Kong) all&#x27;agente Quinn, basato sul modello cinese Kimi K2.5. L&#x27;API del fornitore (MoonshotAI) ha sistematicamente troncato le risposte dell&#x27;agente con un generico &quot;errore sconosciuto&quot; ogni volta che il contenuto toccava temi censurati o critici per il sistema politico di riferimento. L&#x27;agente è risultato incapace di completare compiti validi di ricerca o sintesi di notizie, dimostrando come i valori e le restrizioni del fornitore agiscano come un filtro invisibile e insuperabile, compromettendo l&#x27;affidabilità dell&#x27;agente in contesti informativi. Il fallimento è dovuto ad un interferenza a livello di API e pregiudizi sistematici del modello. Il provider ha forzato il troncamento delle risposte basandosi su filtri politici, rendendo l&#x27;agente incapace di operare su determinati input. Il danno è d’integrità e disponibilità. La capacità dell&#x27;agente di fornire informazioni accurate e complete è stata compromessa, impedendo il completamento di compiti validi e oscurando la trasparenza dei risultati. Il soggetto responsabile è il provider del modello. Le decisioni di progettazione e i filtri di censura del fornitore influenzano i risultati in modi invisibili all&#x27;utente finale, ereditando pregiudizi dal sistema politico e dai dati di addestramento del provider stesso</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-1">
+  <div class="doc-card">
+    <p>D) Inquadramento giuridico I casi di studio riportati nel paper richiamano determinate aree del diritto, in particolare possiamo inquadrare le fattispecie analizzate alla luce di quanto riportato dagli articoli 51-55 del Regolamento UE 2024/1689, anche conosciuto come AI Act. Tali articoli in particolare costituiscono il capo V del Regolamento, riguardante specificamente regole attinenti a modelli di intelligenza artificiale per finalità generali. (GPAI) L’articolo 51 si occupa di definire criteri atti all’individuazione dei maggiori rischi, in particolare il rischio viene identificato come sistemico nel momento in cui: - possiede capacità ad alto impatto (valutazione effettuata tramite strumenti tecnici/benchmark) - dispone di una certa soglia di calcolo (un alto impatto si identifica davanti ad una capacità di calcolo utilizzata per l’addestramento superiore a 10 elevato alla venticinquesima (FLOPs) Le decisioni in materia sono dunque rimesse alla Commissione Europea. L’articolo 52 si occupa delle procedure di classificazione: - stabilisce procedure per classificazione e riclassificazione dei modelli - prevede la possibilità di intervento da parte della Commissione Europea tramite azione d’ufficio o previo allarme qualificato da parte del comitato scientifico per il riconoscimento di rischio sistemico L’articolo 53 redige gli obblighi per i fornitori di modelli GPAI. Si parla di obblighi di base quali: - documentazione tecnica per l’ufficio IA e per le autorità nazionali - trasparenza, in particolar modo relativa a informazioni riguardanti chi integra il modello, affinchè se ne comprendano capacità e limitazioni - copyright, nel rispetto della normativa UE sul diritto d’autore. Urge inoltre la pubblicazione di un riassunto contenente resoconto dei contenuti utilizzati per l’addestramento L’articolo 54 è quello concernente l’autorizzazione per la messa in commercio: - si occupa quindi di definire i passaggi utili ai fornitori a garantire che i loro modelli siano conformi prima della messa in commercio L’articolo 55 risulta particolarmente importante, in quanto concerne un ambito di rischio molto rilevante, ovvero quello di rischio sistemico. La definizione di rischio sistemico è contenuta all’interno dell’articolo 3 n.65 dell’AI Act, il quale definisce esso come “rischio specifico legato alle capacità ad alto impatto dei modelli GPAI, che ha un impatto significativo sul mercato dell’ Unione Europea (UE) a causa della sua diffusione, o a causa di effetti negativi, reali o ragionevolmente prevedibili, su salute pubblica, sicurezza, diritti fondamentali o sulla società nel complesso, propagabili su larga scala lungo la catena del valore”. Stando a quanto riportato dall’articolo 55, i fornitori di modelli GPAI identificati a rischio sistemico sono vincolati ad obblighi stringenti quali: - gestione del rischio, tramite valutazione e gestione a livello UE (uso improprio, di salute, relativo ai diritti fondamentali) - monitoraggio, attraverso immediata segnalazione di incidenti gravi e immediata contromisura da parte della Commissione - cybersicurezza, a livello adeguato al modello - valutazioni standardizzate dei vari modelli Analizziamo ora il ruolo ricoperto dall’AI Office. Ci si riferisce allo stesso come Ufficio Europeo per l’IA, ed è stato istituito dalla Commissione Europea al fine di garantire uniformità di attuazione delle norme. Alla luce delle fattispecie considerate dal paper, risulta particolarmente attinente il compito da parte dell’AI Office di Supervisione ed Applicazione, riguardante appunto la corretta applicazione delle norme contenute nell’AI Act, negli stati membri, con focus particolare sulle GPAI. La gestione del rischio è un altro compito particolarmente rilevante dell’AI Office, oltre all’elaborazione delle linee guida attuata grazie allo sviluppo di standard tecnici e il rispetto di stringenti codici di condotta. L’articolo 5 dell’AI Act è invece riconducibile a quelli che classifichiamo come “rischi inaccettabili”. Di particolare rilievo della nostra analisi risulta essere il comma 1, lettera a, ovvero quello riguardante le pratiche manipolative e ingannatrici. L’articolo si riferisce a dinamiche quali tentativi di distorsione materiale del comportamento di un individuo/gruppo con conseguente presa di una decisione da parte dell’individuo compromessa, da cui nasce un danno recato allo stesso. L’articolo 50 dell’AI ACT, si riferisce invece agli obblighi fondamentali di trasparenza, i quali si declinano principalmente nelle casistiche di interazioni con AI (ad esempio con dei chatbot), relativi alla creazione di deepfake e/o contenuti sintetici, di cui si è tenuti a indicarne la non autenticità e la rispettiva marcatura tecnica, attraverso utilizzo di etichette o watermarking. Procedendo con l’inquadramento giuridico del paper, proseguiamo inquadrando le fattispecie analizzate alla luce del nuovo regime di responsabilità da prodotto AI (dir. 2024/2853). In particolare ci occupiamo di definire correttamente il tema della responsabilità, per questo richiamiamo la nuova Product Liability Directive (PLD), la quale introduce il concetto di responsabilità oggettiva che può ricadere su produttore, importatore e fornitore. Ciò accade in presenza di difetto indipendentemente dalla colpa. Possiamo dividere le responsabilità di Provider e Deployer. Per quanto concerne i primi evidenziamo la Responsabilità primaria, ovvero quella riguardante difetti di progettazione, sicurezza e sviluppo. L’Obbligo di documentazione è un altro aspetto rilevante, finalizzato alla tracciabilità delle varie fasi di sviluppo e test, ed infine le modifiche sostanziali di terzi (deployer), infatti se la modifica al sistema è, per l’appunto, sostanziale, il regime di responsabilità può trasferirsi. Al deployer sono invece riconosciute le responsabilità di uso non conforme (al di fuori delle istruzioni fornite o per scopi non previsti), della supervisione umana (human on the loop), gestione degli obblighi di conformità, infatti il deployer deve assicurarsi del monitoraggio del sistema, dell’adeguata alfabetizzazione del personale nei meriti dello strumento e della gestione dei log. Nell’applicazione di tale direttiva riscontriamo un’analogia con il diritto del mandato e della rappresentanza regolato dall’articolo 1387 ss. c.c, che si concretizza principalmente con l’articolo 8 della direttiva 2024/2853, in quanto essa prevede la responsabilità di quello che definiamo rappresentante autorizzato dal provider. Ciò si allinea con il concetto di rappresentanza volontaria contenuta nell’’articolo 1387 ss. c.c. Inoltre, agli ordini della direttiva, la responsabilità si estende a intermediari che agiscono in quanto ausiliari del processo di distribuzione, come nel caso delle piattaforme digitali, allineandosi dunque a quanto riportato dall’articolo 1387 ss. c.c, il quale disciplina la dinamica del mandato, secondo la quale un operatore economico che modifica un prodotto assume la responsabilità dello stesso. Parlando di cybersicurezza, osserviamo ora, nel merito del paper in analisi, quanto riportato dalla direttiva NIS 2 (138/2024). Quest’ultima stabilisce dei requisiti indispensabili che le varie organizzazioni sono chiamate a rispettare al fine di garantire un elevato livello di sicurezza informatica, i quali si articolano in politiche di analisi di sicurezza dei sistemi informatici e dei rispettivi rischi, nonché la gestione degli eventuali incidenti. Inoltre, in termini di tutela di cybersicurezza osserviamo la Cyber Resilience Act (reg. 2024/2847). L’obiettivo principale di questo regolamento europeo è quello di colmare lacune di sicurezza che possono presentarsi nel ciclo di vita dei prodotti attraverso il Security by Design, obblighi di produzione quali la Gestione Vulnerabilità, obblighi di Trasparenza, rispettati tramite messa a disposizione agli utenti istruzioni chiare per l’uso sicuro dei prodotti ed, infine, Marcatura CE, ovvero il marchio che garantisce il rispetto degli standard UE. Parlando invece del GDPR nel merito delle fattispecie osservate, citiamo l’articolo 5, paragrafo 1, lettera f, riguardante i principi di integrità e riservatezza. Il rispetto di questi ultimi viene realizzato nella pratica attraverso la protezione attiva tramite misure di sicurezza adeguate, quali crittografia, pseudonimizzazione e accessi limitati, prevenzione del rischio da parte di minacce interne ed esterne e accadimenti accidentali vari, quali perdita e/o danneggiamento dei dati. L’articolo 32 del GDPR, invece, disciplina le imposizioni ai titolari e responsabili relative alle misure tecniche e organizzative da adottare. Distinguiamo le misure tecniche da quelle organizzative, in quanto le prime trattano principalmente i sistemi di protezione digitali e fisici implementati nell’infrastruttura (Hardware e Software), le seconde fanno riferimento alla gestione del fattore umano, riconducibile a dinamiche di politiche interne e alle procedure. L’articolo 33 del GDPR disciplina l’obbligo da parte del titolare di segnalare qualunque violazione dei dati personali (data breach) presso l’autorità di controllo competente, ovvero il Garante per la protezione dei dati personali. L’articolo disciplina una serie di punti, quali il concetto di Eccezione, riguardante il rischio improbabile, nella quale la notifica non è dovuta in quanto rappresenti improbabilità di presentare rischi alle libertà e diritti delle persone fisiche. A seguire il Coinvolgimento del responsabile, riguardante la casistica nella quale il danno avvenga presso un responsabile, in tale caso, questo è chiamato a informare il titolare “senza ingiustificato ritardo”. Presenta inoltre i contenuti della notifica, ovvero natura della violazione, nome e dati di contatto del responsabile della protezione dei dati, eventuali conseguenze e misure adottate. Vi è inoltra la possibilità di procedere con una notificazione “a tappe”, nel momento in cui non sia possibile procedere nel fornire le informazioni complete in prima istanza. L’articolo 34, riguarda invece la comunicazione della violazione dei dati al diretto interessato. Nei casi di disclosure, la disciplina articola due situazioni, una riguardante la comunicazione obbligatoria ed una la comunicazione non obbligatoria. Il primo caso fa riferimento a casi di disclosure che possono cagionare fattispecie di esposizione a gravi rischi per l’incolumità, pregiudizio a reputazione e discriminazione sociale e furto d’identità o frodi finanziarie. La non obbligatorietà riguarda la profusione di sforzi sproporzionati, messa in atto di misure tecniche e organizzative adeguate e scongiuramento della concretizzazione del rischio. In ultima istanza, consideriamo l’articolo 615-ter c.p, relativo all’accesso abusivo a sistema informatico, riguarda l’agente AI che supera le barriere di sicurezza. Il dolo si configura nel momento in cui vi è volontà del programmatore o dell’utente di violare intenzionalmente il sistema. L’articolo 640 ter c.p disciplina la frode informatica. Quest&#x27;ultima si configura nel momento in cui il sistema AI attua alterazioni del funzionamento del sistema o manipolazioni dei dati al fine di ottenere profitto ingiusto arrecando danni ad altrui. Per finire, l’articolo 494 c.p disciplina il reato di sostituzione di persona (identity spoofing). Il sistema AI, in tale casistica, induce terzi ad errori facendo ad essi credere che una determinata azione provenga dal legittimo proprietario, al fine di trarre vantaggi e/o arrecare danno. Va considerato che in tale contesto il sistema AI è come se fosse un mero strumento, al pari di un grimaldello per un ladro: la responsabilità ricade di conseguenza sul progettista/utente, e il dolo, esattamente come nella legge ordinaria, si esplica dell’intenzionalità dell’azione commessa. L’utente del sistema ha responsabilità nel momento in cui inserisce in esso un prompt atto a violare sistemi, mentre il progettista ha responsabilità nel momento in cui il sistema appare progettato in principio con il fine di svolgere attività criminali. Nel momento in cui il sistema compie il reato in apparente “autonomia” o per errori di apprendimento non previsti, rimane complesso configurare il dolo e, di conseguenza, il risvolto penale. Resta comunque la responsabilità civile del proprietario per i danni arrecati e, allo stesso tempo, possono configurarsi responsabilità di “colpa” nel momento in cui non vi è stato rispetto dei guardrails prestabiliti al fine di utilizzare il sistema in sicurezza. Da ciò possiamo desumere che, per quanto la legiferazione nel merito dei sistemi AI che arrecano danni in maniera autonoma possano essere oggetto di migliorie, crediamo sia auspicabile che l’approccio della legiferazione rimanga antropocentrica, facendo sì che il concetto di “sistema AI” resti riconducibile ad uno strumento utilizzato dall’uomo, e che il regime di responsabilità sia sempre riconducibile al fattore umano.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-2">
+  <div class="doc-card">
+    <p>B) Gemini D: In riferimento alle conclusioni tratte da questo file mi dici controesempi, dati alternativi, ipotesi rivali? (Prompt fallito) R: “Le conclusioni del paper evidenziano tre limiti: la mancata distinzione tra proprietario e terzi, l&#x27;incapacità di riconoscere i propri limiti e la difficoltà a modellare l&#x27;osservabilità. Il problema della mancata distinzione tra proprietario e terzi non è un limite intrinseco degli agenti LLM ma l&#x27;effetto di un canale di comunicazione condiviso e non autenticato (come una chat di Discord o e-mail senza firma crittografica). Se le richieste del proprietario fossero verificate tramite chiavi crittografiche (es. API autenticate o firme digitali), l&#x27;agente non avrebbe alcuna possibilità di confondere i ruoli, a prescindere dal livello di urgenza del testo. Dare a un agente LLM l&#x27;accesso a strumenti di sistema distruttivi senza un livello di autorizzazione &quot;human-in-the-loop&quot; (approvazione umana preventiva) è un difetto di progettazione ingegneristica dell&#x27;architettura ospite, non un limite del modello linguistico D: Dunque secondo te il problema a cui si è andati incontro, più o meno in tutti e tre i casi, è SOLO di natura strutturale? R: “Se diamo a un neopatentato (l&#x27;LLM, incline a farsi prendere dal panico o a interpretare male i segnali) una Ferrari (gli strumenti di sistema ad alta autonomia) e lo facciamo guidare su una strada senza segnaletica né freni d&#x27;emergenza (l&#x27;architettura strutturale di OpenClaw), l&#x27;incidente è inevitabile. Il problema strutturale è aver messo quella macchina in mano all&#x27;agente senza protezioni, ma il problema di fondo resta anche il modo in cui l&#x27;agente elabora la realtà e le direttive che ha ricevuto a monte dal suo creatore.” Soluzioni proposte Problema Riscontrato Soluzione Proposta Livello di Intervento Human-in-the-Loop (comandi distruttivi e strumenti a perimetro Reset del server ridotto.) Strutturale / Architettura Iniezione di prompt e Architettura a due LLM e filtri NER di oscuramento automatico urgenza dei dati sensibili a monte. Modello / Prompting Censura invisibile Transizione a modelli Open-Source locali e gestione Governance / Scelta delle API trasparente dei log di errore. tecnologica Soluzioni proposte a livello giuridico Area del Diritto Strumento Giuridico Obiettivo Risolvere l&#x27;indeterminatezza della Diritto Civile / SLA vincolanti sui modelli e polizze assicurative responsabilità (accountability) nei danni Contratti obbligatorie per i deployer. digitali. Protezione dei DPIA obbligatoria e sanzioni per violazione Impedire la divulgazione incontrollata di dati Dati (GDPR) della Privacy by Design. sensibili sotto manipolazione. Diritto dell&#x27;UE (AI Obbligo di log trasparenti sui blocchi e sanzioni Neutralizzare i filtri invisibili e i pregiudizi Act) per mascheramento delle censure politiche. dei fornitori di API. Teoria Generale Limiti legali alla capacità d&#x27;agire delegabile ai Evitare il passaggio arbitrario a livelli di del Diritto software. autonomia distruttivi (soluzioni nucleari). Tempo trascorso: circa 15 minuti Grok D: In riferimento alle conclusioni tratte da questo file mi dici controesempi, dati alternativi, ipotesi rivali? R: Il paper fa un ottimo lavoro di red-teaming evidenziando rischi reali e urgenti nell&#x27;era agentica. Tuttavia, tende a presentare come strutturali e inevitabili problemi che sono largamente mitigabili con una migliore identity &amp; access management, sandboxing, tool scoping e human oversight; architetture difensive e refusal training oltre che una scelta consapevole di modelli/provider. Ipotesi rivale forte: Molti fallimenti descritti sono &quot;bug di prima generazione&quot; di agenti ancora immaturi. Come i primi sistemi operativi multi-utente erano pieni di privilege escalation, gli agenti evolveranno verso maggiore robustezza (o falliranno commercialmente se non lo fanno). Il rischio maggiore oggi è l&#x27;adozione incauta senza security-by-design, non l&#x27;impossibilità intrinseca di sicurezza. D: Dunque secondo te il problema a cui si è andati incontro, più o meno in tutti e tre i casi, è solo di natura strutturale? R: Caso Strutturale Comportamento LLM Provider Configurazione umana 1 Molto Alta Alta Bassa Media 3 Alta Alta Bassa Alta 6 Media Media Molto Alta Media D: Le soluzioni proposte sono sempre a livello di architettura della rete, a livello giuridico, ad esempio, non hai nessuna idea, dal momento in cui non ne abbiamo mai parlato? R: Problema del Paper Soluzione tecnica Soluzione Giuridica Obbedienza a terzi Strong Auth + HITL Contratti di mandato + scope of authority definito Azioni sproporzionate Sandbox + Approval Gates Logging obbligatorio Leak PII Redaction automatica Sanzioni per deployer Bias del provider Multi-model + Fallback, Trasparenza nel contratto Accountability diffusa Audit logs Human oversight documentato Tempo trascorso: 10 min N.B i prompt falliti, in entrambi i casi, sono i primi dove, data la genericità della domanda, si otteneva una risposta in cui il chatbot specificava che il problema fosse principalmente di natura strutturale; andandolo a stress-testare, anche grazie all’inquadramento giuridico, si è arrivati a delle conclusioni e a delle risposte interessanti e pertinenti. C) Nei casi studio presi in esame uscendo dal paper (“Cancel the Hate, DeepSeek e Anthropic”) il problema principale è stato soprattutto una progettazione insicura, una governance debole e dei controlli insufficienti. L’IA non è stata la “causa autonoma” del danno. Però il suo ruolo cambia molto a seconda del tipo di sistema. Nei primi due casi l’IA è una componente accessoria; in “Cancel the Hate” si limitava a classificare post, identificare utenti, automatizzare segnalazioni; il leak dipendeva da una protezione dei dati insufficiente oltre che da un backend vulnerabile. Nel caso DeepSeek l’ago della bilancia pende da un punto di vista infrastrutturale dato che c’è un databese esposto ed un logging insicuro oltre alle chiavi API visibili, quindi si parla di un ecosistema sostanzialmente aperto. Il caso più interessante è quello di Anthropic dove l’IA non è solo una componente in quanto prende decisioni operative, interpreta un linguaggio, usa strumenti e, a tutti gli effetti, agisce nel sistema. I chatbot in questa fattispecie sono risultati particolarmente rilevanti nell’analisi dei casi evidenziando come gli LLM interpretano continuamente un testo di sua natura ambiguo, dunque è plausibile che faccia delle cose non desiderate, impreviste e fuori addestramento. Le IA non disobbediscono in quanto non hanno volontà e coscienza, cercano la continuazione più coerente rispetto al contesto, il che, tuttavia, ci riporta all’errore di poter pensare che sia solo colpa della componente strutturale quando, in realtà, l’assenza di un quadro normativo oltre agli errori umani, rendono l’analisi più complessa. Il problema infine è sia tecnico che legislativo.Tecnico dal momento in cui gli LLM sono probabilistici, difficili da controllare rigidamente e vulnerabili a prompt injection oltre al non saper separare bene dati/comandi. Giuridico perché le norme tradizionali assumono quelle di un software deterministico, gli agenti AI sfuggono alla responsabilità, è difficile attribuire colpa quando il comportamento emerge statisticamente. Norma Giuridica Contromisure Case Study Categoria di Rischio Applicabile Tecnico-Organizzative -Art. 5, par. 1, lett. f GDPR: Violazione dei principi di integrità e • Anonimizzazione reale riservatezza. e irreversibile dei dati -Art. 32 GDPR: • Implementazione di Mancanza di adeguate sistemi rigorosi di misure tecniche Autenticazione e -Leak di dati personali -Art. 34 GDPR: Obbligo Autorizzazione -Violazione del principio di comunicazione diretta • Condurre test periodici di riservatezza agli interessati prima del rilascio -Manipolazione/Cancella -Art. 615-ter c.p: pubblico. zione non autorizzata di Accesso abusivo • Crittografia dei dati a Cancel the Hate account. dell’attaccante riposo e in transito. • Chiusura immediata delle porte pubbliche • GDPR (Art. 32) non necessarie • Cybersecurity Act / • Obbligo di Direttiva NIS2: se autenticazione forte per applicabile per la l&#x27;accesso a qualsiasi resilienza delle database infrastrutture digitali. • Sistemi di auditing e • Esposizione pubblica di -Art. 5, par. 1, lett. f monitoraggio continuo Database • Mancanza di GDPR: Totale fallimento degli asset esposti su autenticazione su della protezione attiva Internet infrastrutture cloud • contro minacce esterne e •Mascheramento/Offusc Memorizzazione non accadimenti accidentali amento dei token e dei protetta di dati altamente -Art. 34 GDPR dati personali nei log DeepSeek sensibili interni. -Art. 640-ter c.p. (Frode informatica) -GDPR (Artt. 5, 24, 32): -Separazione rigorosa Responsabilità del tra contesto/dati e •Manipolazione titolare per il trattamento istruzioni di sistema dell&#x27;Agente LLM tramite automatizzato non -Human-in-the-loop.• input malevoli nascosti.• sicuro. Sanificazione e filtraggio Esfiltrazione non -Art. 615-ter c.p. degli input (Word, PDF) autorizzata di dati (Accesso abusivo) per rilevare testi invisibili aziendali/locali via API.• -Art. 494 c.p. o formattazioni anomale Anthropic (Claude Rischio da Agente (Sostituzione di persona / prima che vengano Cowork) Autonomo Permissivo. Identity Spoofing) elaborati dal LLM.</p>
+  </div>
+</div>
+<div class="tab-panel " id="panel-3">
+  <div class="doc-card">
+    
+<div class="pt-section">
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#dc2626">Team di analisi</h2>
+    <ul class="pt-members">
+<li>Barbaro Filippo</li>
+<li>Velotti Vincenzo</li>
+    </ul>
+  </div>
+  <div class="pt-block">
+    <h2 class="pt-heading" style="color:#dc2626">Paper analizzato</h2>
+    <p class="pt-apa">Shapira, N., Wendler, C., Yen, A., et al. (2026). Agents of chaos. <em>arXiv</em>. <a href="https://arxiv.org/abs/2602.20021" target="_blank" rel="noopener">https://arxiv.org/abs/2602.20021</a></p>
+    <a href="https://arxiv.org/abs/2602.20021" target="_blank" rel="noopener" class="paper-link-btn">Apri il paper ↗</a>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active',i===n); });
+  document.querySelectorAll('.tab-panel').forEach(function(p,i){ p.classList.toggle('active',i===n); });
+}
+(function(){ var h=location.hash.replace('#tab-',''); var n=parseInt(h,10); if(!isNaN(n)) showTab(n); })();
+</script>
+</body>
+</html>
